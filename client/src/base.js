@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-const db = firebase.initializeApp({
+firebase.initializeApp({
     apiKey: "AIzaSyCXHNEOM_Y2rdIC3kvncBsYd7gAf88HJ6g",
     authDomain: "muse-eec76.firebaseapp.com",
     databaseURL: "https://muse-eec76.firebaseio.com",
@@ -10,5 +10,7 @@ const db = firebase.initializeApp({
     appId: "1:1076771976447:web:41acb692f55285ef9a08ca",
     measurementId: "G-3D6DCMR4W7"
 });
+
+var db = firebase.firestore();
 
 export default db;
