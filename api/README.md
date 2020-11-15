@@ -1,5 +1,6 @@
-# Muse 
+# Muse (Backend Team)
 This instruction list hinges on the fact that you've installed Firebase CLI, Firebase Tools, etc.
+Learn to create endpoints: https://www.youtube.com/playlist?list=PLJetLDY7yKupm5WTx02ylh1I25rJLPvXe 
 
 ## Installation Instructions
 From the base Muse directory, cd into the api directory and install packages
@@ -20,6 +21,7 @@ firebase init
 - choose JavaScript as the language
 - choose 'Y' for ESLint to catch bugs and enforce style
 - choose 'Y' for installing dependencies with npm
+
 Then, install express and cors if you haven't
 ```
 npm install express
