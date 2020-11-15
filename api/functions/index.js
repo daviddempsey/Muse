@@ -18,7 +18,7 @@ const cors = require('cors');
 app.use( cors({origin: true}));
 
 // Routes
-app.get('/yessir', (req, res) => {
+app.get('/', (req, res) => {
     return res.status(200).send('We did it!');
 });
 
@@ -64,9 +64,30 @@ app.post("/api/poststuff", (req, res) => {
         return res.status(500).send(error);
       }
     })();
-  });
+});
 
 // Read, GET
+
+
+app.get("/api/user/profile/:id", (req, res) => {
+
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = db.collection('profile').doc(req.params.id);
+            let product = await document.get();
+            let response = product.data();
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+app.get("/api/user/")
 
 // Update, PUT
 
