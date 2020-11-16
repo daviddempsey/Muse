@@ -11,10 +11,10 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
+// import * as data_access from './data_access.js'; // Import firebase functions
 
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
-var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
@@ -32,7 +32,6 @@ admin.initializeApp({
   databaseURL: "https://muse-eec76.firebaseio.com"
 });
 
-const express = require('express');
 const app = express();
 const db = admin.firestore();
 
@@ -57,7 +56,25 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-var app = express();
+async function createUser(database, email, displayName, spotifyID, refreshToken) {
+  const userData = {
+      name: displayName, 
+      spotify_id: spotifyID,
+      refresh_token: refreshToken, 
+      location: [],
+      profile: 'profile_id', // hash function based on refresh token
+      friends: [],
+      messages: [],
+      stats_id: '',
+      in_harmony: 'in_harmony_id' // hash function based on refresh token
+  }
+
+  // add new user
+  const res = await database.collection('user').doc(email).set(userData);
+
+  // log to console the result
+  console.log('Added', res);
+}
 
 app.use(express.static(__dirname + '/public'))
    .use(cors())
@@ -124,6 +141,12 @@ app.get('/callback', function(req, res) {
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
           console.log(body);
+
+          var displayName = body['display_name'];
+          var userEmail = body['email'];
+          var userId = body['id']; 
+
+          createUser(db, userEmail, displayName, userId, refresh_token);
         });
 
         // we can also pass the token to the browser to make requests from there

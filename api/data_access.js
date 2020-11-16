@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 
 const console = {log: debug};
 
-async function initializeApp() {
+/*async function initializeApp() {
     process.env.GCLOUD_PROJECT = 'firestorebeta1test2';
     // [START initialize_app]
   
@@ -53,11 +53,13 @@ async function demoInitialize(db) {
       console.log(doc.id, ' => ', doc.data());
     });
     // [END demo_initialize]
-}
+}*/
 
 // Firebase interaction functions
-async function createUser(db, email, name, spotifyID, refreshToken) {
+/*export async function createUser(db, email, displayName, spotifyID, refreshToken) {
     const userData = {
+        name: displayName, 
+        spotify_id: spotifyID,
         refresh_token: refreshToken, 
         location: [],
         profile: 'fuck', // hash function based on refresh token
@@ -72,4 +74,4 @@ async function createUser(db, email, name, spotifyID, refreshToken) {
 
     // log to console the result
     console.log('Added', res);
-}
+}*/
