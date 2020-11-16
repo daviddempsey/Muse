@@ -11,6 +11,7 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
+
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var cors = require('cors');
@@ -20,6 +21,24 @@ var cookieParser = require('cookie-parser');
 var client_id = '3068918efe6349bfa18633d5dd854b6a'; // Your client id
 var client_secret = '93f20dfbf9a64d7cbf7f0832e5f0ccf3'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+
+const debug = require('debug')('firestore-snippets-node'); // firebase debug
+const admin = require('firebase-admin'); // firebase admin account
+const console = {log: debug}; // the console to log debug messages
+
+var serviceAccount = require("./functions/permissions.json"); // service account
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://muse-eec76.firebaseio.com"
+});
+
+const express = require('express');
+const app = express();
+const db = admin.firestore();
+
+// create cores 
+const cors = require('cors');
+app.use( cors({origin: true}));
 
 /**
  * Generates a random string containing numbers and letters
