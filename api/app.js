@@ -11,7 +11,7 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-// import * as data_access from './data_access.js'; // Import firebase functions
+//import * as data_access from './data_access.js'; // Import firebase functions
 
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -24,7 +24,7 @@ var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
 const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
-const console = {log: debug}; // the console to log debug messages
+//const console = {log: debug}; // the console to log debug messages
 
 var serviceAccount = require("./functions/permissions.json"); // service account
 admin.initializeApp({
@@ -56,29 +56,110 @@ var generateRandomString = function(length) {
 
 var stateKey = 'spotify_auth_state';
 
-async function createUser(database, email, displayName, spotifyID, refreshToken) {
-  const userData = {
-      name: displayName, 
-      spotify_id: spotifyID,
-      refresh_token: refreshToken, 
-      location: [],
-      profile: 'profile_id', // hash function based on refresh token
-      friends: [],
-      messages: [],
-      stats_id: '',
-      in_harmony: 'in_harmony_id' // hash function based on refresh token
-  }
-
-  // add new user
-  const res = await database.collection('user').doc(email).set(userData);
-
-  // log to console the result
-  console.log('Added', res);
-}
-
 app.use(express.static(__dirname + '/public'))
    .use(cors())
    .use(cookieParser());
+
+
+/**
+ * Creates a user based on the user's Spotify information into the database
+ * that's passed in. 
+ * 
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} displayName name of the user
+ * @param {*} spotifyID Spotify ID of the user
+ * @param {*} refreshToken Spotify refresh token of the user 
+ */
+async function createUser(db, email, displayName, spotifyID, refreshToken) {
+
+  // create a data document to be stored 
+  const userData = {
+    name: displayName, 
+    spotify_id: spotifyID,
+    refresh_token: refreshToken, 
+    location: [],
+    profile: email, // hash function based on refresh token
+    friends: [],
+    messages: [],
+    stats_id: email,
+    in_harmony: email // hash function based on refresh token
+  }
+
+  // go into the user tab and create the user
+  const res = await db.collection('user').doc(email).set(userData);
+
+  // create user profile
+  createUserProfile(db, email);
+
+  // create user in harmony document
+  createUserInHarmony(db, email, refreshToken);
+
+  // create and get user stats from Spotify
+
+  // TODO: check what the response is and decide where to go from here
+
+  // log to console the result
+  console.log('Added', res);
+
+}
+
+/**
+* Creates and prepopulates the user's profile
+* @param {*} db reference to the database to add to
+* @param {*} email email of the user
+*/
+async function createUserProfile(db, email) {
+
+  // create data object to be stored
+  const userProfileData = {
+    profile_picture: '',
+    biography: '',
+    profile_url: '',
+    select_playlist: [],
+    social_media: []
+  }
+
+  // go into the profile tab and create the profile for the user
+  const res = await db.collection('profile').doc(email).set(userProfileData);
+
+  // TODO: check what response is and decide where to go from here
+
+  // log to console the result
+  console.log('Added', res); 
+}
+
+/**
+* Creates and populated the user's stats for top 5 stats
+* @param {*} db reference to the database to add to
+* @param {*} email email of the user
+* @param {*} refresh_token Spotify refresh token of the user
+*/
+async function createUserStats(db, email, refresh_token) {
+
+}
+
+/**
+* Creates the user's in harmony list from current 
+* @param {*} db 
+* @param {*} email 
+* @param {*} refresh_token 
+*/
+async function createUserInHarmony(db, email, refresh_token) {
+
+  // TODO: in harmony algorithm
+
+  // Create the in harmony list (empty for now)
+  const userInHarmonyData = {
+    similar_users: []
+  }
+
+  // go into in harmony tab and create the profile for the user
+  const res = await db.collection('in_harmony').doc(email).set(userInHarmonyData);
+
+  // Log to console the result
+  console.log('Added', res);
+}
 
 app.get('/login', function(req, res) {
 

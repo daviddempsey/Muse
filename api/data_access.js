@@ -1,77 +1,107 @@
-const debug = require('debug')('firestore-snippets-node');
+/** 
+ * Muse - Database access methods
+ * 
+ * This file is to store all the database access methods
+ * This will include profile creating and reading, user creating and reading,
+ * etc.
+ */
 
-const admin = require('firebase-admin');
+/**
+ * Creates a user based on the user's Spotify information into the database
+ * that's passed in. 
+ * 
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} displayName name of the user
+ * @param {*} spotifyID Spotify ID of the user
+ * @param {*} refreshToken Spotify refresh token of the user 
+ */
+export async function createUser(db, email, displayName, spotifyID, refreshToken) {
 
-const console = {log: debug};
+    // create a data document to be stored 
+  const userData = {
+    name: displayName, 
+    spotify_id: spotifyID,
+    refresh_token: refreshToken, 
+    location: [],
+    profile: email, // hash function based on refresh token
+    friends: [],
+    messages: [],
+    stats_id: email,
+    in_harmony: email // hash function based on refresh token
+  }
 
-/*async function initializeApp() {
-    process.env.GCLOUD_PROJECT = 'firestorebeta1test2';
-    // [START initialize_app]
+  // go into the user tab and create the user
+  const res = await db.collection('user').doc(email).set(userData);
+
+  // create user profile
+  createUserProfile(db, email);
+
+  // create user in harmony document
+  createUserInHarmony(db, email, refreshToken);
+
+  // create and get user stats from Spotify
+
+  // TODO: check what the response is and decide where to go from here
+
+  // log to console the result
+  console.log('Added', res);
   
-    admin.initializeApp({
-      credential: admin.credential.applicationDefault()
-    });
-  
-    const db = admin.firestore();
-    // [END initialize_app]
-    return db;
 }
 
-async function initializeAppFunctions() {
-    process.env.GCLOUD_PROJECT = 'firestorebeta1test2';
-    // [START initialize_app_functions]
-    admin.initializeApp();
-  
-    const db = admin.firestore();
-  
-    // [END initialize_app_functions]
-    return db;
+/**
+ * Creates and prepopulates the user's profile
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ */
+export async function createUserProfile(db, email) {
+
+  // create data object to be stored
+  const userProfileData = {
+    profile_picture: '',
+    biography: '',
+    profile_url: '',
+    select_playlist: [],
+    social_media: []
+  }
+
+  // go into the profile tab and create the profile for the user
+  const res = await db.collection('profile').doc(email).set(userProfileData);
+
+  // TODO: check what response is and decide where to go from here
+
+  // log to console the result
+  console.log('Added', res); 
 }
 
-async function initializeAppSA() {
-    // [START initialize_app_service_account]
-  
-    const serviceAccount = require('./path/to/serviceAccountKey.json');
-  
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
-    });
-  
-    const db = admin.firestore();
-  
-    // [END initialize_app_service_account]
-    return db;
+/**
+ * Creates and populated the user's stats for top 5 stats
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} refresh_token Spotify refresh token of the user
+ */
+export async function createUserStats(db, email, refresh_token) {
+
 }
 
-async function demoInitialize(db) {
-    // [START demo_initialize]
-    // Fetch data from Firestore
-    const snapshot = await db.collection('cities').get();
+/**
+ * Creates the user's in harmony list from current 
+ * @param {*} db 
+ * @param {*} email 
+ * @param {*} refresh_token 
+ */
+export async function createUserInHarmony(db, email, refresh_token) {
   
-    // Print the ID and contents of each document
-    snapshot.forEach(doc => {
-      console.log(doc.id, ' => ', doc.data());
-    });
-    // [END demo_initialize]
-}*/
+  // TODO: in harmony algorithm
 
-// Firebase interaction functions
-/*export async function createUser(db, email, displayName, spotifyID, refreshToken) {
-    const userData = {
-        name: displayName, 
-        spotify_id: spotifyID,
-        refresh_token: refreshToken, 
-        location: [],
-        profile: 'fuck', // hash function based on refresh token
-        friends: [],
-        messages: [],
-        stats_id: '',
-        in_harmony: 'fuckkkkkkkkk' // hash function based on refresh token
-    }
+  // Create the in harmony list (empty for now)
+  const userInHarmonyData = {
+    similar_users: []
+  }
 
-    // add new user
-    const res = await db.collection('user').doc(email).set(userData);
+  // go into in harmony tab and create the profile for the user
+  const res = await db.collection('in_harmony').doc(email).set(userInHarmonyData);
 
-    // log to console the result
-    console.log('Added', res);
-}*/
+  // Log to console the result
+  console.log('Added', res);
+}
