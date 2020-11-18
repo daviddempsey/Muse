@@ -35,10 +35,8 @@ function App() {
           </a>
         </header>
         <Switch>
-
-          <Route path='/socialmedia' component={SocialMedia}></Route>
-          <Route path='/biography' component={Biography}></Route>
-
+          <Route path="/socialmedia" component={SocialMedia}></Route>
+          <Route path="/biography" component={Biography}></Route>
         </Switch>
       </div>
     </Router>

@@ -8,7 +8,7 @@ class SocialMedia extends Component {
       userid: "12345",
       facebook: "https://www.facebook.com",
       instagram: "https://www.instagram.com",
-      twitter: "https://www.twitter.com"
+      twitter: "https://www.twitter.com",
     };
     // change functions
     this.changeFacebook = this.changeFacebook.bind(this);
@@ -18,17 +18,17 @@ class SocialMedia extends Component {
 
   // change facebook URL
   changeFacebook(facebookURL) {
-    this.setState({facebook: facebookURL});
+    this.setState({ facebook: facebookURL });
   }
 
   // change instagram URL
   changeInstagram(instagramURL) {
-    this.setState({instagram: instagramURL});
+    this.setState({ instagram: instagramURL });
   }
 
   // change twitter URL
   changeTwitter(twitterURL) {
-    this.setState({twitter: twitterURL});
+    this.setState({ twitter: twitterURL });
   }
 
   // render functionn
