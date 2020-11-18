@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Axios from "axios";
 import SocialMedia from "../src/components/SocialMedia";
+import Biography from "../src/components/Biography";
 
 function App() {
   Axios({
@@ -35,6 +36,7 @@ function App() {
         </header>
         <Switch>
           <Route path='/socialmedia' component={SocialMedia}></Route>
+          <Route path='/biography' component={Biography}></Route>
         </Switch>
       </div>
     </Router>
