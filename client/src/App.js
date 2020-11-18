@@ -1,7 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import logo from "./logo.svg";
+import "./App.css";
 import Axios from "axios";
 import SocialMedia from "../src/components/SocialMedia";
 import Biography from "../src/components/Biography";
@@ -11,9 +11,9 @@ function App() {
     method: "GET",
     url: "http://localhost:5000/",
     headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(res => {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => {
     console.log(res.data.message);
   });
 
@@ -35,8 +35,10 @@ function App() {
           </a>
         </header>
         <Switch>
+
           <Route path='/socialmedia' component={SocialMedia}></Route>
           <Route path='/biography' component={Biography}></Route>
+
         </Switch>
       </div>
     </Router>
