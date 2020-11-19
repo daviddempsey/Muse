@@ -4,11 +4,10 @@ import UserService from "../services/user.service"
 export default class profilePicture extends Component {
     constructor(props) {
         super(props);
-        this.onChangePicture = this.onChangePicture.bind(this);
+        // this.onChangePicture = this.onChangePicture.bind(this);
 
         this.state = {
             url: ""
-            
         };
     }
 
@@ -21,7 +20,7 @@ export default class profilePicture extends Component {
         this.setState({url: profilePictureURL});
     }
 
-    onChangePicture() {
+    onChangePicture(e) {
         this.setState({
             url: e.target.value
         });
