@@ -87,8 +87,6 @@ app.get("/api/user/profile/:id", (req, res) => {
     })();
 });
 
-app.get("/api/user/")
-
 // Update, PUT
 
 // Delete, DELETE
