@@ -25,6 +25,7 @@ export default class friendPage extends Component {
     /* event handler for adding a new friend */
     handleAddFriend (name) {
         console.log("Added " + name);
+        // add the friend to the user's friends list
         this.setState((name) => {
             return {
                 friends: this.state.friends.concat({ userEmail: name })
@@ -35,6 +36,7 @@ export default class friendPage extends Component {
     /* event handler for removing a friend */ 
     handleRemoveFriend (name) {
         console.log("Removed " + name);
+        // filter out the names excluding the removed user
         this.setState((name) => {          
           return {
               friends: this.state.friends.filter((friend) => friend.userEmail !== name)
@@ -42,6 +44,7 @@ export default class friendPage extends Component {
         })
     }
   
+    /* render the friends list */
     render() {
         const { friends } = this.state;
         return (
@@ -49,8 +52,8 @@ export default class friendPage extends Component {
                 <h1>Friend Page</h1>
                 {/* lists the friends of the user */}
                 {this.state.friends.map((name) => 
-                    UserService.getUser(name.userEmail)
-                ).join('\n')};
+                    this.viewFriend(name.userEmail)
+                ).join('\n')}; {/* not sure how to have each friend on different line */}
             </div>
         )
     }
