@@ -104,4 +104,4 @@ export async function createUserInHarmony(db, email, refresh_token) {
 
   // Log to console the result
   console.log('Added', res);
-}
+} 
