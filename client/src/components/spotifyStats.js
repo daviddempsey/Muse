@@ -13,10 +13,10 @@ export class spotifyStats extends React.Component{
     }
     //checks if component mounted
     componentDidMount(){
-       // this.getSpotifyStats();
+       this.getSpotifyStats();
     }
     // calls to get data from database
-    /*getSpotifyStats(){
+    getSpotifyStats(){
         //calls userservice to return data
         let dbTopArtists = UserService.getTop_artists();
         let dbTopGenres = UserService.getTopGenres();
@@ -30,7 +30,7 @@ export class spotifyStats extends React.Component{
             top_artists: dbTopArtists, 
             top_genres: dbTopGenres, 
             top_tracks: dbTopTracks});
-    }*/
+    }
     render(){
         return(
             <div>
