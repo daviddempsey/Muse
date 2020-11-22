@@ -12,7 +12,11 @@ class UserService {
   }
 
   getProfilePicture(email) {
-      return db.doc(email).get("profile_picture");
+    return db.doc(email).get("profile_picture");
+  }
+
+  getSocials(email) {
+    return db.doc(email).get("socials");
   }
 
   create(user) {

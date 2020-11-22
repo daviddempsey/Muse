@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import UserService from "../services/user.service";
 
 class SocialMedia extends Component {
   // constructor
@@ -14,6 +15,17 @@ class SocialMedia extends Component {
     this.changeFacebook = this.changeFacebook.bind(this);
     this.changeInstagram = this.changeInstagram.bind(this);
     this.changeTwitter = this.changeTwitter.bind(this);
+  }
+
+  // check mount
+  componentDidMount() {
+    this.getSocials();
+  }
+
+  /* NOT FINISHED */
+  getSocials() {
+    let socials = UserService.getSocials();
+    //this.setState();
   }
 
   // change facebook URL
