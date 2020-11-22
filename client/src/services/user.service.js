@@ -33,6 +33,15 @@ class UserService {
   getProfileLink(email){
     return db.doc(email).get("profile_picture");
   }
+  getTopArtists(email){
+    return db.doc(email).get("top_artists");
+  }
+  getTopGenres(email){
+    return db.doc(email).get("top_genres");
+  }
+  getTopTracks(email){
+    return db.doc(email).get("top_tracks");
+  }
 
   create(user) {
     return db.add(user);
