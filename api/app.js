@@ -20,6 +20,20 @@ var client_id = "3068918efe6349bfa18633d5dd854b6a"; // Your client id
 var client_secret = "93f20dfbf9a64d7cbf7f0832e5f0ccf3"; // Your secret
 var redirect_uri = "http://localhost:8888/callback"; // Your redirect uri
 
+var firebase = require("firebase/app");
+require("firebase/auth");
+
+firebase.initializeApp({
+  apiKey: "AIzaSyCXHNEOM_Y2rdIC3kvncBsYd7gAf88HJ6g",
+  authDomain: "muse-eec76.firebaseapp.com",
+  databaseURL: "https://muse-eec76.firebaseio.com",
+  projectId: "muse-eec76",
+  storageBucket: "muse-eec76.appspot.com",
+  messagingSenderId: "1076771976447",
+  appId: "1:1076771976447:web:41acb692f55285ef9a08ca",
+  measurementId: "G-3D6DCMR4W7",
+});
+
 const debug = require("debug")("firestore-snippets-node"); // firebase debug
 const admin = require("firebase-admin"); // firebase admin account
 //const console = {log: debug}; // the console to log debug messages
@@ -31,7 +45,7 @@ admin.initializeApp({
 });
 
 const app = express();
-const db = admin.firestore();
+const fsdb = admin.firestore();
 
 // create cores
 const cors = require("cors");
@@ -61,6 +75,37 @@ app
   .use(cookieParser());
 
 /**
+ * Creates a user based on Firebase based on Spotify's information into database
+ * @param {*} userEmail user email
+ * @param {*} displayName user's name
+ * @param {*} spotifyID user's spotifyID
+ * @param {*} refreshToken user's refreshToken
+ */
+async function createFirebaseUser(
+  userEmail,
+  displayName,
+  spotifyID,
+  refreshToken
+) {
+  admin
+    .auth()
+    .updateUser(spotifyID, {
+      displayName: displayName,
+    })
+    .catch((error) => {
+      // if user does not exist, we create one
+      if (error.code === "auth/user-not-found") {
+        return admin.auth().createUser({
+          uid: spotifyID,
+          displayName: displayName,
+          refreshToken: refreshToken,
+          email: userEmail,
+        });
+      }
+    });
+}
+
+/**
  * Creates a user based on the user's Spotify information into the database
  * that's passed in.
  *
@@ -77,12 +122,36 @@ async function createUser(db, email, displayName, spotifyID, refreshToken) {
     spotify_id: spotifyID,
     refresh_token: refreshToken,
     location: [],
-    profile: email, // hash function based on refresh token
+    profile: email,
     friends: [],
     messages: [],
     stats_id: email,
-    in_harmony: email, // hash function based on refresh token
+    in_harmony: email,
   };
+
+  await createFirebaseUser(email, displayName, spotifyID, refreshToken);
+
+  // create a custom auth token
+  const token = await admin.auth().createCustomToken(spotifyID);
+  console.log("Created custom token for UID", spotifyID, "Token:", token);
+
+  // attempt to sign in to the application
+  firebase
+    .auth()
+    .signInWithCustomToken(token)
+    .then((user) => {
+      // Signed in
+      console.log("Signed in successfully");
+
+      console.log("Added", res);
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      // log the error to the console
+      console.log(errorCode, errorMessage);
+    });
 
   // go into the user tab and create the user
   const res = await db.collection("user").doc(email).set(userData);
@@ -98,7 +167,6 @@ async function createUser(db, email, displayName, spotifyID, refreshToken) {
   // TODO: check what the response is and decide where to go from here
 
   // log to console the result
-  console.log("Added", res);
 }
 
 /**
@@ -131,22 +199,48 @@ async function createUserProfile(db, email) {
  * @param {String} email user's email will be used as the key for the document
  * @param {JSON} topArtistsAndGenres contains top 10 artists from API call
  */
-async function createUserStatsTopArtistsAndGenres(
-  db,
-  email,
-  topArtistsAndGenres
-) {
+async function createUserStatsTopArtists(db, email, topArtists) {
   var formatedList = {
     top_artists: [],
   };
 
-  for (var i in topArtistsAndGenres) {
-    formatedList["top_artists"].push(topArtistsAndGenres[i]["name"]);
+  for (var i in topArtists) {
+    formatedList["top_artists"].push(topArtists[i]["name"]);
   }
 
   const document = db.collection("stats").doc(email);
   await document.update({
     top_artists: formatedList["top_artists"],
+  });
+}
+
+/**
+ * Since Spotify is weird and shit, we have to grab top genres from top
+ * artists as they are the only object with a genre item.
+ * @param {*} db
+ * @param {*} email
+ * @param {*} topArtists
+ */
+async function createUserStatsTopGenres(db, email, topArtists) {
+  // create a list for genres
+  var formattedList = {
+    top_genres: [],
+  };
+
+  // loop through the artists list and add the genres to the list
+  for (var i in topArtists) {
+    //formattedList["top_genres"].push(topArtists[i]["genres"]);
+
+    for (var j in topArtists[i]["genres"]) {
+      formattedList["top_genres"].push(topArtists[i]["genres"][j]);
+      console.log(topArtists[i]["genres"][j]);
+    }
+  }
+
+  // add it to the database
+  const document = db.collection("stats").doc(email);
+  await document.update({
+    top_genres: formattedList["top_genres"],
   });
 }
 
@@ -178,6 +272,7 @@ async function createUserStatsTopTracks(db, email, topTracks) {
  * @param {*} refresh_token Spotify refresh token of the user
  */
 async function createUserStats(db, email, access_token, refresh_token) {
+  // create an empty stats document for the user
   const statsData = {
     top_artists: [],
     top_tracks: [],
@@ -185,20 +280,27 @@ async function createUserStats(db, email, access_token, refresh_token) {
   };
   const res = await db.collection("stats").doc(email).set(statsData);
 
-  // find top artist and genres
-  var topArtistsAndGenresCall = {
+  // find top artist
+  var topArtistsCall = {
     url:
       "https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10",
     headers: { Authorization: "Bearer " + access_token },
     json: true,
   };
 
-  request.get(topArtistsAndGenresCall, function (
-    error,
-    response,
-    topArtistsAndGenres
-  ) {
-    createUserStatsTopArtistsAndGenres(db, email, topArtistsAndGenres.items);
+  request.get(topArtistsCall, function (error, response, topArtists) {
+    createUserStatsTopArtists(db, email, topArtists.items);
+  });
+
+  // find top genre
+  var topGenresCall = {
+    url:
+      "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=50",
+    headers: { Authorization: "Bearer" + access_token },
+    json: true,
+  };
+  request.get(topGenresCall, function (error, response, topArtists) {
+    createUserStatsTopGenres(db, email, topArtists.items);
   });
 
   // find top tracks
@@ -211,6 +313,8 @@ async function createUserStats(db, email, access_token, refresh_token) {
   request.get(topTracksCall, function (error, response, topTracks) {
     createUserStatsTopTracks(db, email, topTracks.items);
   });
+
+  console.log("Added", res);
 }
 
 /**
@@ -292,6 +396,7 @@ app.get("/callback", function (req, res) {
         var access_token = body.access_token,
           refresh_token = body.refresh_token;
 
+        // signed in
         var options = {
           url: "https://api.spotify.com/v1/me",
           headers: { Authorization: "Bearer " + access_token },
@@ -306,8 +411,8 @@ app.get("/callback", function (req, res) {
           var userEmail = body["email"];
           var userId = body["id"];
 
-          createUser(db, userEmail, displayName, userId, refresh_token);
-          createUserStats(db, userEmail, access_token, refresh_token);
+          createUser(fsdb, userEmail, displayName, userId, refresh_token);
+          createUserStats(fsdb, userEmail, access_token, refresh_token); // Should this be moved to inside create users then?
           // TODO: how to get top genres??
           // look at this link to get some data info https://sofiya.io/blog/genres
         });
@@ -359,5 +464,6 @@ app.get("/refresh_token", function (req, res) {
   });
 });
 
+// the
 console.log("Listening on 8888");
 app.listen(8888);
