@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import UserService from "../services/user.service"
+
 
 /*update a user's biography.
   Current functionality: basic text element with a save button to 
@@ -17,6 +19,16 @@ class Biography extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  //checks if component mounted
+  componentDidMount(){
+    this.getBiography();
+  }
+
+  getBiography(){
+    let bioText = UserService.getBiography();
+    this.setState({value: bioText});
+  }
+
   /*event handler for when our text field changes so we update this.state.value
         and text box to reflect change*/
   handleChange(event) {
@@ -24,7 +36,7 @@ class Biography extends React.Component {
   }
   /* event handler for when user hits submit button*/
   handleSubmit(event) {
-    var biographyTxt = this.state.value;
+    bioText = this.state.value;
     alert("Biography updated: " + this.state.value);
     event.preventDefault();
   }
