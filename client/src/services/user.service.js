@@ -15,8 +15,17 @@ class UserService {
     return db.doc(email).get("profile_picture");
   }
 
-  getSocials(email) {
-    return db.doc(email).get("socials");
+  /* SOCIAL MEDIA GET FUNCTIONS */
+  getFacebook(email) {
+    return db.doc(email).get("facebook");
+  }
+
+  getInstagram(email) {
+    return db.doc(email).get("instagram");
+  }
+
+  getTwitter(email) {
+    return db.doc(email).get("twitter");
   }
 
   create(user) {

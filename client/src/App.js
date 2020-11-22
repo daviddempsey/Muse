@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
 import Axios from "axios";
-import SocialMedia from "../src/components/SocialMedia";
+import socialMedia from "../src/components/SocialMedia";
 import Biography from "../src/components/Biography";
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
           </a>
         </header>
         <Switch>
-          <Route path="/socialmedia" component={SocialMedia}></Route>
+          <Route path="/socialmedia" component={socialMedia}></Route>
           <Route path="/biography" component={Biography}></Route>
         </Switch>
       </div>
