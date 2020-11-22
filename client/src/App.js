@@ -6,6 +6,7 @@ import Axios from "axios";
 import socialMedia from "../src/components/SocialMedia";
 import Biography from "../src/components/Biography";
 import profileLink from "./components/profileLink";
+import spotifyStats from "./components/spotifyStats"
 
 function App() {
   Axios({
@@ -40,6 +41,7 @@ function App() {
           <Route path="/biography" component={Biography}></Route>
           <Route path= "/profileLink" component = {profileLink}></Route>
           <Route path="/currentTrack" component = {currentTrack}></Route>
+          <Route path="/spotifyStats" component = {spotifyStats}></Route>
         </Switch>
       </div>
     </Router>
