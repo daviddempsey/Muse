@@ -5,10 +5,19 @@ class featuredArtist extends Component {
   // constructor
   constructor(props) {
     super(props);
+    this.state = {
+      artist: "Kanye West"
+    }
+    this.changeArtist = this.changeArtist.bind(this);
   }
 
   // check mount
-  componentDidMount() {
+  componentDidMount() {}
+
+  getFeaturedArtist() {}
+
+  changeArtist(newArtist) {
+    this.setState({ artist: newArtist });
   }
 
   // render functionn
@@ -16,6 +25,7 @@ class featuredArtist extends Component {
     return (
       <div>
         <h1>Hello Featured Artist</h1>
+        <h2>{this.state.artist}</h2>
       </div>
     );
   }

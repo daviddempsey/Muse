@@ -27,19 +27,19 @@ class UserService {
   getTwitter(email) {
     return db.doc(email).get("twitter");
   }
-  getBiography(email){
+  getBiography(email) {
     return db.doc(email).get("biography");
   }
-  getProfileLink(email){
+  getProfileLink(email) {
     return db.doc(email).get("profile_picture");
   }
-  getTopArtists(email){
+  getTopArtists(email) {
     return db.doc(email).get("top_artists");
   }
-  getTopGenres(email){
+  getTopGenres(email) {
     return db.doc(email).get("top_genres");
   }
-  getTopTracks(email){
+  getTopTracks(email) {
     return db.doc(email).get("top_tracks");
   }
 

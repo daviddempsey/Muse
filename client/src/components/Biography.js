@@ -23,7 +23,8 @@ class Biography extends React.Component {
   }
 
   getBiography() {
-    var bioText = UserService.getBiography();
+    //var bioText = UserService.getBiography();
+    var bioText = "this is a test";
     this.setState({ value: bioText });
   }
 
@@ -34,7 +35,7 @@ class Biography extends React.Component {
   }
   /* event handler for when user hits submit button*/
   handleSubmit(event) {
-    bioText = this.state.value;
+    //bioText = this.state.value;
     alert("Biography updated: " + this.state.value);
     event.preventDefault();
   }
