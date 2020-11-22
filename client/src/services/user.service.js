@@ -18,6 +18,12 @@ class UserService {
   getSocials(email) {
     return db.doc(email).get("socials");
   }
+  getBiography(email){
+    return db.doc(email).get("biography");
+  }
+  getProfileLink(email){
+    return db.doc(email).get("profile_picture");
+  }
 
   create(user) {
     return db.add(user);

@@ -23,7 +23,7 @@ class Biography extends React.Component {
   }
 
   getBiography() {
-    let bioText = UserService.getBiography();
+    var bioText = UserService.getBiography();
     this.setState({ value: bioText });
   }
 
