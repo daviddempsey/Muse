@@ -39,6 +39,7 @@ function App() {
           <Route path="/socialmedia" component={socialMedia}></Route>
           <Route path="/biography" component={Biography}></Route>
           <Route path= "/profileLink" component = {profileLink}></Route>
+          <Route path="/currentTrack" component = {currentTrack}></Route>
         </Switch>
       </div>
     </Router>
