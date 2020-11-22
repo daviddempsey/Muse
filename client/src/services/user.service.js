@@ -27,6 +27,12 @@ class UserService {
   getTwitter(email) {
     return db.doc(email).get("twitter");
   }
+  getBiography(email){
+    return db.doc(email).get("biography");
+  }
+  getProfileLink(email){
+    return db.doc(email).get("profile_picture");
+  }
 
   create(user) {
     return db.add(user);
