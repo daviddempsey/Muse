@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import UserService from "../services/user.service";
 
-class socialMedia extends Component {
+class SocialMedia extends Component {
   // constructor
   constructor(props) {
     super(props);
@@ -80,4 +80,4 @@ class socialMedia extends Component {
   }
 }
 
-export default socialMedia;
+export default SocialMedia;

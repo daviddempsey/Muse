@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //import UserService from "../services/user.service";
 
-class featuredTrack extends Component {
+class FeaturedTrack extends Component {
   // constructor
   constructor(props) {
     super(props);
@@ -31,4 +31,4 @@ class featuredTrack extends Component {
   }
 }
 
-export default featuredTrack;
+export default FeaturedTrack;

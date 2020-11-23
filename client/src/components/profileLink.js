@@ -1,7 +1,7 @@
 import React from "react";
 import UserService from "../services/user.service";
 
-class profileLink extends React.Component{
+class ProfileLink extends React.Component{
 
     constructor(props){
         super(props);
@@ -27,4 +27,4 @@ class profileLink extends React.Component{
     }
 }
 
-export default profileLink;
+export default ProfileLink;
