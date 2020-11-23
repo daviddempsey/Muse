@@ -15,6 +15,7 @@ class Biography extends React.Component {
     //event handlers for when we update text field and submit button
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    please detect change
   }
 
   //checks if component mounted
