@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 //import UserService from "../services/user.service";
 
-class ProfileLink extends React.Component {
+class ProfileLink extends Component {
   constructor(props) {
     super(props);
 
