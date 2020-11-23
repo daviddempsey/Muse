@@ -1,3 +1,13 @@
 api/node_modules
 client/node_modules
 data-node
+
+# firebase stuff
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+database-debug.log
+database.rules.json
+firestore-debug.log
+ui-debug.log
