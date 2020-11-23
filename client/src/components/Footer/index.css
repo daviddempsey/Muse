@@ -23,8 +23,12 @@
     font-size: 32px;
 }
 
-.footer li {
+.footer li:last-of-type {
     display: flex;
+    align-items: center;
+}
+
+.footer li {
     padding: 1rem 6rem;
     color: var(--black);
 }

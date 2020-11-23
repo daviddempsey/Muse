@@ -4,13 +4,14 @@ import Logo from '../../assets/logo.svg';
 import './index.css';
 
 const Header = () => {
+  const SPACE = "\u00a0";
+
   return <div className="Header">
     <h3>
       <ul className="navbar">
           <li>
-            <Link to="/">
-              <img src={Logo} alt="Muse" />
-            </Link>
+            <Link to="/"><img src={Logo} alt="Muse" /></Link>
+            <h1>{SPACE}Muse</h1>
           </li>
           <li className="empty" />
           <li>

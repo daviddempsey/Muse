@@ -17,8 +17,14 @@
     flex-grow: 1;
 }
 
+.navbar li h1 {
+    font-size: 32px;
+}
+
 .navbar li:first-of-type {
     padding-left: 6rem;
+    display: flex;
+    align-items: center;
 }
 
 .navbar li:last-of-type {
