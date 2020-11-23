@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import UserService from "../services/user.service";
+import React, { Component } from 'react';
+// import UserService from '../services/user.service';
 
 export default class profilePicture extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ export default class profilePicture extends Component {
     // this.onChangePicture = this.onChangePicture.bind(this);
 
     this.state = {
-      url: "",
+      url: '',
     };
   }
 
@@ -16,8 +16,8 @@ export default class profilePicture extends Component {
   }
 
   getProfilePicture() {
-    let profilePictureURL = UserService.getProfilePicture();
-    this.setState({ url: profilePictureURL });
+    // let profilePictureURL = UserService.getProfilePicture();
+    // this.setState({ url: profilePictureURL });
   }
 
   onChangePicture(e) {
@@ -27,13 +27,13 @@ export default class profilePicture extends Component {
   }
 
   savePicture() {
-    UserService.update({ profile_picture: this.state.url })
+    /*UserService.update({ profile_picture: this.state.url })
       .then(() => {
-        console.log("Uploaded new picture successfully!");
+        console.log('Uploaded new picture successfully!');
       })
       .catch((e) => {
         console.log(e);
-      });
+      });*/
   }
 
   render() {

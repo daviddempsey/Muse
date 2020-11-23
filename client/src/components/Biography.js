@@ -1,5 +1,5 @@
-import React from "react";
-import UserService from "../services/user.service";
+import React from 'react';
+// import UserService from "../services/user.service";
 
 /*update a user's biography.
   Current functionality: basic text element with a save button to 
@@ -10,7 +10,7 @@ class Biography extends React.Component {
     super(props);
     // set default state of text element instead text box
     this.state = {
-      value: "Tell us a little bit about yourself :)",
+      value: 'Tell us a little bit about yourself :)',
     };
     //event handlers for when we update text field and submit button
     this.handleChange = this.handleChange.bind(this);
@@ -23,19 +23,20 @@ class Biography extends React.Component {
   }
 
   getBiography() {
-    var bioText = UserService.getBiography();
+    //var bioText = UserService.getBiography();
+    var bioText = 'this is a test';
     this.setState({ value: bioText });
   }
 
   /*event handler for when our text field changes so we update this.state.value
-        and text box to reflect change*/
+          and text box to reflect change*/
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
   /* event handler for when user hits submit button*/
   handleSubmit(event) {
-    bioText = this.state.value;
-    alert("Biography updated: " + this.state.value);
+    //bioText = this.state.value;
+    alert('Biography updated: ' + this.state.value);
     event.preventDefault();
   }
 
@@ -45,9 +46,12 @@ class Biography extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Biography:
-          <textarea value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Save" />
+          <textarea
+            value={this.state.value}
+            onChange={this.handleChange}
+          />{' '}
+        </label>{' '}
+        <input type='submit' value='Save' />
       </form>
     );
   }
