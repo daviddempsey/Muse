@@ -18,10 +18,10 @@ export class SpotifyStats extends React.Component {
   // calls to get data from database
   getSpotifyStats() {
     /*
-            //calls userservice to return data
-            let dbTopArtists = UserService.getTop_artists();
-            let dbTopGenres = UserService.getTopGenres();
-            let dbTopTracks = UserService.getTopTracks();*/
+                //calls userservice to return data
+                let dbTopArtists = UserService.getTop_artists();
+                let dbTopGenres = UserService.getTopGenres();
+                let dbTopTracks = UserService.getTopTracks();*/
 
     this.setState({
       // I am not sure what the database returns is it in array form already?

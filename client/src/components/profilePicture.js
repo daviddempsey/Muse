@@ -28,12 +28,12 @@ export default class ProfilePicture extends Component {
 
   savePicture() {
     /*UserService.update({ profile_picture: this.state.url })
-      .then(() => {
-        console.log('Uploaded new picture successfully!');
-      })
-      .catch((e) => {
-        console.log(e);
-      });*/
+          .then(() => {
+            console.log('Uploaded new picture successfully!');
+          })
+          .catch((e) => {
+            console.log(e);
+          });*/
   }
 
   render() {
