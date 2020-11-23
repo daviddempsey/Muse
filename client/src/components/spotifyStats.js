@@ -27,6 +27,7 @@ export class spotifyStats extends React.Component{
             // if it is an array not sure if I'm suppose to map a key to the <li>
             // also not sure how to go about doing that if we need to.
             // if we list top artists as an unordered list then rn is fine.
+            // more info on notion notes
             top_artists: dbTopArtists, 
             top_genres: dbTopGenres, 
             top_tracks: dbTopTracks});
