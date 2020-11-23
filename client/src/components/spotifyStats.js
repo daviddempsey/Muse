@@ -1,7 +1,7 @@
 import React from 'react';
 //import UserService from "../services/user.service";
 
-export class spotifyStats extends React.Component {
+export class SpotifyStats extends React.Component {
   constructor(props) {
     super(props);
 
@@ -43,4 +43,5 @@ export class spotifyStats extends React.Component {
     );
   }
 }
->>>>>>> 79fd26574f2c213749775929a34bec3d132839a9
+
+export default SpotifyStats;
