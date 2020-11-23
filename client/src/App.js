@@ -5,11 +5,11 @@ import "./App.css";
 import Axios from "axios";
 import socialMedia from "./components/SocialMedia";
 import Biography from "./components/Biography";
-import featuredArtist from "./components/featuredArtist";
-import featuredTrack from "./components/featuredTrack";
-//import profileLink from "./components/profileLink";
-//import spotifyStats from "./components/spotifyStats";
-//import currentTrack from "./components/currentTrack";
+import FeaturedArtist from "./components/FeaturedArtist";
+import FeaturedTrack from "./components/FeaturedTrack";
+import ProfileLink from "./components/ProfileLink";
+import SpotifyStats from "./components/SpotifyStats";
+import CurrentTrack from "./components/CurrentTrack";
 
 function App() {
   Axios({
@@ -42,8 +42,8 @@ function App() {
         <Switch>
           <Route path="/socialmedia" component={socialMedia}></Route>
           <Route path="/biography" component={Biography}></Route>
-          <Route path="/featuredartist" component={featuredArtist}></Route>
-          <Route path="/featuredtrack" component={featuredTrack}></Route>
+          <Route path="/featuredartist" component={FeaturedArtist}></Route>
+          <Route path="/featuredtrack" component={FeaturedTrack}></Route>
         </Switch>
       </div>
     </Router>
