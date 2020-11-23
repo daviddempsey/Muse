@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 //import UserService from "../services/user.service";
 
-class FeaturedArtists extends Component {
+class FeaturedArtist extends Component {
   // constructor
   constructor(props) {
     super(props);
     this.state = {
-      artist: 'Kanye West',
+      artists: 'Kanye West,',
     };
     this.changeArtist = this.changeArtist.bind(this);
   }
@@ -24,11 +24,10 @@ class FeaturedArtists extends Component {
   render() {
     return (
       <div>
-        <h1> Hello Featured Artist </h1>
-        <h2> {this.state.artist} </h2>
+        <h1> Hello Featured Artist </h1> <h2> {this.state.artist} </h2>{' '}
       </div>
     );
   }
 }
 
-export default FeaturedArtists;
+export default FeaturedArtist;

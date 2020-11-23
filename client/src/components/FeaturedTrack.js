@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 //import UserService from "../services/user.service";
 
 class FeaturedTrack extends Component {
@@ -6,8 +6,8 @@ class FeaturedTrack extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      track: "People in Paris - Kanye West"
-    }
+      tracks: 'People in Paris - Kanye West',
+    };
     this.changeTrack = this.changeTrack.bind(this);
   }
 
@@ -24,8 +24,7 @@ class FeaturedTrack extends Component {
   render() {
     return (
       <div>
-        <h1>Hello Featured Track</h1>
-        <h2>{this.state.track}</h2>
+        <h1> Hello Featured Track </h1> <h2> {this.state.track} </h2>{' '}
       </div>
     );
   }
