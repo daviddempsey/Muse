@@ -10,11 +10,8 @@ class Biography extends React.Component {
     super(props);
     // set default state of text element instead text box
     this.state = {
-      value: 'Tell us a little bit about yourself :)',
+      Biography: 'Tell us a little bit about yourself :)',
     };
-    //event handlers for when we update text field and submit button
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   //checks if component mounted
@@ -25,34 +22,15 @@ class Biography extends React.Component {
   getBiography() {
     //var bioText = UserService.getBiography();
     var bioText = 'this is a test';
-    this.setState({ value: bioText });
-  }
-
-  /*event handler for when our text field changes so we update this.state.value
-          and text box to reflect change*/
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-  /* event handler for when user hits submit button*/
-  handleSubmit(event) {
-    //bioText = this.state.value;
-    alert('Biography updated: ' + this.state.value);
-    event.preventDefault();
+    this.setState({ Biography: bioText });
   }
 
   /* render text box*/
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Biography:
-          <textarea
-            value={this.state.value}
-            onChange={this.handleChange}
-          />{' '}
-        </label>{' '}
-        <input type='submit' value='Save' />
-      </form>
+      <div>
+        <h1>{this.state.Biography}</h1>
+      </div>
     );
   }
 }
