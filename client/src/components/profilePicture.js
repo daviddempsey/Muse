@@ -8,7 +8,6 @@ export default class profilePicture extends Component {
 
         this.state = {
             url: ""
-            
         };
     }
 
