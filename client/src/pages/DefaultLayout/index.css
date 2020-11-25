@@ -1,1 +1,12 @@
 @import '../../styles/index.css';
+
+.container {
+    min-height: 100%;
+    margin-bottom: -4rem;
+}
+
+.container:after {
+    content: "";
+    display: block;
+    height: 4rem;
+}
