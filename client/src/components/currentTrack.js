@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import "./index.css";
 //import userService from "../services/user.service";
 
 class CurrentTrack extends Component {
@@ -6,10 +7,10 @@ class CurrentTrack extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Pyramids',
-      artist: 'Frank Ocean',
-      album: 'Channel Orange',
-      playlist: 'vibes?',
+      name: "Pyramids",
+      artist: "Frank Ocean",
+      album: "Channel Orange",
+      playlist: "This is Frank Ocean",
     };
 
     // spotify api call function
@@ -40,7 +41,7 @@ class CurrentTrack extends Component {
   render() {
     return (
       <div>
-        <h1>Why hello there current track</h1>
+        <h1 className="title">Now Listening To</h1>
         <p>{this.state.name}</p>
         <p>{this.state.artists}</p>
         <p>{this.state.album}</p>

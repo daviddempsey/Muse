@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.css";
 import ProfilePicture from "../../components/ProfilePicture";
 import Biography from "../../components/Biography";
 import CurrentTrack from "../../components/CurrentTrack";
@@ -11,14 +12,32 @@ import SpotifyStats from "../../components/SpotifyStats";
 const ProfilePage = () => {
   return (
     <div>
-      <ProfilePicture />
-      <Biography />
-      <CurrentTrack />
-      <FeaturedArtist />
-      <FeaturedTrack />
-      <ProfileLink />
-      <SocialMedia />
-      <SpotifyStats />
+      <div className="content">
+        <div className="personal">
+          <h1 className="title">Frank_Ocean_22</h1>
+          <ProfilePicture />
+          <Biography />
+          <ProfileLink />
+          <SocialMedia />
+        </div>
+        <div className="column">
+          <div className="tracks">
+            <CurrentTrack />
+          </div>
+          <div className="tracks">
+            <FeaturedTrack />
+          </div>
+          <div className="artists">
+            <FeaturedArtist />
+          </div>
+          <div className="playlists"></div>
+        </div>
+        <div className="column">
+          <div className="stats">
+            <SpotifyStats />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

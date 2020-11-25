@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import "./index.css";
 //import UserService from "../services/user.service";
 
 class FeaturedArtist extends Component {
@@ -6,7 +7,7 @@ class FeaturedArtist extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      artists: 'Kanye West,',
+      artists: "Kanye West,",
     };
     this.changeArtist = this.changeArtist.bind(this);
   }
@@ -20,11 +21,12 @@ class FeaturedArtist extends Component {
     this.setState({ artist: newArtist });
   }
 
-  // render functionn
+  // render function
   render() {
     return (
       <div>
-        <h1> Hello Featured Artist </h1> <h2> {this.state.artist} </h2>{' '}
+        <h1 className="title"> Featured Artists </h1>
+        <h2> {this.state.artist} </h2>{" "}
       </div>
     );
   }

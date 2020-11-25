@@ -1,0 +1,5 @@
+@import "../styles/index.css";
+
+.title {
+  color: var(--red);
+}

@@ -1,1 +1,40 @@
-@import '../../styles/index.css';
+@import "../../styles/index.css";
+
+.title {
+  flex: 1;
+  color: var(--red);
+}
+
+.content {
+  flex: 1;
+}
+
+.personal {
+  flex: 1;
+  background-color: var(--almost-white);
+}
+
+.column {
+  flex: 1;
+  flex-direction: column;
+}
+
+.tracks {
+  flex: 1;
+  background-color: var(--almost-white);
+}
+
+.artists {
+  flex: 1;
+  background-color: var(--almost-white);
+}
+
+.playlists {
+  flex: 1;
+  background-color: var(--almost-white);
+}
+
+.stats {
+  flex: 1;
+  background-color: var(--almost-white);
+}
