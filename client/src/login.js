@@ -1,21 +1,8 @@
-// Taken from the web-api-auth-examples repo from spotify
-
-
-
-/**
- * This is an example of a basic node.js script that performs
- * the Authorization Code oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
- */
-
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-var data_access = require('./data_access');
+var data_access = require('./data_access'); // the database access functions
 
 var client_id = '3068918efe6349bfa18633d5dd854b6a'; // Your client id
 var client_secret = '93f20dfbf9a64d7cbf7f0832e5f0ccf3'; // Your secret
@@ -139,8 +126,9 @@ app.get('/callback', function(req, res) {
           var userEmail = body['email'];
           var userId = body['id']; 
           var imageUrl = body['images'][0]['url'];
+          var spotifyUrl = body['external_urls']['spotify'];
 
-          data_access.createUser(firebase, admin, fsdb, userEmail, displayName, userId, imageUrl, refresh_token);
+          data_access.createUser(firebase, admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
           data_access.createUserStats(fsdb, userEmail, access_token, refresh_token); // Should this be moved to inside create users then? 
         });
 

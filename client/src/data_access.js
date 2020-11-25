@@ -26,6 +26,7 @@ exports.createUser = async function createUser(
   displayName, 
   spotifyID, 
   profilePicture, 
+  acctUrl,
   refreshToken) {
 
   // create a data document to be stored 
@@ -84,7 +85,7 @@ exports.createUser = async function createUser(
   const res = await db.collection('user').doc(userEmail).set(userData);
 
   // create user profile
-  createUserProfile(db, userEmail, profilePicture);
+  createUserProfile(db, userEmail, profilePicture, acctUrl);
 
   // create user in harmony document
   createUserInHarmony(db, userEmail, refreshToken);
@@ -96,15 +97,23 @@ exports.createUser = async function createUser(
 * @param {*} db reference to the database to add to
 * @param {*} email email of the user
 */
-async function createUserProfile(db, email, profilePicture) {
+async function createUserProfile(db, email, profilePicture, acctUrl) {
+
+  // create empty social media object
+  const userSocialMedia = {
+    facebook: '',
+    instagram: '',
+    twitter: '',
+    tiktok: '',
+    spotify: acctUrl,
+  }
 
   // create data object to be stored
   const userProfileData = {
-    profile_picture: '',
     biography: '',
     profile_url: profilePicture,
     select_playlist: [],
-    social_media: []
+    social_media: userSocialMedia,
   }
 
   // go into the profile tab and create the profile for the user
