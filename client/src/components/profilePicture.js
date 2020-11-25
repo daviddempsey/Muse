@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 // import UserService from '../services/user.service';
 
 export default class ProfilePicture extends Component {
@@ -7,7 +7,7 @@ export default class ProfilePicture extends Component {
     // this.onChangePicture = this.onChangePicture.bind(this);
 
     this.state = {
-      url: "",
+      url: '',
     };
   }
 
@@ -38,7 +38,7 @@ export default class ProfilePicture extends Component {
 
   render() {
     return (
-      <img src={this.state.url} alt="profile" />
+      <img src={this.state.url} />
       // write form code to upload and set new profile picture
     );
   }
