@@ -1,0 +1,17 @@
+# Project organization Layout
+- **api**: backend stuff
+    - (can those of you doing backend fill this out when you can)
+- **client**: frontend stuff
+    - **src**: p much everything is in here
+        - **assets**: shared assets among components/pages (ie: the logo)
+        - **components**: reusable components among different pages (ie: custom button, header, footer)
+        - **pages**: the actual main web pages to render (ie: landing page, profile page, messaging page)
+            - **Template**: copy this folder if you want to make a new page
+                - __index.js__: this will be the js file for every component. Put the code here
+                - __index.css__: put css for __index.js__ here
+            - **DefaultLayout**: page wrapper, adds a header and footer
+                - __note: header is static and not fully implemented yet__ 
+        - **styles**: global styles go here
+            - __index.css__: the main css stylesheet, should be referred to by all css files in **pages** and **components**. It refers to __reset.css__ and __typography.css__
+            - __reset.css__: utility css file, reduces browser inconsistencies
+            - __typography.css__: provides semantic html components for text. Corresponding to the design system traits on the Figma, use `<h1>` for Title, `<h2>` for Subtitle, `<h3>` for Link, and `<p>` for Paragraph, and adjust the font size as needed.
