@@ -37,9 +37,8 @@ firebase.initializeApp({
 
 const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
-// const console = {log: debug}; // the console to log debug messages
 
-var serviceAccount = require("./permissions.json"); // service account
+var serviceAccount = require("../permissions.json"); // service account
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://muse-eec76.firebaseio.com"
