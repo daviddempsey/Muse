@@ -1,0 +1,323 @@
+/** 
+ * Muse - Database access methods
+ * 
+ * This file is to store all the database access methods
+ * This will include profile creating and reading, user creating and reading,
+ * etc.
+ */
+
+var request = require('request'); // "Request" library
+
+/**
+ * Creates a user based on the user's Spotify information into the database
+ * that's passed in. 
+ * 
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} displayName name of the user
+ * @param {*} spotifyID Spotify ID of the user
+ * @param {*} refreshToken Spotify refresh token of the user 
+ */
+exports.createUser = async function createUser(
+  firebase, 
+  admin, 
+  db, 
+  userEmail, 
+  displayName, 
+  spotifyID, 
+  profilePicture, 
+  refreshToken) {
+
+  // create a data document to be stored 
+  const userData = {
+    name: displayName, 
+    spotify_id: spotifyID,
+    refresh_token: refreshToken, 
+    location: [],
+    profile: userEmail, 
+    friends: [],
+    messages: [],
+    stats_id: userEmail,
+    in_harmony: userEmail,
+  }
+
+  // creates a firebase user
+  admin.auth().updateUser(
+    spotifyID, 
+    { 
+      displayName: displayName,
+      email: userEmail
+    }).catch((error) => {
+    // if user does not exist, we create one
+    if (error.code === 'auth/user-not-found') {
+      return admin.auth().createUser({
+        uid: spotifyID,
+        displayName: displayName,
+        refreshToken: refreshToken, 
+        email: userEmail
+      }).then((userRecord) => {
+        console.log('Successfully created new user with email: ', userRecord.email);
+      });
+    }
+  });
+  
+  // create a custom auth token
+  const token = await admin.auth().createCustomToken(spotifyID);
+  console.log('Created custom token for UID', spotifyID, 'Token:', token);
+
+  // attempt to sign in to the application
+  firebase.auth().signInWithCustomToken(token).then((user) => {
+    // Signed in 
+    console.log('Signed in successfully');
+
+    
+    console.log('Added', res);
+  }).catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+
+    // log the error to the console
+    console.log(errorCode, errorMessage);
+  })
+
+  // go into the user tab and create the user
+  const res = await db.collection('user').doc(userEmail).set(userData);
+
+  // create user profile
+  createUserProfile(db, userEmail, profilePicture);
+
+  // create user in harmony document
+  createUserInHarmony(db, userEmail, refreshToken);
+
+}
+
+/**
+* Creates and prepopulates the user's profile
+* @param {*} db reference to the database to add to
+* @param {*} email email of the user
+*/
+async function createUserProfile(db, email, profilePicture) {
+
+  // create data object to be stored
+  const userProfileData = {
+    profile_picture: '',
+    biography: '',
+    profile_url: profilePicture,
+    select_playlist: [],
+    social_media: []
+  }
+
+  // go into the profile tab and create the profile for the user
+  const res = await db.collection('profile').doc(email).set(userProfileData);
+
+  // TODO: check what response is and decide where to go from here
+
+  // log to console the result
+  console.log('Added', res); 
+}
+
+/**
+ * Index the top 10 artists of a user into Firebase
+ * @param {JSON} db firebase database that the data will be stored in
+ * @param {String} email user's email will be used as the key for the document
+ * @param {JSON} topArtists contains top 10 artists from API call
+ */
+async function createUserStatsTopArtists(db, email, topArtists) {
+  // list to be added for top artists
+  var formattedList = {
+    "top_artists": [
+      {
+        "rank": 0,
+        "artist_name": "",
+        "artist_id": ""
+      }
+    ]
+  }; 
+
+  // go through and add each artist 
+  for( var i in topArtists ) {
+    var entry = {
+      "rank": (+i + +1),
+      "track_name": topArtists[i]["name"],
+      "track_id": topArtists[i]["id"]
+    }
+    formattedList["top_artists"].push(entry);
+  } 
+
+  // add populated list into database
+  const document = db.collection('stats').doc(email);
+  await document.update({
+    top_artists: formattedList["top_artists"]
+  });
+}
+
+/**
+ * Since Spotify is weird and shit, we have to grab top genres from top 
+ * artists as they are the only object with a genre item. 
+ * @param {*} db 
+ * @param {*} email 
+ * @param {*} topArtists 
+ */
+async function createUserStatsTopGenres(db, email, topArtists) {
+
+  // create a list for genres
+  var formattedList = {
+    "top_genres": [
+      {
+        "rank": 0,
+        "genre_name": ""
+      }
+    ]
+  }; 
+
+  // Map to store all genres and their frequencies 
+  let genreRankings = new Map();
+  
+  // loop through the artists list and add the genres to the list 
+  for (let i in topArtists) {
+    for (let j in topArtists[i]["genres"]) {
+
+      // Append genre to Map<genre_name, int> and update frequency
+      let genre = topArtists[i]["genres"][j];
+      if( genreRankings.has(genre) ) {
+        genreRankings.set( genre, +genreRankings.get(genre) + +1 );
+      } else {
+        genreRankings.set( genre, 1 );
+      }
+    }
+  }
+
+  // Sort map 
+  genreRankings = new Map([...genreRankings.entries()].sort((a, b) => b[1] - a[1]));
+
+  // Format data to be indexed into Firestore 'stats' as a new or updated document 
+  let index = 0;
+  for( const [key, value] of genreRankings.entries() ){
+    var entry = {
+      "rank": (+index + +1),
+      "genre_name": key
+    }
+    formattedList["top_genres"].push(entry);
+    index++;
+  }
+
+  // add it to the database
+  const document = db.collection('stats').doc(email);
+  await document.update({
+    top_genres: formattedList["top_genres"]
+  });
+}
+
+/**
+ * Index the top 10 tracks of a user into Firebase
+ * @param {JSON} db firebase database that the data will be stored in
+ * @param {String} email user's email will be used as the key for the document
+ * @param {JSON} topTracks top 10 tracks from API call
+ */
+async function createUserStatsTopTracks(db, email, topTracks) {
+
+  // list to be added
+  var formattedList = {
+    "top_tracks": [
+      {
+        "rank": 0,
+        "track_name": "",
+        "track_id": ""
+      }
+    ]
+  }; 
+
+  // go through each track and fill in the entries
+  for( var i in topTracks ) {
+    var entry = {
+      "rank": (+i + +1),
+      "track_name": topTracks[i]["name"],
+      "track_id": topTracks[i]["id"]
+    }
+    formattedList["top_tracks"].push(entry);
+  } 
+
+  // add information to document
+  const document = db.collection('stats').doc(email);
+  await document.update({
+    top_tracks: formattedList["top_tracks"]
+  });
+}
+
+
+/**
+* Creates and populated the user's stats for top 5 stats
+* @param {*} db reference to the database to add to
+* @param {*} email email of the user
+* @param {*} refresh_token Spotify refresh token of the user
+*/
+exports.createUserStats = async function createUserStats(
+  db, 
+  email, 
+  access_token, 
+  refresh_token) {
+
+    // create an empty stats document for the user
+    const statsData = {
+      top_artists: [],
+      top_tracks: [],
+      top_genres: []
+    }
+    const res = await db.collection('stats').doc(email).set(statsData); 
+
+    // find top artist
+    var topArtistsCall = {
+      url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10', 
+      headers: { 'Authorization': 'Bearer ' + access_token },
+      json: true
+    };
+  
+    request.get(topArtistsCall, function(error, response, topArtists) {
+      createUserStatsTopArtists(db, email, topArtists.items);
+    });
+
+    // find top genre (Do we really want it long term 50 since we have medium_term 10 for all the other calls)
+    var topGenresCall = {
+      url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10', 
+      headers: { 'Authorization': 'Bearer ' + access_token },
+      json: true
+    };
+    request.get(topGenresCall, function(error, response, topArtists) {
+      createUserStatsTopGenres(db, email, topArtists.items);
+    });
+  
+    // find top tracks
+    var topTracksCall = {
+      url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10', 
+      headers: { 'Authorization': 'Bearer ' + access_token },
+      json: true
+    };
+    request.get(topTracksCall, function(error, response, topTracks) {
+      createUserStatsTopTracks(db, email, topTracks.items);
+    });
+
+    console.log("Added", res);
+
+}
+
+/**
+* Creates the user's in harmony list from current 
+* @param {*} db 
+* @param {*} email 
+* @param {*} refresh_token 
+*/
+async function createUserInHarmony(db, email, refresh_token) {
+
+  // TODO: in harmony algorithm - Steven's task
+
+  // Create the in harmony list (empty for now)
+  const userInHarmonyData = {
+    similar_users: []
+  }
+
+  // go into in harmony tab and create the profile for the user
+  const res = await db.collection('in_harmony').doc(email).set(userInHarmonyData);
+
+  // Log to console the result
+  console.log('Added', res);
+}

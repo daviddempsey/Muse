@@ -1,26 +1,34 @@
-import React from "react";
-import logo from "../../assets/logo.svg";
-import "./index.css";
+import React, { Component } from 'react';
+import Biography from '../../components/Biography';
+import CurrentTrack from '../../components/CurrentTrack';
+import FeaturedArtist from '../../components/FeaturedArtist';
+import FeaturedTrack from '../../components/FeaturedTrack';
+import ProfileLink from '../../components/ProfileLink';
+import SocialMedia from '../../components/SocialMedia';
+import SpotifyStats from '../../components/SpotifyStats';
 
-const ProfilePage = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-};
+class ProfilePage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  componentDidMount = () => {};
+
+  render = () => {
+    return (
+      <div>
+        <Biography />
+        <CurrentTrack />
+        <FeaturedArtist />
+        <FeaturedTrack />
+        <ProfileLink />
+        <SocialMedia />
+        <SpotifyStats />
+      </div>
+    );
+  };
+}
 
 export default ProfilePage;
