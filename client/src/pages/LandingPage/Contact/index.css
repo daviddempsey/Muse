@@ -21,5 +21,6 @@
 }
 
 .Contact .text h2 {
+    font-size: 3rem;
     color: var(--grey);
 }
