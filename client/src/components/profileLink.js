@@ -1,10 +1,29 @@
 import React, { Component } from 'react';
 //import UserService from "../services/user.service";
 
+class ProfileLink extends Component {
+  constructor(props) {
+    super(props);
 
-export function ProfileLink() {
-  // let link = UserService.getProfileLink();
-  let link = "https://muse.com/test_text";
-  return <div>{link}</div>
-};
+    this.state = {
+      link: '',
+    };
+  }
+  componentDidMount() {
+    this.getProfileLink();
+  }
+  getProfileLink() {
+    //let profileLinkUrl = UserService.getProfileLink();
+    //this.setState({ link: profileLinkUrl });
+  }
 
+  render() {
+    return (
+      <div>
+        <p> {this.state.link} </p>{' '}
+      </div>
+    );
+  }
+}
+
+export default ProfileLink;
