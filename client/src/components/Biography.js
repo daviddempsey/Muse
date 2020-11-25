@@ -5,9 +5,11 @@ import React from 'react';
   Current functionality: basic text element with a save button to 
   handle updating firestore database in the future*/
 
-export default function Biography() {
+const Biography = () => {
   // uncomment userservice once we get it to work.
   //let bioText = UserService.getBiography();
   let bioText = 'test text';
   return <div> {bioText} </div>;
-}
+};
+
+export default Biography;
