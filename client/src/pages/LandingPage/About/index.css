@@ -1,1 +1,33 @@
 @import '../../../styles/index.css';
+
+.About {
+    display: flex;
+    align-items: center;
+    
+    min-height: 100vh;
+    padding: 0rem 6rem;
+}
+
+.About .image {
+    flex: 50%;
+}
+
+.About .text h1 {
+    line-height: 3.75rem;
+    padding-bottom: 1rem;
+}
+
+.About .text p {
+    color: var(--grey);
+    line-height: 1.75rem;
+    padding-bottom: 1rem;
+}
+
+.About .text .row {
+    display: flex;
+}
+
+.About .text .row p {
+    padding-left: 1rem;
+    font-size: 1rem;
+}
