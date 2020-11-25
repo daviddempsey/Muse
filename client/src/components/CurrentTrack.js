@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./index.css";
 //import userService from "../services/user.service";
 
-class CurrentTracks extends Component {
+class CurrentTrack extends Component {
   // constructor
   constructor(props) {
     super(props);
@@ -51,4 +51,4 @@ class CurrentTracks extends Component {
   }
 }
 
-export default CurrentTracks;
+export default CurrentTrack;
