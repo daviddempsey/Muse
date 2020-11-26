@@ -13,49 +13,49 @@ class UserService {
   }
 
   getProfilePicture(email) {
-    return userCollection.doc(email)["profile_url"];
+    return userCollection.doc(email).get()["profile_picture"];
   }
 
   /* SOCIAL MEDIA GET FUNCTIONS */
   getFacebook(email) {
-    return userCollection.doc(email)["facebook"];
+    return userCollection.doc(email).get()["facebook"];
   }
 
   getInstagram(email) {
-    return userCollection.doc(email)["instagram"];
+    return userCollection.doc(email).get()["instagram"];
   }
 
   getTwitter(email) {
-    return userCollection.doc(email)["twitter"];
+    return userCollection.doc(email).get()["twitter"];
   }
 
   getTikTok(email) {
-    return userCollection.doc(email)["tiktok"];
+    return userCollection.doc(email).get()["tiktok"];
   }
 
   getSpotify(email) {
-    return userCollection.doc(email)["spotify"];
+    return userCollection.doc(email).get()["spotify"];
   }
 
   /* Profile information get functions */
   getBiography(email) {
-    return userCollection.doc(email)["biography"];
+    return userCollection.doc(email).get()["biography"];
   }
 
   getProfileLink(email) {
-    return userCollection.doc(email)["profile_picture"];
+    return userCollection.doc(email).get()["profile_picture"];
   }
 
   getTopArtists(email) {
-    return userCollection.doc(email)["top_artists"];
+    return userCollection.doc(email).get()["top_artists"];
   }
 
   getTopGenres(email) {
-    return userCollection.doc(email)["top_genres"];
+    return userCollection.doc(email).get()["top_genres"];
   }
 
   getTopTracks(email) {
-    return userCollection.doc(email)["top_tracks"];
+    return userCollection.doc(email).get()["top_tracks"];
   }
 
   // what is this function 

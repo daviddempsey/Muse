@@ -22,7 +22,6 @@ firebase.initializeApp({
   measurementId: "G-3D6DCMR4W7"
 });
 
-const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
 
 var serviceAccount = require("../permissions.json"); // service account
@@ -34,9 +33,13 @@ admin.initializeApp({
 const app = express();
 const fsdb = admin.firestore();
 
+var stateKey = 'spotify_auth_state';
+
 // create cores 
 const cors = require('cors');
-app.use( cors({origin: true}));
+app.use(express.static(__dirname + './../public'))
+   .use(cors({origin: true}));
+   .use(cookieParser());
 
 /**
  * Generates a random string containing numbers and letters
@@ -52,12 +55,6 @@ var generateRandomString = function(length) {
   }
   return text;
 };
-
-var stateKey = 'spotify_auth_state';
-
-app.use(express.static(__dirname + './../public'))
-   .use(cors())
-   .use(cookieParser());
 
 app.get('/login', function(req, res) {
 
@@ -100,7 +97,7 @@ app.get('/callback', function(req, res) {
         grant_type: 'authorization_code'
       },
       headers: {
-        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
       },
       json: true
     };
@@ -128,18 +125,17 @@ app.get('/callback', function(req, res) {
           var imageUrl = body['images'][0]['url'];
           var spotifyUrl = body['external_urls']['spotify'];
 
-          data_access.createUser(firebase, admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
-          data_access.createUserStats(fsdb, userEmail, access_token, refresh_token); // Should this be moved to inside create users then? 
+          var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
+          data_access.createUserStats(fsdb, userEmail, access_token, refresh_token); 
+          return res.write({firebaseToken});
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('/#' +
+        /*res.redirect('/#' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
-          }));
-
-        
+          }));*/
       } else {
         res.redirect('/#' +
           querystring.stringify({

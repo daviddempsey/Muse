@@ -19,7 +19,6 @@ var request = require('request'); // "Request" library
  * @param {*} refreshToken Spotify refresh token of the user 
  */
 exports.createUser = async function createUser(
-  firebase, 
   admin, 
   db, 
   userEmail, 
@@ -43,6 +42,7 @@ exports.createUser = async function createUser(
   }
 
   // creates a firebase user
+  // add then OR do a try catch block 
   admin.auth().updateUser(
     spotifyID, 
     { 
@@ -62,34 +62,22 @@ exports.createUser = async function createUser(
     }
   });
   
-  // create a custom auth token
+  // create a custom auth token and if user already exists, query for custom token 
+  // surround a try catch block, and handle it with 
   const token = await admin.auth().createCustomToken(spotifyID);
   console.log('Created custom token for UID', spotifyID, 'Token:', token);
-
-  // attempt to sign in to the application
-  firebase.auth().signInWithCustomToken(token).then((user) => {
-    // Signed in 
-    console.log('Signed in successfully');
-
-    
-    console.log('Added', res);
-  }).catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-
-    // log the error to the console
-    console.log(errorCode, errorMessage);
-  })
 
   // go into the user tab and create the user
   const res = await db.collection('user').doc(userEmail).set(userData);
 
+  // add await and error checking 
   // create user profile
   createUserProfile(db, userEmail, profilePicture, acctUrl);
 
   // create user in harmony document
   createUserInHarmony(db, userEmail, refreshToken);
 
+  return token 
 }
 
 /**
@@ -111,7 +99,8 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
   // create data object to be stored
   const userProfileData = {
     biography: '',
-    profile_url: profilePicture,
+    profile_url: '',
+    profile_picture: profilePicture,
     select_playlist: [],
     social_media: userSocialMedia,
   }
@@ -119,10 +108,8 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
   // go into the profile tab and create the profile for the user
   const res = await db.collection('profile').doc(email).set(userProfileData);
 
-  // TODO: check what response is and decide where to go from here
-
   // log to console the result
-  console.log('Added', res); 
+  return res;  
 }
 
 /**
@@ -268,6 +255,10 @@ exports.createUserStats = async function createUserStats(
 
     // create an empty stats document for the user
     const statsData = {
+      song_stats: '',
+      albums: '',
+      artist_stats: '',
+      playlist_stats: '',
       top_artists: [],
       top_tracks: [],
       top_genres: []
