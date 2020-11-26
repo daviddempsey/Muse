@@ -42,10 +42,12 @@ class CurrentTrack extends Component {
     return (
       <div>
         <h1 className="title">Now Listening To</h1>
-        <p>{this.state.name}</p>
-        <p>{this.state.artists}</p>
-        <p>{this.state.album}</p>
-        <p>{this.state.playlist}</p>
+        <div className="trackelement">
+          <h3>{this.state.name}</h3>
+          <p>{this.state.artists}</p>
+          <p>{this.state.album}</p>
+          <p>{this.state.playlist}</p>
+        </div>
       </div>
     );
   }

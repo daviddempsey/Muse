@@ -3,3 +3,39 @@
 .title {
   color: var(--red);
 }
+
+.element {
+  padding: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: var(--yellow);
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--black);
+  border-radius: 20px;
+}
+
+.altelement {
+  padding: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: var(--red);
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--black);
+  border-radius: 20px;
+}
+
+.trackelement {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background-color: var(--white);
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--black);
+  border-radius: 20px;
+}

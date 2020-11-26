@@ -14,27 +14,29 @@ const ProfilePage = () => {
     <div>
       <div className="content">
         <div className="personal">
-          <h1 className="title">Frank_Ocean_22</h1>
           <ProfilePicture />
-          <Biography />
+          <h1 className="title">Frank_Ocean_22</h1>
           <ProfileLink />
           <SocialMedia />
+          <Biography />
         </div>
-        <div className="column">
-          <div className="tracks">
-            <CurrentTrack />
+        <div className="columns">
+          <div className="columnLeft">
+            <div className="tracks">
+              <CurrentTrack />
+            </div>
+            <div className="tracks">
+              <FeaturedTrack />
+            </div>
+            <div className="artists">
+              <FeaturedArtist />
+            </div>
+            {/*<div className="playlists"></div>*/}
           </div>
-          <div className="tracks">
-            <FeaturedTrack />
-          </div>
-          <div className="artists">
-            <FeaturedArtist />
-          </div>
-          <div className="playlists"></div>
-        </div>
-        <div className="column">
-          <div className="stats">
-            <SpotifyStats />
+          <div className="columnRight">
+            <div className="stats">
+              <SpotifyStats />
+            </div>
           </div>
         </div>
       </div>

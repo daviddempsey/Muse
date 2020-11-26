@@ -13,15 +13,27 @@ const SpotifyStats = () => {
     console.log("Hi");
   }, []);
 
-  let top_artists = "1,000,000 artists listened to";
-  let top_genres = "1,000,000 genres listened to";
-  let top_tracks = "1,000,000 songs listened to";
+  let top_artists_num = "1,000,000";
+  let top_artists = "artists listened to";
+  let top_genres_num = "1,000,000";
+  let top_genres = "genres listened to";
+  let top_tracks_num = "1,000,000";
+  let top_tracks = "songs listened to";
   return (
     <div>
       <h1 className="title"> Spotify Stats </h1>
-      <h1> {top_artists} </h1>
-      <h1> {top_genres} </h1>
-      <h1> {top_tracks} </h1>{" "}
+      <div className="element">
+        <h1> {top_artists_num} </h1>
+        <h3> {top_artists} </h3>
+      </div>
+      <div className="altelement">
+        <h1> {top_genres_num} </h1>
+        <h3> {top_genres} </h3>
+      </div>
+      <div className="element">
+        <h1> {top_tracks_num} </h1>
+        <h3> {top_tracks} </h3>{" "}
+      </div>
     </div>
   );
 };

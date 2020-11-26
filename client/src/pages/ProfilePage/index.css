@@ -1,40 +1,75 @@
 @import "../../styles/index.css";
 
 .title {
-  flex: 1;
+  text-align: left;
   color: var(--red);
 }
 
 .content {
-  flex: 1;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 .personal {
-  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
   background-color: var(--almost-white);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-.column {
-  flex: 1;
+.columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.columnLeft {
+  display: flex;
+  flex: 0.5;
   flex-direction: column;
+  margin-right: 10px;
+}
+
+.columnRight {
+  display: flex;
+  flex: 0.5;
+  flex-direction: column;
+  margin-left: 10px;
 }
 
 .tracks {
-  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: left;
   background-color: var(--almost-white);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .artists {
-  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: left;
   background-color: var(--almost-white);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .playlists {
-  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: left;
   background-color: var(--almost-white);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .stats {
-  flex: 1;
+  padding: 10px;
+  text-align: left;
   background-color: var(--almost-white);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
