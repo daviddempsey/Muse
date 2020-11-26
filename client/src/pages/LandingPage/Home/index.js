@@ -14,6 +14,15 @@ const Home = () => {
 
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth' });
 
+  const loginToSpotify = () => {
+    fetch('http://localhost:8888/')
+    .then(res => res.json())
+    .then((data) => {
+      this.setState({contacts: data})
+    })
+    .catch(console.log)
+  };
+
   return <div className="Home" id="home">
     <header>
       <h3>
@@ -39,7 +48,7 @@ const Home = () => {
       <div className="text-col">
         <h1>Harmonize<br/>with Others</h1>
         <p>Let's answer the question "What kind of music do you<br/>listen to?" together! Join a community where you can<br/>compare and connect through music.</p>
-        <button className="login-btn"><h3>Register / Login</h3></button>
+        <button className="login-btn" onClick={loginToSpotify}><h3>Register / Login</h3></button>
       </div>
       <div className="image-col">
         <img src={Graphic} alt="people dancing"></img>

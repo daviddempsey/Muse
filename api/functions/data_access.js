@@ -19,6 +19,7 @@ var request = require('request'); // "Request" library
  * @param {*} refreshToken Spotify refresh token of the user 
  */
 exports.createUser = async function createUser(
+  firebase,
   admin, 
   db, 
   userEmail, 
@@ -27,6 +28,8 @@ exports.createUser = async function createUser(
   profilePicture, 
   acctUrl,
   refreshToken) {
+
+  var newUser = false;
 
   // create a data document to be stored 
   const userData = {
@@ -51,33 +54,36 @@ exports.createUser = async function createUser(
     }).catch((error) => {
     // if user does not exist, we create one
     if (error.code === 'auth/user-not-found') {
-      return admin.auth().createUser({
+      admin.auth().createUser({
         uid: spotifyID,
         displayName: displayName,
         refreshToken: refreshToken, 
         email: userEmail
       }).then((userRecord) => {
         console.log('Successfully created new user with email: ', userRecord.email);
+        newUser = true;
       });
     }
   });
-  
+
+  if (newUser === true) {
+    // go into the user tab and create the user
+    const res = await db.collection('user').doc(userEmail).set(userData);
+
+    // add await and error checking 
+    // create user profile
+    createUserProfile(db, userEmail, profilePicture, acctUrl);
+
+    // create user in harmony document
+    createUserInHarmony(db, userEmail, refreshToken);
+  }
+
   // create a custom auth token and if user already exists, query for custom token 
   // surround a try catch block, and handle it with 
   const token = await admin.auth().createCustomToken(spotifyID);
   console.log('Created custom token for UID', spotifyID, 'Token:', token);
 
-  // go into the user tab and create the user
-  const res = await db.collection('user').doc(userEmail).set(userData);
-
-  // add await and error checking 
-  // create user profile
-  createUserProfile(db, userEmail, profilePicture, acctUrl);
-
-  // create user in harmony document
-  createUserInHarmony(db, userEmail, refreshToken);
-
-  return token 
+  return token;
 }
 
 /**
