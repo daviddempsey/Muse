@@ -10,10 +10,8 @@
   margin-bottom: 10px;
   text-align: center;
   background-color: var(--yellow);
-  border-style: solid;
-  border-width: 1px;
-  border-color: var(--black);
-  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 
 .altelement {
@@ -22,10 +20,8 @@
   margin-bottom: 10px;
   text-align: center;
   background-color: var(--red);
-  border-style: solid;
-  border-width: 1px;
-  border-color: var(--black);
-  border-radius: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
 }
 
 .trackelement {
@@ -37,5 +33,5 @@
   border-style: solid;
   border-width: 1px;
   border-color: var(--black);
-  border-radius: 20px;
+  border-radius: 15px;
 }
