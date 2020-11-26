@@ -1,7 +1,9 @@
 import firebase from "firebase";
 
-// attempt to sign in to the application
-firebase.auth().signInWithCustomToken(token).then((user) => {
+// should this be a functional component? dunno 
+const SignIn = (firebaseToken) => {
+  // attempt to sign in to the application
+  firebase.auth().signInWithCustomToken(firebaseToken).then((user) => {
     // Signed in 
     console.log('Signed in successfully');
 
@@ -14,3 +16,4 @@ firebase.auth().signInWithCustomToken(token).then((user) => {
     // log the error to the console
     console.log(errorCode, errorMessage);
   });
+} 

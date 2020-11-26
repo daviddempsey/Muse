@@ -54,281 +54,8 @@ app.get('/', (req, res) => {
 
 // Create, POST
 
-// this a sample version
-app.post('/api/create', (req, res) => {
-    (async () => {
-
-        try {
-            await fsdb.collection('products').doc('/' + req.body.id + '/')
-            .create({
-                name: req.body.name,
-                description: req.body.description,
-                price: req.body.price
-            })
-
-            return res.status(200).send();
-        } catch (error) {
-
-            // if there happens to be an error, log and send error
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-// another example
-app.post("/api/poststuff", (req, res) => {
-    console.log("check post");
-    (async() => {
-      try {
-        await fsdb.collection('login').doc('/' + req.body.id + '/')
-        .create({
-          access: req.body.access,
-          refresh: req.body.refresh
-        })
-  
-        return res.status(200).send();
-      }
-      catch (error) {
-        console.log(error);
-        return res.status(500).send(error);
-      }
-    })();
-});
 
 // Read, GET
-app.get("/api/user/profile/:id", (req, res) => {
-
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let product = await document.get();
-            let response = product.data();
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/profile/pictureUrl/:id" , (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['profile_picture'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-app.get("/api/user/profile/profileUrl/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['profile_url'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/profile/biography/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['biography'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/profile/selectPlaylist/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['select_playlist'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/profile/facebook/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['social_media']['facebook'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/profile/spotify/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['social_media']['spotify'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/profile/instagram/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['social_media']['instagram'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-}); 
-
-app.get("/api/user/profile/twitter/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('profile').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['social_media']['twitter'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
-app.get("/api/user/stats/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('stats').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data();
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-app.get("/api/user/stats/topArtists/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('stats').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['top_artists'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-app.get("/api/user/stats/topGenres/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('stats').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['top_genres'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-app.get("/api/user/stats/topTracks/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('stats').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data()['top_tracks'];
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-
-
-// Update, PUT
-
-// Delete, DELETE
-
-
-// other functions
-
-  
 app.get('/login', function(req, res) {
   
     var state = generateRandomString(16);
@@ -346,8 +73,8 @@ app.get('/login', function(req, res) {
     }));
 });
   
-  // callback once you reach finish logging in and you get the information 
-  app.get('/callback', function(req, res) {
+// callback once you reach finish logging in and you get the information 
+app.get('/callback', function(req, res) {
   
     // your application requests refresh and access tokens
     // after checking the state parameter
@@ -411,9 +138,9 @@ app.get('/login', function(req, res) {
         }
       });
     }
-  });
+});
   
-  app.get('/refresh_token', function(req, res) {
+app.get('/refresh_token', function(req, res) {
   
     // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
@@ -430,12 +157,107 @@ app.get('/login', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
         var access_token = body.access_token;
-        res.send({
-          'access_token': access_token
-        });
+          res.send({
+            'access_token': access_token
+          });
       }
     });
-  });
+});
+
+app.get("/api/user/profile/:id", (req, res) => {
+
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('profile').doc(req.params.id);
+            let product = await document.get();
+            let response = product.data();
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+app.get("/api/user/profile/:section/:id" , (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('profile').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data()[req.params.section];
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+app.get("/api/user/profile/social/:site/:id", (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('profile').doc(req.params.id);
+            let product = await document.get();
+            let response = product.data()['social_media'][req.params.id];
+            console.log(response);
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+app.get("/api/user/stats/:id", (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('stats').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data();
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+app.get("/api/user/stats/:section/:id", (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('stats').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data()[req.params.section];
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+// Update, PUT
+
+// Delete, DELETE
+
+
+// other functions
+
 
 
 // call function whenever there's a new request
