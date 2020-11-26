@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from '../../assets/logo.svg';
 import './index.css';
+
+import LandingPageHeader from './LandingPageHeader';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+import Footer from '../../components/Footer';
 
 const LandingPage = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="LandingPage">
+      <LandingPageHeader/>
+      <Home />
+      <About />
+      <Contact />
+      <Footer />
     </div>
   );
 };

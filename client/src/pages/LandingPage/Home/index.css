@@ -1,0 +1,42 @@
+@import '../../../styles/index.css';
+
+.Home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15rem 6rem;
+}
+
+.Home .text-col {
+    flex: 40%;
+}
+
+.Home .text-col h1 {
+    line-height: 3.75rem;
+}
+
+.Home .text-col p {
+    color: var(--grey);
+    line-height: 1.75rem;
+}
+
+.Home .text-col .login-btn {
+    background-color: var(--red);
+    border: 0px transparent;
+    border-radius: 1.875rem;
+    height: 3.75rem;
+    width: 12.5rem;
+}
+
+.Home .text-col .login-btn:hover {
+    opacity: 75%;
+}
+
+.Home .text-col .login-btn:focus {
+    outline: none;
+}
+
+.Home .text-col .login-btn h3 {
+    font-size: 1.125rem;
+    color: var(--white);
+}
