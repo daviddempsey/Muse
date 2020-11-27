@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Album from "../assets/Channel_ORANGE.jpg";
 import "./index.css";
 //import userService from "../services/user.service";
 
@@ -9,7 +10,7 @@ class CurrentTrack extends Component {
     this.state = {
       name: "Pyramids",
       artist: "Frank Ocean",
-      album: "Channel Orange",
+      album: "channel ORANGE",
       playlist: "This is Frank Ocean",
     };
 
@@ -41,11 +42,16 @@ class CurrentTrack extends Component {
   render() {
     return (
       <div>
-        <h1 className="title">Now Listening To</h1>
+        <h2 className="title">Now Listening To</h2>
         <div className="trackelement">
-          <h3>{this.state.name}</h3>
-          <p className="body">{this.state.album}</p>
-          <p className="body">{this.state.artist}</p>
+          <div className="columns">
+            <img src={Album} className="album" alt="album" />
+            <div className="columnRight">
+              <h2>{this.state.name}</h2>
+              <p className="body">{this.state.album}</p>
+              <p className="body">{this.state.artist}</p>
+            </div>
+          </div>
         </div>
       </div>
     );

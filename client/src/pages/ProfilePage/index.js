@@ -1,4 +1,5 @@
 import React from "react";
+import HeaderIcon from "../../assets/headericon.png";
 import "./index.css";
 import ProfilePicture from "../../components/ProfilePicture";
 import Biography from "../../components/Biography";
@@ -14,6 +15,7 @@ const ProfilePage = () => {
     <div>
       <div className="content">
         <div className="personal">
+          <img src={HeaderIcon} className="header" alt="hi" />
           <div className="rows">
             <div className="rowTop">
               <ProfilePicture />

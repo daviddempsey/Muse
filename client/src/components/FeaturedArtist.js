@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Artist from "../assets/frankocean.png";
 import "./index.css";
 //import UserService from "../services/user.service";
 
@@ -25,8 +26,10 @@ class FeaturedArtist extends Component {
   render() {
     return (
       <div>
-        <h1 className="title"> Featured Artists </h1>
-        <h2> {this.state.artist} </h2>{" "}
+        <h2 className="title"> Featured Artists </h2>
+        <div className="artistimgs">
+          <img src={Artist} className="artistimg" alt="artist" />
+        </div>
       </div>
     );
   }

@@ -1,5 +1,10 @@
 @import "../../styles/index.css";
 
+.header {
+  width: 101%;
+  margin-bottom: -30%;
+}
+
 .title {
   text-align: left;
   color: var(--red);
@@ -13,8 +18,8 @@
 }
 
 .personal {
-  padding: 10px;
-  margin-bottom: 10px;
+  overflow: hidden;
+  margin-bottom: 30px;
   background-color: var(--almost-white);
   border-radius: 15px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
@@ -23,12 +28,14 @@
 .rows {
   display: flex;
   flex-direction: column;
+  margin-top: -80px;
+  margin-left: 20px;
 }
 
 .rowTop {
   flex: 0.5;
   text-align: left;
-  padding-top: 30px;
+  padding-top: 100px;
   padding-bottom: 30px;
   padding-left: 10px;
 }
@@ -68,8 +75,8 @@
 }
 
 .tracks {
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 30px;
+  margin-bottom: 30px;
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
@@ -77,8 +84,8 @@
 }
 
 .artists {
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 30px;
+  margin-bottom: 30px;
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
@@ -86,8 +93,8 @@
 }
 
 .playlists {
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 30px;
+  margin-bottom: 30px;
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
@@ -95,7 +102,7 @@
 }
 
 .stats {
-  padding: 10px;
+  padding: 30px;
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
