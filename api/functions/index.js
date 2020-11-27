@@ -7,9 +7,9 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var data_access = require('./data_access'); // the database access functions
 
-var client_id = '3068918efe6349bfa18633d5dd854b6a'; // Your client id
-var client_secret = '93f20dfbf9a64d7cbf7f0832e5f0ccf3'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
+var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
+var redirect_uri = 'http://localhost:5001/muse-eec76/us-central1/app/callback'; // Your redirect uri
 
 const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
@@ -17,6 +17,7 @@ const admin = require('firebase-admin'); // firebase admin account
 var serviceAccount = require("./permissions.json"); // service account
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  projectId: "muse-eec76",
   databaseURL: "https://muse-eec76.firebaseio.com"
 });
 
@@ -44,7 +45,10 @@ var generateRandomString = function(length) {
 var stateKey = 'spotify_auth_state';
   
 app.use(express.static(__dirname + './../public'))
-    .use(cors({origin: true}))
+    .use(cors({
+      'allowedHeaders': ['Content-Type'],
+      'origin': '*',
+      'preflightContinue': true}))
     .use(cookieParser());
 
 // Routes
@@ -54,10 +58,15 @@ app.get('/', (req, res) => {
 
 // Create, POST
 
-
+app.options('/login', function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.end();
+});
 // Read, GET
+
 app.get('/login', function(req, res) {
-  
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
   
@@ -117,8 +126,6 @@ app.get('/callback', function(req, res) {
   
           // use the access token to access the Spotify Web API
           request.get(options, function(error, response, body) {
-            console.log(body);
-  
             var displayName = body['display_name'];
             var userEmail = body['email'];
             var userId = body['id']; 
@@ -126,8 +133,8 @@ app.get('/callback', function(req, res) {
             var spotifyUrl = body['external_urls']['spotify'];
   
             var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
-            data_access.createUserStats(fsdb, userEmail, access_token, refresh_token); 
-            return res.write({firebaseToken});
+            firebaseToken.then((value) => res.cookie("token", value).redirect("http://localhost:3000"), (e) => console.log(e));
+            data_access.createUserStats(fsdb, userEmail, access_token, refresh_token)
           });
   
         } else {
@@ -258,6 +265,9 @@ app.get("/api/user/stats/:section/:id", (req, res) => {
 
 // other functions
 
+// app.listen(3000, function () {
+//   console.log('CORS-enabled web server listening on port 3000')
+// })
 
 
 // call function whenever there's a new request
