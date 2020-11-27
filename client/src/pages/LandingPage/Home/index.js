@@ -15,7 +15,7 @@ const Home = () => {
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth' });
 
   const loginToSpotify = () => {
-    fetch('http://localhost:8888/')
+    fetch('http://localhost:5001/muse-eec76/us-central1/app/login')
     .then(res => res.json())
     .then((data) => {
       this.setState({contacts: data})

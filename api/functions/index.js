@@ -7,9 +7,9 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var data_access = require('./data_access'); // the database access functions
 
-var client_id = '3068918efe6349bfa18633d5dd854b6a'; // Your client id
-var client_secret = '93f20dfbf9a64d7cbf7f0832e5f0ccf3'; // Your secret
-var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+var client_id = '11410ea547d349459f3266d8e3e25663'; // Your client id
+var client_secret = '165957909373477f977ef2e26157fda0'; // Your secret
+var redirect_uri = 'http://localhost:5001/muse-eec76/us-central1/app/callback'; // Your redirect uri
 
 const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
@@ -125,7 +125,7 @@ app.get('/callback', function(req, res) {
             var imageUrl = body['images'][0]['url'];
             var spotifyUrl = body['external_urls']['spotify'];
   
-            var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
+            var firebaseToken = data_access.createUser(admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
             data_access.createUserStats(fsdb, userEmail, access_token, refresh_token); 
             return res.write({firebaseToken});
           });
