@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PFP from "../assets/PFP.png";
 import "./index.css";
 // import UserService from '../services/user.service';
 
@@ -8,7 +9,7 @@ export default class ProfilePicture extends Component {
     // this.onChangePicture = this.onChangePicture.bind(this);
 
     this.state = {
-      url: "",
+      url: PFP,
     };
   }
 
@@ -39,7 +40,7 @@ export default class ProfilePicture extends Component {
 
   render() {
     return (
-      <img src={this.state.url} alt="" />
+      <img src={this.state.url} className="profilepicture" alt="pfp" />
       // write form code to upload and set new profile picture
     );
   }

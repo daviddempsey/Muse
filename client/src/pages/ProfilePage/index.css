@@ -20,6 +20,34 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowTop {
+  flex: 0.5;
+  text-align: left;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+}
+
+.rowMid {
+  display: flex;
+  flex: 0.15;
+  flex-direction: row;
+  padding-bottom: 15px;
+  padding-left: 10px;
+}
+
+.rowBot {
+  flex: 0.2;
+  text-align: left;
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+
 .columns {
   display: flex;
   flex-direction: row;

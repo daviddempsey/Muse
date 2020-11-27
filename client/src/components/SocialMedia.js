@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Facebook from "../assets/fb.png";
+import Instagram from "../assets/ig.png";
+import Twitter from "../assets/twitter.png";
 import "./index.css";
 //import UserService from "../services/user.service";
 
@@ -72,9 +75,15 @@ class SocialMedia extends Component {
   render() {
     return (
       <div>
-        <a href={this.state.facebook}> FACEBOOK </a>{" "}
-        <a href={this.state.instagram}> INSTAGRAM </a>{" "}
-        <a href={this.state.twitter}> TWITTER </a>{" "}
+        <a href={this.state.facebook}>
+          <img src={Facebook} className="socials" alt="fb" />
+        </a>
+        <a href={this.state.instagram}>
+          <img src={Instagram} className="socials" alt="ig" />
+        </a>
+        <a href={this.state.twitter}>
+          <img src={Twitter} className="socials" alt="twitter" />
+        </a>
       </div>
     );
   }

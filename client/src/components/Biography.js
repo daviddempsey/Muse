@@ -13,8 +13,9 @@ const Biography = () => {
   React.useEffect(() => {
     console.log("Hi");
   }, []);
-  let bioText = "Bio";
-  return <div> {bioText} </div>;
+  let bioText =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  return <p className="body"> {bioText} </p>;
 };
 
 export default Biography;

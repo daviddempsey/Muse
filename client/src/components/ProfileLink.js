@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "../assets/copylink.png";
 import "./index.css";
 //import UserService from "../services/user.service";
 
@@ -10,7 +11,11 @@ const ProfileLink = () => {
   }, []);
 
   let link = "https://muse.com/test_text";
-  return <div> {link} </div>;
+  return (
+    <a href={link}>
+      <img src={Link} className="copylink" alt="link" />
+    </a>
+  );
 };
 
 export default ProfileLink;

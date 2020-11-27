@@ -14,11 +14,21 @@ const ProfilePage = () => {
     <div>
       <div className="content">
         <div className="personal">
-          <ProfilePicture />
-          <h1 className="title">Frank_Ocean_22</h1>
-          <ProfileLink />
-          <SocialMedia />
-          <Biography />
+          <div className="rows">
+            <div className="rowTop">
+              <ProfilePicture />
+            </div>
+            <div className="rowMid">
+              <h1 className="title">Frank_Ocean_22</h1>
+              <ProfileLink />
+            </div>
+            <div className="rowMid">
+              <SocialMedia />
+            </div>
+            <div className="rowBot">
+              <Biography />
+            </div>
+          </div>
         </div>
         <div className="columns">
           <div className="columnLeft">

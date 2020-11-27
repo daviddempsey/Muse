@@ -44,9 +44,8 @@ class CurrentTrack extends Component {
         <h1 className="title">Now Listening To</h1>
         <div className="trackelement">
           <h3>{this.state.name}</h3>
-          <p>{this.state.artists}</p>
-          <p>{this.state.album}</p>
-          <p>{this.state.playlist}</p>
+          <p className="body">{this.state.album}</p>
+          <p className="body">{this.state.artist}</p>
         </div>
       </div>
     );
