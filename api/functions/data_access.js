@@ -19,7 +19,6 @@ var request = require('request'); // "Request" library
  * @param {*} refreshToken Spotify refresh token of the user 
  */
 exports.createUser = async function createUser(
-  firebase,
   admin, 
   db, 
   userEmail, 
