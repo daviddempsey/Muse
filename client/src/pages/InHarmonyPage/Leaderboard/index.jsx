@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
 // import './index.css';
 
-const Leaderboard = () => {
-  return (
-    <div className="Leaderboard">
+class Leaderboard extends Component {
+    constructor(props) {
+        super(props);
+        let topUsers = [];
+    }
 
-    </div>
-  );
-};
+    compareUsers = (user) => {
+        
+    }
+
+    render() {
+        return (
+            <div className="Leaderboard">
+
+            </div>
+        );
+    }
+}
+
 export default Contact;
