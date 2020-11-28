@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 const TopStats = () => {
   const [topArtist, setTopArtist] = useState('Kanye West');
   const [topTrack, setTopTrack] = useState('People in Paris');
+  const [topGenres, setTopGenres] = useState('R&B, Hip-Hop');
 
   // check if component mounted
   React.useEffect(() => {
@@ -14,6 +15,7 @@ const TopStats = () => {
     <div id='topstats'>
       <h2>Top Artist: {topArtist}</h2>
       <h2>Top Track : {topTrack}</h2>
+      <h3>Top Genre: {topGenres}</h3>
     </div>
   );
 };

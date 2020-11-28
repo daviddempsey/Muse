@@ -7,9 +7,11 @@ const SpotifyStats = () => {
   /*let top_artists = UserService.getTopArtists();
     let top_genres = UserService.getTopGenres();
     let top_tracks = UserService.getTopTracks(); */
-  const [topArtists, setTopArtist] = useState('Kanye West, Frank Ocean, EDEN');
-  const [topTracks, setTopTracks] = useState('People in Paris, Novacane, Wake Up');
-  const [topGenres, setTopGenres] = useState('R&B, Hip-Hop');
+  // my assumption is that the database stores numerical value of how many minutes, numberof songs, etc.
+  const [songStats, setSongStats] = useState(100000);
+  const [albumStats, setAlbumStats] = useState(100000);
+  const [artistStats, setAristStats] = useState(1000000);
+  const [minuteStats, setMinuteStats] = useState(10000000000);
 
   // check if component mounted
   React.useEffect(() => {
@@ -18,7 +20,7 @@ const SpotifyStats = () => {
 
   return (
     <div>
-      <h1> {topArtists} </h1> <h1> {topTracks} </h1> <h1> {topGenres} </h1>{' '}
+      <h1> {songStats} </h1> <h1> {albumStats} </h1> <h1> {artistStats} </h1><h1>{minuteStats}</h1>{' '}
     </div>
   );
 };
