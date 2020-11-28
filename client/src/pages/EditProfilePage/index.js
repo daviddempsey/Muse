@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import './index.css';
+
+import DefaultLayout from '../DefaultLayout';
 
 class EditProfilePage extends Component {
   //constructor
@@ -10,12 +13,12 @@ class EditProfilePage extends Component {
       facebook: 'https://www.facebook.com',
       instagram: 'https://www.instagram.com',
       twitter: 'https://www.twitter.com',
-      featuredArtist: 'Keshi',
-      featuredTrack: '2soon',
+      playlists: ['A', 'B', 'C']
     };
     //event handlers for when we update text field and submit button
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.componentDidCatch = this.componentDidCatch.bind(this);
   }
 
   //checks if component mounted
@@ -25,8 +28,7 @@ class EditProfilePage extends Component {
     this.getFacebook();
     this.getInstagram();
     this.getTwitter();
-    this.getFeaturedArtist();
-    this.getFeaturedTrack();
+    this.getPlaylists();
   }
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
@@ -51,29 +53,19 @@ class EditProfilePage extends Component {
     let twitterURL = 'https://www.twitter.com';
     this.setState({ twitter: twitterURL });
   }
-  getFeaturedArtist(){
-    //let featured_artist = UserService.getFeaturedArtist();
-    let featured_artist = 'keshi';
-    this.setState({featuredArtist: featured_artist})
 
-  }
-  getFeaturedTrack(){
-    //let featured_track = UserService.getFeaturedArtist();
-    let featured_track = '2soon';
-    this.setState({featuredTrack: featured_track})
+  getPlaylists() {
+    let playlists = ['A', 'B', 'C'];
+    this.playlists({ playlists: playlists });
   }
 
-
-  // onCHange updates the state 
-  handleChange(event){
-    this.setState({biography: event.target.biography});
-    this.setState({facebook:event.target.facebook});
-    this.setState({twitter: event.target.twitter});
-    this.setState({instagram: event.target.instagram});
-    this.setState({featuredArtist: event.target.featured_artist});
-    this.setState({featuredTrack: event.target.featured_track});
+  // onCHange updates the state
+  handleChange(event) {
+    this.setState({ biography: event.target.biography });
+    this.setState({ facebook: event.target.facebook });
+    this.setState({ twitter: event.target.twitter });
+    this.setState({ instagram: event.target.instagram });
   }
-
 
   /* event handler for when user hits submit button*/
   // onSubmit updates database once user is done.
@@ -88,35 +80,64 @@ class EditProfilePage extends Component {
   /* render text box*/
   render() {
     return (
-      <form id= 'edit-profile-form' onSubmit={this.handleSubmit}>
-        <div id='biography-form'>
-          <label>
-            Biography:
-            <input type="text" value={this.state.biography} onChange={this.handleChange}/>{' '}
-          </label>{' '}
-        </div>
-        <div id='socials-form'>
-          <div id='facebook-form'>
+      <DefaultLayout>
+        <form id='edit-profile-form' onSubmit={this.handleSubmit}>
+          <div id='biography-form'>
             <label>
-              Facebook:
-              <input type="text" value={this.state.facebook} onChange={this.handleChange}/>{' '}
+              Biography:
+              <input
+                type='text'
+                value={this.state.biography}
+                onChange={this.handleChange}
+              />{' '}
             </label>{' '}
           </div>
-          <div id='instagram-form'>
-            <label>
-              Instagram:
-              <input type="text" value={this.state.instagram} onChange={this.handleChange} />{' '}
-            </label>{' '}
+          <div id='socials-form'>
+            <div id='facebook-form'>
+              <label>
+                Facebook:
+                <input
+                  type='text'
+                  value={this.state.facebook}
+                  onChange={this.handleChange}
+                />{' '}
+              </label>{' '}
+            </div>
+            <div id='instagram-form'>
+              <label>
+                Instagram:
+                <input
+                  type='text'
+                  value={this.state.instagram}
+                  onChange={this.handleChange}
+                />{' '}
+              </label>{' '}
+            </div>
+            <div id='twitter-form'>
+              <label>
+                Twitter:
+                <input
+                  type='text'
+                  value={this.state.twitter}
+                  onChange={this.handleChange}
+                />{' '}
+              </label>{' '}
+            </div>
           </div>
-          <div id='twitter=form'>
-            <label>
-              Twitter:
-              <input type="text" value={this.state.twitter} onChange={this.handleChange}/>{' '}
-            </label>{' '}
+          <div id='playlist-form'>
+            <label> Playlists: </label>
+            <select value={this.state.playlists}
+                  onChange={this.handleChange} multiple>
+              <option value='$'>$</option>
+              <option value='T'>T</option>
+              <option value='S'>S</option>
+              <option value='L'>L</option>
+              <option value='A'>A</option>
+            </select>
           </div>
-        </div>
-        <input type="submit" value="Submit" />{' '}
-      </form>
+          <input type='submit' value='Submit' />{' '}
+        </form>
+      </DefaultLayout>
     );
   }
 }
