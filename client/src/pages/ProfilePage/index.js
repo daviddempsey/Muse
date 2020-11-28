@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Biography from '../../components/Biography';
-import FeaturedArtist from '../../components/FeaturedArtist';
-import FeaturedTrack from '../../components/FeaturedTrack';
 import ProfileLink from '../../components/ProfileLink';
 import SocialMedia from '../../components/SocialMedia';
 import SpotifyStats from '../../components/SpotifyStats';
+import TopStats from '../../components/TopStats';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -17,13 +16,12 @@ class ProfilePage extends Component {
 
   render = () => {
     return (
-      <div>
+      <div id='profile'>
         <Biography />
-        <FeaturedArtist />
-        <FeaturedTrack />
         <ProfileLink />
         <SocialMedia />
         <SpotifyStats />
+        <TopStats/>
       </div>
     );
   };

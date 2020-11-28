@@ -88,27 +88,27 @@ class EditProfilePage extends Component {
   /* render text box*/
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div id='biography'>
+      <form id= 'edit-profile-form' onSubmit={this.handleSubmit}>
+        <div id='biography-form'>
           <label>
             Biography:
             <input type="text" value={this.state.biography} onChange={this.handleChange}/>{' '}
           </label>{' '}
         </div>
-        <div id='socials'>
-          <div id='facebook'>
+        <div id='socials-form'>
+          <div id='facebook-form'>
             <label>
               Facebook:
               <input type="text" value={this.state.facebook} onChange={this.handleChange}/>{' '}
             </label>{' '}
           </div>
-          <div id='instagram'>
+          <div id='instagram-form'>
             <label>
               Instagram:
               <input type="text" value={this.state.instagram} onChange={this.handleChange} />{' '}
             </label>{' '}
           </div>
-          <div id='twitter'>
+          <div id='twitter=form'>
             <label>
               Twitter:
               <input type="text" value={this.state.twitter} onChange={this.handleChange}/>{' '}

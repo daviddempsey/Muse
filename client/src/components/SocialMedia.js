@@ -1,28 +1,27 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 //import UserService from "../services/user.service";
 
-class SocialMedia extends Component {
-  // constructor
-  constructor(props) {
-    super(props);
-    this.state = {
-      userid: '12345',
-      facebook: 'https://www.facebook.com',
-      instagram: 'https://www.instagram.com',
-      twitter: 'https://www.twitter.com',
-    };
-  }
-  // render functionn
-  render() {
-    return (
-      <div>
-        <h1> Hello Social Media </h1>{' '}
-        <a href={this.state.facebook}> FACEBOOK </a>{' '}
-        <a href={this.state.instagram}> INSTAGRAM </a>{' '}
-        <a href={this.state.twitter}> TWITTER </a>{' '}
-      </div>
-    );
-  }
-}
+const SocialMedia = () => {
+  // uncomment userservice once we get it to work.
+  const [facebook, setFacebook] = useState('https://www.facebook.com');
+  const [instagram, setInstagram] = useState('https://www.instagram.com');
+  const [twitter, setTwitter] = useState('https://www.twitter.com');
+  const [tiktok, setTikTok] = useState('https://www.tiktok.com');
+
+  
+  // check if component mounted
+  React.useEffect(() => {
+    console.log('Hi');
+  }, []);
+
+  return (
+    <div id="socialmedia">
+      <h1> Hello Social Media </h1> <a href={facebook}> FACEBOOK </a>{' '}
+      <a href={instagram}> INSTAGRAM </a>{' '}
+      <a href={twitter}> TWITTER </a>{' '}
+      <a href={tiktok}> TIKTOK </a>{' '}
+    </div>
+  );
+};
 
 export default SocialMedia;

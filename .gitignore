@@ -9,6 +9,7 @@ data-node
 ./api/.DS_Store
 ./api/src/.DS_Store
 ./api/src/components/.DS_Store
+./client/.eslintcache
 
 
 # firebase stuff

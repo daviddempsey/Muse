@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import UserService from "../services/user.service";
 
 const ProfileLink = () => {
   // let link = UserService.getProfileLink();
+  const [profileLink, setProfileLink] = useState('https://localhost:3000/u/iamsped');
+
   //check if component mounted
   React.useEffect(()=> {
     console.log("Hi");
   }, []); 
 
-  let link = 'https://muse.com/test_text';
-  return <div> {link} </div>;
+  return <div id='profilelink'> {profileLink} </div>;
 };
 
 export default ProfileLink;

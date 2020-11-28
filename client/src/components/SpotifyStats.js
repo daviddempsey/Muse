@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import UserService from "../services/user.service";
-
 
 // grabs the spotify stats for a user from firebase and returns it
 const SpotifyStats = () => {
@@ -8,17 +7,18 @@ const SpotifyStats = () => {
   /*let top_artists = UserService.getTopArtists();
     let top_genres = UserService.getTopGenres();
     let top_tracks = UserService.getTopTracks(); */
+  const [topArtists, setTopArtist] = useState('Kanye West, Frank Ocean, EDEN');
+  const [topTracks, setTopTracks] = useState('People in Paris, Novacane, Wake Up');
+  const [topGenres, setTopGenres] = useState('R&B, Hip-Hop');
+
   // check if component mounted
-  React.useEffect(()=> {
-    console.log("Hi");
+  React.useEffect(() => {
+    console.log('Hi');
   }, []);
 
-  let top_artists = 'test top artist text';
-  let top_genres = 'test top artist text';
-  let top_tracks = 'test top artist text';
   return (
     <div>
-      <h1> {top_artists} </h1> <h1> {top_genres} </h1> <h1> {top_tracks} </h1>{' '}
+      <h1> {topArtists} </h1> <h1> {topTracks} </h1> <h1> {topGenres} </h1>{' '}
     </div>
   );
 };

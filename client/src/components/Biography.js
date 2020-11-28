@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import UserService from '../services/user.service';
 
 /*update a user's biography.
@@ -6,13 +6,14 @@ import React from 'react';
   handle updating firestore database in the future*/
 
 const Biography = () => {
-  // uncomment userservice once we get it to work.
-  //let bioText = UserService.getBiography();
+  // uncomment userservice once we get it to work
+  const [bioText, setBioText] = useState('this is a test bio text pls');
+
   // check if component mounted
   React.useEffect(() => {
     console.log('Hi');
   }, []);
-  let bioText = 'test text';
+
   return <div> {bioText} </div>;
 };
 
