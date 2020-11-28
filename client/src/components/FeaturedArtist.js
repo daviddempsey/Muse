@@ -14,8 +14,9 @@ class FeaturedArtist extends Component {
   // check mount
   componentDidMount() {}
 
-  getFeaturedArtist() {}
+  getFeaturedArtist() {}  
 
+  // HAVE DEFAULT FEATURED ARTIST BE NUMBER 1 ARTIST 
   changeArtist(newArtist) {
     this.setState({ artist: newArtist });
   }

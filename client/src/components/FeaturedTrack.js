@@ -14,8 +14,9 @@ class FeaturedTrack extends Component {
   // check mount
   componentDidMount() {}
 
+  // HAVE DEFAULT FEATURED TRACK BE TOP PLAYED SONG
   getFeaturedTrack() {}
-
+  
   changeTrack(newTrack) {
     this.setState({ track: newTrack });
   }

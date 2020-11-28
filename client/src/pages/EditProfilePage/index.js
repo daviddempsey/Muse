@@ -10,6 +10,8 @@ class EditProfilePage extends Component {
       facebook: 'https://www.facebook.com',
       instagram: 'https://www.instagram.com',
       twitter: 'https://www.twitter.com',
+      featuredArtist: 'Keshi',
+      featuredTrack: '2soon',
     };
     //event handlers for when we update text field and submit button
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,6 +25,8 @@ class EditProfilePage extends Component {
     this.getFacebook();
     this.getInstagram();
     this.getTwitter();
+    this.getFeaturedArtist();
+    this.getFeaturedTrack();
   }
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
@@ -47,6 +51,18 @@ class EditProfilePage extends Component {
     let twitterURL = 'https://www.twitter.com';
     this.setState({ twitter: twitterURL });
   }
+  getFeaturedArtist(){
+    //let featured_artist = UserService.getFeaturedArtist();
+    let featured_artist = 'keshi';
+    this.setState({featuredArtist: featured_artist})
+
+  }
+  getFeaturedTrack(){
+    //let featured_track = UserService.getFeaturedArtist();
+    let featured_track = '2soon';
+    this.setState({featuredTrack: featured_track})
+  }
+
 
   // onCHange updates the state 
   handleChange(event){
@@ -54,6 +70,8 @@ class EditProfilePage extends Component {
     this.setState({facebook:event.target.facebook});
     this.setState({twitter: event.target.twitter});
     this.setState({instagram: event.target.instagram});
+    this.setState({featuredArtist: event.target.featured_artist});
+    this.setState({featuredTrack: event.target.featured_track});
   }
 
 
@@ -64,6 +82,7 @@ class EditProfilePage extends Component {
     alert('Stuff is updated' + this.state.Biography + this.state.facebook);
     event.preventDefault();
   }
+
   /* TODO: edit social media, edit profile picture, featured artist and track*/
 
   /* render text box*/

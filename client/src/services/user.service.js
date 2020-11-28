@@ -57,6 +57,12 @@ class UserService {
     getTopTracks(email) {
         return userCollection.doc(email).get()["top_tracks"];
     }
+    getFeaturedArtist(email){
+        return userCollection.doc(email).get()["featured_artist"];
+    }
+    getFeaturedTrack(email){
+        return userCollection.doc(email).get()["featured_track"];
+    }
 
     // what is this function 
     /*create(user) {
