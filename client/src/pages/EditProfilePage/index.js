@@ -32,7 +32,8 @@ class EditProfilePage extends Component {
     alert('Stuff is updated updated: ' + this.state.Biography);
     event.preventDefault();
   }
-
+  /* TODO: edit social media, edit profile picture, featured artist and track*/
+  
   /* render text box*/
   render() {
     return (
