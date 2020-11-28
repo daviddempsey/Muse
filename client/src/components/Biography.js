@@ -8,9 +8,9 @@ import React from 'react';
 const Biography = () => {
   // uncomment userservice once we get it to work.
   //let bioText = UserService.getBiography();
-  // check if component mounted 
-  React.useEffect(()=> {
-    console.log("Hi");
+  // check if component mounted
+  React.useEffect(() => {
+    console.log('Hi');
   }, []);
   let bioText = 'test text';
   return <div> {bioText} </div>;

@@ -5,11 +5,10 @@ export default class ProfilePicture extends Component {
   constructor(props) {
     super(props);
     // this.onChangePicture = this.onChangePicture.bind(this);
-
-        this.state = {
-            url: ""
-        };
-    }
+    this.state = {
+      url: '',
+    };
+  }
 
   componentDidMount() {
     this.getProfilePicture();
