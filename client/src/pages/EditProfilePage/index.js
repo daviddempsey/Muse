@@ -13,6 +13,7 @@ class EditProfilePage extends Component {
     };
     //event handlers for when we update text field and submit button
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   //checks if component mounted
@@ -29,7 +30,7 @@ class EditProfilePage extends Component {
   getBiography() {
     //var bioText = UserService.getBiography();
     let bioText = 'place holder for UserService';
-    this.setState({ Biography: bioText });
+    this.setState({ biography: bioText });
   }
 
   getFacebook() {
@@ -47,11 +48,20 @@ class EditProfilePage extends Component {
     this.setState({ twitter: twitterURL });
   }
 
+  // onCHange updates the state 
+  handleChange(event){
+    this.setState({biography: event.target.biography});
+    this.setState({facebook:event.target.facebook});
+    this.setState({twitter: event.target.twitter});
+    this.setState({instagram: event.target.instagram});
+  }
+
+
   /* event handler for when user hits submit button*/
+  // onSubmit updates database once user is done.
   handleSubmit(event) {
     //bioText = this.state.value;
-    this.setState({ Biography: event.target.Biography });
-    alert('Stuff is updated updated');
+    alert('Stuff is updated' + this.state.Biography + this.state.facebook);
     event.preventDefault();
   }
   /* TODO: edit social media, edit profile picture, featured artist and track*/
@@ -63,30 +73,30 @@ class EditProfilePage extends Component {
         <div id='biography'>
           <label>
             Biography:
-            <input value={this.state.Biography} />{' '}
+            <input type="text" value={this.state.biography} onChange={this.handleChange}/>{' '}
           </label>{' '}
         </div>
         <div id='socials'>
           <div id='facebook'>
             <label>
               Facebook:
-              <input type="text" value={this.state.facebook} />{' '}
+              <input type="text" value={this.state.facebook} onChange={this.handleChange}/>{' '}
             </label>{' '}
           </div>
           <div id='instagram'>
             <label>
               Instagram:
-              <input type="text" value={this.state.instagram} />{' '}
+              <input type="text" value={this.state.instagram} onChange={this.handleChange} />{' '}
             </label>{' '}
           </div>
           <div id='twitter'>
             <label>
               Twitter:
-              <input type="text" value={this.state.twitter} />{' '}
+              <input type="text" value={this.state.twitter} onChange={this.handleChange}/>{' '}
             </label>{' '}
           </div>
         </div>
-        <input type='submit' value='Submit' />{' '}
+        <input type="submit" value="Submit" />{' '}
       </form>
     );
   }
