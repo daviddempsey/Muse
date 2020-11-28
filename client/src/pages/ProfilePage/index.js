@@ -1,6 +1,6 @@
 import React from "react";
-import HeaderIcon from "./assets/headericon.png";
 import "./index.css";
+import HeaderIcon from "./assets/headericon.png";
 import ProfilePicture from "./components/ProfilePicture";
 import Biography from "./components/Biography";
 import CurrentTrack from "./components/CurrentTrack";
