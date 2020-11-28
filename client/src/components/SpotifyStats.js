@@ -1,6 +1,7 @@
 import React from 'react';
 //import UserService from "../services/user.service";
 
+
 // grabs the spotify stats for a user from firebase and returns it
 const SpotifyStats = () => {
   // commmented out until we implement userservice
@@ -8,8 +9,8 @@ const SpotifyStats = () => {
     let top_genres = UserService.getTopGenres();
     let top_tracks = UserService.getTopTracks(); */
   // check if component mounted
-  React.useEffect(() => {
-    console.log('Hi');
+  React.useEffect(()=> {
+    console.log("Hi");
   }, []);
 
   let top_artists = 'test top artist text';
