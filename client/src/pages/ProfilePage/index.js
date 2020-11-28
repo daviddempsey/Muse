@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Biography from '../../components/Biography';
-import CurrentTrack from '../../components/CurrentTrack';
 import FeaturedArtist from '../../components/FeaturedArtist';
 import FeaturedTrack from '../../components/FeaturedTrack';
 import ProfileLink from '../../components/ProfileLink';
@@ -20,7 +19,6 @@ class ProfilePage extends Component {
     return (
       <div>
         <Biography />
-        <CurrentTrack />
         <FeaturedArtist />
         <FeaturedTrack />
         <ProfileLink />

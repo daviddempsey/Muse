@@ -63,26 +63,26 @@ class EditProfilePage extends Component {
         <div id='biography'>
           <label>
             Biography:
-            <textarea value={this.state.Biography} />{' '}
+            <input value={this.state.Biography} />{' '}
           </label>{' '}
         </div>
         <div id='socials'>
           <div id='facebook'>
             <label>
               Facebook:
-              <textarea value={this.state.facebook} />{' '}
+              <input type="text" value={this.state.facebook} />{' '}
             </label>{' '}
           </div>
           <div id='instagram'>
             <label>
               Instagram:
-              <textarea value={this.state.instagram} />{' '}
+              <input type="text" value={this.state.instagram} />{' '}
             </label>{' '}
           </div>
           <div id='twitter'>
             <label>
               Twitter:
-              <textarea value={this.state.twitter} />{' '}
+              <input type="text" value={this.state.twitter} />{' '}
             </label>{' '}
           </div>
         </div>
