@@ -1,11 +1,5 @@
 @import "../../styles/index.css";
 
-.header {
-  flex: 1;
-  width: 101%;
-  margin-bottom: -30%;
-}
-
 .title {
   text-align: left;
   color: var(--red);
@@ -24,6 +18,13 @@
   background-color: var(--almost-white);
   border-radius: 15px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  min-width: 776px;
+}
+
+.header {
+  flex: 1;
+  width: 101%;
+  margin-bottom: -30%;
 }
 
 .rows {
