@@ -62,12 +62,10 @@ class UserService {
     /*create(user) {
       return db.add(user);
     }
-
     // I don't think email can be changed
     update(email, value) {
       return db.doc(email).update(value);
     }
-
     // i don't think we can delete this email
     delete(email) {
       return db.doc(email).delete();
