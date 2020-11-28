@@ -1,5 +1,5 @@
 import React from "react";
-import "./index.css";
+import "../index.css";
 //import UserService from "../services/user.service";
 
 // grabs the spotify stats for a user from firebase and returns it

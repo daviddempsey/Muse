@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Album from "../assets/Channel_ORANGE.jpg";
-import "./index.css";
+import "../index.css";
 //import userService from "../services/user.service";
 
 class CurrentTrack extends Component {

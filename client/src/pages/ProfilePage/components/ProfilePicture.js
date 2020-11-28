@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PFP from "../assets/PFP.png";
-import "./index.css";
+import "../index.css";
 // import UserService from '../services/user.service';
 
 export default class ProfilePicture extends Component {

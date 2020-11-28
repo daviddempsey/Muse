@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Artist from "../assets/frankocean.png";
-import "./index.css";
+import "../index.css";
 //import UserService from "../services/user.service";
 
 class FeaturedArtist extends Component {
