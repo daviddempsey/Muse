@@ -1,5 +1,7 @@
 import React from "react";
 import "./index.css";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import HeaderIcon from "./assets/headericon.png";
 import ProfilePicture from "./components/ProfilePicture";
 import Biography from "./components/Biography";
@@ -13,6 +15,7 @@ import SpotifyStats from "./components/SpotifyStats";
 const ProfilePage = () => {
   return (
     <div>
+      <Header />
       <div className="content">
         <div className="personal">
           <img src={HeaderIcon} className="header" alt="hi" />
@@ -52,6 +55,7 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

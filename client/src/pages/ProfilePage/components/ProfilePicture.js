@@ -1,16 +1,19 @@
 import React, { Component } from "react";
-import UserService from "../services/user.service";
+import "../index.css";
+import PFP from "../assets/PFP.png";
+//import UserService from "../../../services/user.service";
 
 export default class ProfilePicture extends Component {
   constructor(props) {
     super(props);
-    this.onChangePicture = this.onChangePicture.bind(this);
+    //this.onChangePicture = this.onChangePicture.bind(this);
 
     this.state = {
       url: "",
     };
   }
 
+  /*
   componentDidMount() {
     this.getProfilePicture();
   }
@@ -35,10 +38,12 @@ export default class ProfilePicture extends Component {
         console.log(e);
       });
   }
+  */
 
   render() {
     return (
-      <img src={this.state.url} />
+      <img src={PFP} className="profilepicture" alt="pfp" />
+      //<img src={this.state.url} />
       // write form code to upload and set new profile picture
     );
   }
