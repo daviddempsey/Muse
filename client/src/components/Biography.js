@@ -14,7 +14,10 @@ const Biography = () => {
     console.log("Hi");
   }, []);
   let bioText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";
   return <p className="body"> {bioText} </p>;
 };
 

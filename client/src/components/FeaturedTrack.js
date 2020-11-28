@@ -8,7 +8,11 @@ class FeaturedTrack extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tracks: "Lost-channel ORANGE-Frank Ocean",
+      tracks: [
+        "Lost-channel ORANGE-Frank Ocean",
+        "Forrest Gump-channel ORANGE-Frank Ocean",
+        "Super Rich Kids-channel ORANGE-Frank Ocean",
+      ],
     };
     this.changeTrack = this.changeTrack.bind(this);
   }
@@ -22,7 +26,7 @@ class FeaturedTrack extends Component {
     this.setState({ track: newTrack });
   }
 
-  // render functionn
+  // render function
   render() {
     return (
       <div>
@@ -30,11 +34,30 @@ class FeaturedTrack extends Component {
         <div className="trackelement">
           <div className="columns">
             <img src={Album} className="album" alt="album" />
-            <div className="columnRight">
-              <h2>{this.state.name}</h2>
-              <h2>{this.state.tracks.split("-")[0]}</h2>
-              <p className="body">{this.state.tracks.split("-")[1]}</p>
-              <p className="body">{this.state.tracks.split("-")[2]}</p>
+            <div className="trackcontent">
+              <h2>{this.state.tracks[0].split("-")[0]}</h2>
+              <p className="body">{this.state.tracks[0].split("-")[1]}</p>
+              <p className="body">{this.state.tracks[0].split("-")[2]}</p>
+            </div>
+          </div>
+        </div>
+        <div className="trackelement">
+          <div className="columns">
+            <img src={Album} className="album" alt="album" />
+            <div className="trackcontent">
+              <h2>{this.state.tracks[1].split("-")[0]}</h2>
+              <p className="body">{this.state.tracks[1].split("-")[1]}</p>
+              <p className="body">{this.state.tracks[1].split("-")[2]}</p>
+            </div>
+          </div>
+        </div>
+        <div className="trackelement">
+          <div className="columns">
+            <img src={Album} className="album" alt="album" />
+            <div className="trackcontent">
+              <h2>{this.state.tracks[2].split("-")[0]}</h2>
+              <p className="body">{this.state.tracks[2].split("-")[1]}</p>
+              <p className="body">{this.state.tracks[2].split("-")[2]}</p>
             </div>
           </div>
         </div>
