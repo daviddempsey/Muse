@@ -17,3 +17,5 @@ const TopStats = () => {
     </div>
   );
 };
+
+export default TopStats;
