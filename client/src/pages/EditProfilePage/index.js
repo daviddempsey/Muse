@@ -13,12 +13,12 @@ class EditProfilePage extends Component {
       facebook: 'https://www.facebook.com',
       instagram: 'https://www.instagram.com',
       twitter: 'https://www.twitter.com',
-      playlists: ['A', 'B', 'C']
+      playlists: ['A', 'B', 'C'],
     };
     //event handlers for when we update text field and submit button
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.componentDidCatch = this.componentDidCatch.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   //checks if component mounted
@@ -56,7 +56,7 @@ class EditProfilePage extends Component {
 
   getPlaylists() {
     let playlists = ['A', 'B', 'C'];
-    this.playlists({ playlists: playlists });
+    this.setState({ playlists: playlists });
   }
 
   // onCHange updates the state
@@ -65,6 +65,7 @@ class EditProfilePage extends Component {
     this.setState({ facebook: event.target.facebook });
     this.setState({ twitter: event.target.twitter });
     this.setState({ instagram: event.target.instagram });
+    this.setState({ playlists: event.target.playlists });
   }
 
   /* event handler for when user hits submit button*/
@@ -126,8 +127,11 @@ class EditProfilePage extends Component {
           </div>
           <div id='playlist-form'>
             <label> Playlists: </label>
-            <select value={this.state.playlists}
-                  onChange={this.handleChange} multiple>
+            <select
+              value={this.state.playlists}
+              onChange={this.handleChange}
+              multiple
+            >
               <option value='$'>$</option>
               <option value='T'>T</option>
               <option value='S'>S</option>

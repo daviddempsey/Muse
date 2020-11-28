@@ -5,7 +5,7 @@ const FeaturedPlaylists = () => {
   const [playlists, setPlaylists] = useState([
     'joie de vivre',
     'je ne sais quoi',
-    'je ne parle pas français'
+    'je ne parle pas français',
   ]);
 
   // check if component mounted

@@ -20,7 +20,8 @@ const SpotifyStats = () => {
 
   return (
     <div>
-      <h1> {songStats} </h1> <h1> {albumStats} </h1> <h1> {artistStats} </h1><h1>{minuteStats}</h1>{' '}
+      <h1> {songStats} </h1> <h1> {albumStats} </h1> <h1> {artistStats} </h1>
+      <h1>{minuteStats}</h1>{' '}
     </div>
   );
 };

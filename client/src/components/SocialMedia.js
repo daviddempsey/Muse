@@ -8,17 +8,15 @@ const SocialMedia = () => {
   const [twitter, setTwitter] = useState('https://www.twitter.com');
   const [tiktok, setTikTok] = useState('https://www.tiktok.com');
 
-  
   // check if component mounted
   React.useEffect(() => {
     console.log('Hi');
   }, []);
 
   return (
-    <div id="socialmedia">
+    <div id='socialmedia'>
       <h1> Hello Social Media </h1> <a href={facebook}> FACEBOOK </a>{' '}
-      <a href={instagram}> INSTAGRAM </a>{' '}
-      <a href={twitter}> TWITTER </a>{' '}
+      <a href={instagram}> INSTAGRAM </a> <a href={twitter}> TWITTER </a>{' '}
       <a href={tiktok}> TIKTOK </a>{' '}
     </div>
   );
