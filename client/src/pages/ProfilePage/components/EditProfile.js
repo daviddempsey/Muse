@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import "./index.css";
+import "../index.css";
 import Popup from "./Popup";
 
-export default class EditProfilePage extends Component {
+export default class EditProfile extends Component {
   state = {
     seen: false,
   };

@@ -10,7 +10,7 @@ import FeaturedTrack from "./components/FeaturedTrack";
 import ProfileLink from "./components/ProfileLink";
 import SocialMedia from "./components/SocialMedia";
 import SpotifyStats from "./components/SpotifyStats";
-import EditProfilePage from "../EditProfilePage";
+import EditProfilePage from "./components/EditProfile";
 
 const ProfilePage = () => {
   return (
