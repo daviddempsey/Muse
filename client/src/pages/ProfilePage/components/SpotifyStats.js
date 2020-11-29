@@ -14,32 +14,28 @@ const SpotifyStats = () => {
   }, []);
 
   let top_artists_num = "1,000,000";
-  let top_artists = "artists listened to";
   let top_genres_num = "1,000,000";
-  let top_genres = "genres listened to";
   let top_tracks_num = "1,000,000";
-  let top_tracks = "songs listened to";
   let minutes_num = "1,000,000";
-  let minutes = "minutes listened to";
 
   return (
     <div>
       <h2 className="title"> Spotify Stats </h2>
       <div className="element">
         <h1> {top_artists_num} </h1>
-        <h3> {top_artists} </h3>
+        <h3>artists listenedd to</h3>
       </div>
       <div className="altelement">
         <h1> {top_genres_num} </h1>
-        <h3> {top_genres} </h3>
+        <h3>genres listened to</h3>
       </div>
       <div className="element">
         <h1> {top_tracks_num} </h1>
-        <h3> {top_tracks} </h3>{" "}
+        <h3> songs listened to</h3>{" "}
       </div>
       <div className="altelement">
         <h1> {minutes_num} </h1>
-        <h3> {minutes} </h3>
+        <h3>minutes listened to</h3>
       </div>
     </div>
   );

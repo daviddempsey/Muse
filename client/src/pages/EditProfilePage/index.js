@@ -17,13 +17,12 @@ export default class EditProfilePage extends Component {
   render() {
     return (
       <div>
-        <img
-          src={EditButton}
-          className="btn"
-          alt="edit"
-          onClick={this.togglePop}
-        />
-        {this.state.seen ? <Popup toggle={this.togglePop} /> : null}
+        <button className="btn" onClick={this.togglePop}>
+          <h3>Edit Profile</h3>
+        </button>
+        {this.state.seen ? (
+          <Popup className="popup" toggle={this.togglePop} />
+        ) : null}
       </div>
     );
   }

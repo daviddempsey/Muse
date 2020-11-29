@@ -41,26 +41,6 @@ class FeaturedTrack extends Component {
             </div>
           </div>
         </div>
-        <div className="trackelement">
-          <div className="columns">
-            <img src={Album} className="album" alt="album" />
-            <div className="trackcontent">
-              <h2>{this.state.tracks[1].split("-")[0]}</h2>
-              <p className="body">{this.state.tracks[1].split("-")[1]}</p>
-              <p className="body">{this.state.tracks[1].split("-")[2]}</p>
-            </div>
-          </div>
-        </div>
-        <div className="trackelement">
-          <div className="columns">
-            <img src={Album} className="album" alt="album" />
-            <div className="trackcontent">
-              <h2>{this.state.tracks[2].split("-")[0]}</h2>
-              <p className="body">{this.state.tracks[2].split("-")[1]}</p>
-              <p className="body">{this.state.tracks[2].split("-")[2]}</p>
-            </div>
-          </div>
-        </div>
       </div>
     );
   }

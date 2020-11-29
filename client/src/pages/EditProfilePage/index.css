@@ -4,6 +4,14 @@
   width: auto;
   height: auto;
   max-height: 40px;
+  color: var(--red);
+  background-color: var(--almost-white);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 2.2rem;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 2rem;
   margin-left: 30px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
