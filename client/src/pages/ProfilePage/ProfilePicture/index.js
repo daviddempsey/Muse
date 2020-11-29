@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import UserService from "../services/user.service"
 
-export default class profilePicture extends Component {
+export default class ProfilePicture extends Component {
     constructor(props) {
         super(props);
         this.onChangePicture = this.onChangePicture.bind(this);
