@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import UserService from "../services/user.service";
+import React from 'react';
+import UserService from '../../services/user.service';
 
 const ProfileLink = () => {
   let profileLink = UserService.getProfileLink();

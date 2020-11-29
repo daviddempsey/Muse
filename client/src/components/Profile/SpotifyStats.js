@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import userService from '../../services/user.service';
-//import UserService from "../services/user.service";
-
+import React from 'react';
+import UserService from '../../services/user.service';
 // grabs the spotify stats for a user from firebase and returns it
 const SpotifyStats = () => {
   // my assumption is that the database stores numerical value of how many minutes, numberof songs, etc.

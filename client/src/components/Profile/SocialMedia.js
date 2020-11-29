@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import UserService from "../services/user.service";
+import React from 'react';
+import UserService from '../../services/user.service';
 
 const SocialMedia = () => {
   // uncomment userservice once we get it to work.
@@ -16,8 +16,8 @@ const SocialMedia = () => {
   return (
     <div id='socialmedia'>
       <h1> Hello Social Media </h1> <a href={facebookLink}> FACEBOOK </a>{' '}
-      <a href={instagramLink}> INSTAGRAM </a> <a href={twitterLink}> TWITTER </a>{' '}
-      <a href={tiktokLink}> TIKTOK </a>{' '}
+      <a href={instagramLink}> INSTAGRAM </a>{' '}
+      <a href={twitterLink}> TWITTER </a> <a href={tiktokLink}> TIKTOK </a>{' '}
     </div>
   );
 };

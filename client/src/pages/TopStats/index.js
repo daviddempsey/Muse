@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import UserTopStats from "../services/userTopStats"
+import UserService from '../../services/user.service';
+
+// i don t know hy this is in the page folder, prolly duplicate since we have TopStats.js in ../components/
 
 const TopStats = () => {
 
@@ -7,8 +9,8 @@ const TopStats = () => {
 
     const [topTrack, setTopTrack] = useState("");
 
-    setTopArtist(UserTopStats.getTopArtist());
-    setTopTrack(UserTopStats.getTopTrack());
+    setTopArtist(UserService.getTopArtist());
+    setTopTrack(UserService.getTopTrack());
 
     return( // idk what to return 
         <div>  
@@ -18,3 +20,5 @@ const TopStats = () => {
     );
 
 }
+
+export default TopStats;
