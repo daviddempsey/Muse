@@ -1,0 +1,90 @@
+@import '../../../styles/index.css';
+
+.Home header h3 {
+    font-size: 18px;
+}
+
+.Home header .scroll-menu {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+    display: flex;
+    align-items: center;
+    background-color: var(--yellow);
+}
+
+.Home header .scroll-menu .empty {
+    flex-grow: 1;
+}
+
+.Home header .scroll-menu li h1 {
+    font-size: 32px;
+}
+
+.Home header .scroll-menu li:first-of-type {
+    padding-left: 6rem;
+    display: flex;
+    align-items: center;
+}
+
+.Home header .scroll-menu li:last-of-type {
+    padding-right: 6rem;
+}
+
+.Home header .scroll-menu li .scroll-item {
+    color: var(--black);
+    text-decoration: transparent;
+}
+
+.Home header .scroll-menu li .scroll-item:hover {
+    border-bottom: 2px solid var(--black);
+}
+
+.Home header .scroll-menu li {
+    padding: 1em;
+}
+
+.Home .desc{
+    display: flex;
+    align-items: center;
+    
+    min-height: 100vh;
+    padding: 0rem 6rem;
+}
+
+.Home .desc .text-col {
+    flex: 50%
+}
+
+.Home .desc .text-col h1 {
+    line-height: 3.75rem;
+    padding-bottom: 1rem;
+}
+
+.Home .desc .text-col p {
+    color: var(--grey);
+    line-height: 1.75rem;
+    padding-bottom: 1rem;
+}
+
+.Home .desc .text-col .login-btn {
+    background-color: var(--red);
+    border: 0px transparent;
+    border-radius: 1.875rem;
+    height: 3.75rem;
+    width: 12.5rem;
+}
+
+.Home .text-col .login-btn:hover {
+    opacity: 75%;
+}
+
+.Home .text-col .login-btn:focus {
+    outline: none;
+}
+
+.Home .text-col .login-btn h3 {
+    font-size: 1.125rem;
+    color: var(--white);
+}

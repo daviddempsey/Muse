@@ -1,0 +1,12 @@
+@import './reset.css';
+@import './typography.css';
+
+:root {
+  --yellow: #f9d342;
+  --red: #ff6666;
+  --teal: #4bc6b9;
+  --black: #191919;
+  --grey: #646165;
+  --almost-white: #fafaff;
+  --white: #fcfcfc;
+}
