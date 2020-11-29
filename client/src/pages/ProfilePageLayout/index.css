@@ -1,0 +1,13 @@
+@import '../../styles/index.css';
+
+.ProfilePage .container .content {
+    padding: 6rem;
+}
+
+.ProfilePage .container .row {
+    display: flex;
+}
+
+.ProfilePage .container .row .column {
+    flex: 50%;
+}

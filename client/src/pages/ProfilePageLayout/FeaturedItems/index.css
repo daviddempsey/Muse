@@ -1,0 +1,10 @@
+@import '../../../styles/index.css';
+
+.FeaturedItems {
+    padding-right: 1rem;
+}
+
+.FeaturedItems .temp-box {
+    box-shadow: 0px 0px 4px;
+    height: 20rem;
+}
