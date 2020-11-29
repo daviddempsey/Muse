@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
 import Popup from "./Popup";
-import EditButton from "./EditProfile.png";
 
 export default class EditProfilePage extends Component {
   state = {
