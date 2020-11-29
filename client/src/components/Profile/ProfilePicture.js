@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import UserService from "../services/user.service"
+import React, { Component } from 'react';
+import UserService from "../../services/user.service";
 
 export default class profilePicture extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ export default class profilePicture extends Component {
 
     getProfilePicture() {
         let profilePictureURL = UserService.getProfilePicture();
-        this.setState({url: profilePictureURL});
+        this.setState({ url: profilePictureURL });
     }
 
     onChangePicture() {
@@ -27,7 +27,7 @@ export default class profilePicture extends Component {
     }
 
     savePicture() {
-        UserService.update({profile_picture: this.state.url})
+        UserService.update({ profile_picture: this.state.url })
             .then(() => {
                 console.log("Uploaded new picture successfully!");
             })
@@ -37,8 +37,9 @@ export default class profilePicture extends Component {
     }
 
     render() {
-        return (
-            <img src={this.state.url} />
+        return ( <
+            img src = { this.state.url }
+            />
             // write form code to upload and set new profile picture
         );
     }

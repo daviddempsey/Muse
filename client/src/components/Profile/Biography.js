@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-//import UserService from '../services/user.service';
+import React from 'react';
+import UserService from '../../services/user.service';
 
 /*update a user's biography.
   Current functionality: basic text element with a save button to 
@@ -7,14 +7,12 @@ import React, { useState } from 'react';
 
 const Biography = () => {
   // uncomment userservice once we get it to work
-  const [bioText, setBioText] = useState('this is a test bio text pls');
-
   // check if component mounted
   React.useEffect(() => {
-    console.log('Hi');
+    console.log('Component is Mounted');
   }, []);
 
-  return <div> {bioText} </div>;
+  return <div> {UserService.getBiography()} </div>;
 };
 
 export default Biography;
