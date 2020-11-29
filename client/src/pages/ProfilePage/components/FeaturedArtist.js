@@ -26,7 +26,7 @@ class FeaturedArtist extends Component {
   render() {
     return (
       <div>
-        <h2 className="title"> Featured Artists </h2>
+        <h2 className="title"> Top Artists </h2>
         <div className="artistimgs">
           <img src={Artist} className="artistimg" alt="artist" />
         </div>

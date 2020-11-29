@@ -74,6 +74,7 @@
 
 .decal {
   flex: 1;
+  height: auto;
   width: 101%;
   margin-bottom: -30%;
 }

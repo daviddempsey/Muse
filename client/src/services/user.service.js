@@ -1,4 +1,3 @@
-/*
 import firebase from "firebase";
 
 const db = firebase.firestore();
@@ -15,10 +14,10 @@ class UserService {
 
   getProfilePicture(email) {
     return userCollection.doc(email).get()["profile_picture"];
-  }*/
+  }
 
-/* SOCIAL MEDIA GET FUNCTIONS */
-/*getFacebook(email) {
+  /* SOCIAL MEDIA GET FUNCTIONS */
+  getFacebook(email) {
     return userCollection.doc(email).get()["facebook"];
   }
 
@@ -36,10 +35,10 @@ class UserService {
 
   getSpotify(email) {
     return userCollection.doc(email).get()["spotify"];
-  }*/
+  }
 
-/* Profile information get functions */
-/*getBiography(email) {
+  /* Profile information get functions */
+  getBiography(email) {
     return userCollection.doc(email).get()["biography"];
   }
 
@@ -57,10 +56,10 @@ class UserService {
 
   getTopTracks(email) {
     return userCollection.doc(email).get()["top_tracks"];
-  }*/
+  }
 
-// what is this function
-/*create(user) {
+  // what is this function
+  /*create(user) {
     return db.add(user);
   }
 
@@ -73,7 +72,6 @@ class UserService {
   delete(email) {
     return db.doc(email).delete();
   }*/
-/*}
+}
 
 export default new UserService();
-*/

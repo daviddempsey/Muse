@@ -23,7 +23,7 @@ const SpotifyStats = () => {
       <h2 className="title"> Spotify Stats </h2>
       <div className="element">
         <h1> {top_artists_num} </h1>
-        <h3>artists listenedd to</h3>
+        <h3>artists listened to</h3>
       </div>
       <div className="altelement">
         <h1> {top_genres_num} </h1>

@@ -10,7 +10,7 @@ import FeaturedTrack from "./components/FeaturedTrack";
 import ProfileLink from "./components/ProfileLink";
 import SocialMedia from "./components/SocialMedia";
 import SpotifyStats from "./components/SpotifyStats";
-import EditProfilePage from "./components/EditProfile";
+import EditProfile from "./components/EditProfile";
 
 const ProfilePage = () => {
   return (
@@ -25,7 +25,7 @@ const ProfilePage = () => {
               </div>
               <div className="rowMid">
                 <h1 className="title">Frank_Ocean_22</h1>
-                <EditProfilePage />
+                <EditProfile />
                 <ProfileLink />
               </div>
               <div className="rowMid">

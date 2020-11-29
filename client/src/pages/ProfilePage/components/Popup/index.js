@@ -12,7 +12,17 @@ export default class Popup extends Component {
         <span className="close" onClick={this.handleClick}>
           &times;
         </span>
-        <h1 className="title"> Edit Bio </h1>
+        <div>
+          <div>
+            <h1 className="title"> Edit Bio </h1>
+          </div>
+          <div>
+            <h1 className="title"> Manage Featured Playlists </h1>
+          </div>
+          <div>
+            <h1 className="title"> Manage Socials </h1>
+          </div>
+        </div>
       </div>
     );
   }

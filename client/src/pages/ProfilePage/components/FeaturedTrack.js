@@ -30,7 +30,7 @@ class FeaturedTrack extends Component {
   render() {
     return (
       <div>
-        <h2 className="title"> Featured Tracks </h2>
+        <h2 className="title"> Top Tracks </h2>
         <div className="trackelement">
           <div className="columns">
             <img src={Album} className="album" alt="album" />
