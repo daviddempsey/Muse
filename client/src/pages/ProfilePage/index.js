@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 import DefaultLayout from "../DefaultLayout";
-import HeaderIcon from "./assets/headericon.png";
+import Decal from "./assets/decal.png";
 import ProfilePicture from "./components/ProfilePicture";
 import Biography from "./components/Biography";
 import CurrentTrack from "./components/CurrentTrack";
@@ -18,7 +18,7 @@ const ProfilePage = () => {
       <DefaultLayout>
         <div className="content">
           <div className="personal">
-            <img src={HeaderIcon} className="header" alt="hi" />
+            <img src={Decal} className="decal" alt="decal" />
             <div className="rows">
               <div className="rowTop">
                 <ProfilePicture />

@@ -11,4 +11,11 @@
   background-color: var(--almost-white);
   border-radius: 15px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  text-align: right;
+}
+
+.close {
+  font-size: 3rem;
+  color: var(--red);
+  margin-right: 1rem;
 }

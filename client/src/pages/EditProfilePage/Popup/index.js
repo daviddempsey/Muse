@@ -9,7 +9,10 @@ export default class Popup extends Component {
   render() {
     return (
       <div className="modal">
-        <h1> Edit Bio </h1>
+        <span className="close" onClick={this.handleClick}>
+          &times;
+        </span>
+        <h1 className="title"> Edit Bio </h1>
       </div>
     );
   }
