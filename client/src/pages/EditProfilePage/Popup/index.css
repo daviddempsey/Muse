@@ -1,0 +1,7 @@
+@import "../../../styles/index.css";
+
+.modal {
+  display: none;
+  position: fixed;
+  background-color: var(--almost-white);
+}

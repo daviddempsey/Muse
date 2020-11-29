@@ -1,31 +1,36 @@
-@import '../../styles/index.css';
+@import "../../styles/index.css";
 
 .footer {
-    height: 4rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background-color: var(--yellow);
+  height: 4rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--yellow);
 }
 
 .footer .empty {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .footer li h3 {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .footer li h1 {
-    font-size: 32px;
+  font-size: 32px;
 }
 
 .footer li:last-of-type {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .footer li {
-    padding: 1rem 6rem;
-    color: var(--black);
+  padding: 1rem 6rem;
+  color: var(--black);
+}
+
+.footer img {
+  height: 2rem;
+  width: 2rem;
 }
