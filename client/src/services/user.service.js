@@ -2,6 +2,8 @@ import firebase from "firebase";
 
 const db = firebase.firestore();
 const userCollection = db.collection("user");
+// we probably need to add more collections since we only reference user rn when we need 
+// to reference profile too
 
 class UserService {
     getAll() {
@@ -60,6 +62,19 @@ class UserService {
 
     getUserPlaylists(email) {
         return userCollection.doc(email).get()["playlists"];
+    }
+
+    getSongStats() {
+        // NO SONG STATS IN DATABASE YET 
+    }
+    getAlbumStats() {
+        // NO ALBUM STATS IN DATABASE YET
+    }
+    getArtistStats() {
+        // NO ARTIST STATS IN DATABASE YET
+    }
+    getMinuteStats() {
+        // NO MINUTES STATS IN DATABASE YET
     }
 
     // what is this function 

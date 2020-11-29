@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
+import userService from '../../services/user.service';
 //import UserService from "../services/user.service";
 
 // grabs the spotify stats for a user from firebase and returns it
 const SpotifyStats = () => {
-  // commmented out until we implement userservice
-  /*let top_artists = UserService.getTopArtists();
-    let top_genres = UserService.getTopGenres();
-    let top_tracks = UserService.getTopTracks(); */
   // my assumption is that the database stores numerical value of how many minutes, numberof songs, etc.
-  const [songStats, setSongStats] = useState(100000);
-  const [albumStats, setAlbumStats] = useState(100000);
-  const [artistStats, setAristStats] = useState(1000000);
-  const [minuteStats, setMinuteStats] = useState(10000000000);
+  let songStats = UserService.getSongStats();
+  let albumStats = UserService.getAlbumStats();
+  let artistStats = UserService.getArtistStats();
+  let minuteStats = UserService.getMinuteStats();
 
   // check if component mounted
   React.useEffect(() => {
