@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
-import ProfilePage from '../ProfilePage/index';
+import fb from '../../base';
+import { useEffect } from 'react';
 
-class LoadingPage extends Component {
-    constructor(props) {
-        super(props);
+const LoadingPage = ({history}) => {
+
+    useEffect(() => {
+        handleSignIn();
+    })
+
+    const handleSignIn = () => {
+
+        // get token from cookie
+        const token = Cookies.get('token');
+        
+        // try to sign user in 
+        try {
+            fb.auth().signInWithCustomToken(token);
+            history.push("/profile");
+        } catch (error) {
+            alert(error);
+        }
     }
 
-    componentDidMount = () => {};
-
-    render = () => {
-        return(
-            <div>
-                
-            </div>
-        );
-    };
+    return(
+        <div>
+            <p>Spinner should be here</p>
+        </div>
+    );
 }
+
+export default LoadingPage;

@@ -7,6 +7,7 @@ import FeaturedTrack from '../../components/FeaturedTrack';
 import ProfileLink from '../../components/ProfileLink';
 import SocialMedia from '../../components/SocialMedia';
 import SpotifyStats from '../../components/SpotifyStats';
+import fb from '../../base';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class ProfilePage extends Component {
         <SocialMedia />
         <SpotifyStats />
         <p>{Cookies.get('token')}</p>
+        <p>{fb.auth().currentUser.email}</p>
       </div>
     );
   };
