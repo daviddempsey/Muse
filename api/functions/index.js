@@ -139,7 +139,7 @@ app.get('/callback', function(req, res) {
             // redirect to profile
             firebaseToken
             .then((value) => res.cookie("token", value)
-                  .redirect("http://localhost:3001/profile"), (e) => console.log(e));
+                  .redirect("http://localhost:3001/logging"), (e) => console.log(e));
 
           });
   

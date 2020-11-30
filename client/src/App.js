@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
+import LoadingPage from './pages/LoadingPage';
 import './styles/index.css';
 
 function App() {
