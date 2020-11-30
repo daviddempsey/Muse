@@ -13,14 +13,19 @@ export default class Popup extends Component {
           &times;
         </span>
         <div className="content">
-          <div>
-            <h1 className="title"> Edit Bio </h1>
+          <div className="row-1">
+            <div className="col-2">
+              <h1 className="title"> Edit Bio </h1>
+              <div className="form"></div>
+            </div>
           </div>
-          <div>
+          <div className="row-2">
             <h1 className="title"> Manage Featured Playlists </h1>
+            <div className="form"></div>
           </div>
-          <div>
+          <div className="row-3">
             <h1 className="title"> Manage Socials </h1>
+            <div></div>
           </div>
         </div>
       </div>
