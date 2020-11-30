@@ -1,9 +1,28 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './index.css';
 
-const Template = () => {
-  return <div className="Template">
-    
-  </div>;
-};
-export default Template;
+
+import DefaultLayout from '../DefaultLayout';
+import FriendsPage from '../../components/friendPage';
+
+export default class FriendPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  componentDidMount = () => {};
+
+  render = () => {
+    return (
+      <div id='friend-page'>
+        <DefaultLayout>
+          <div id='friends'>
+            <FriendsPage />
+          </div>
+        </DefaultLayout>
+      </div>
+    )
+  }
+}

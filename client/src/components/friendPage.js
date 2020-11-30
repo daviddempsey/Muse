@@ -7,7 +7,12 @@ import UserService from "../services/user.service"
 /* view and a user's friends list */
 export default function friendPage() {
     // get the friends list from the database
-    let friendsList = UserService.getFriends();
+
+    // need user.service to work first
+    // let friendsList = UserService.getFriends();
+    let friendsList = ["Enoch", "Jason", "David", "Kenny"];
+
+    
 
     const friends = friendsList.map((email, compatibility) => {
         return <li><Friend email={email, compatibility}/></li>
