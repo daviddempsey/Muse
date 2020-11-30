@@ -78,6 +78,7 @@
 
 .Home .text-col .login-btn:hover {
     opacity: 75%;
+    cursor: pointer;
 }
 
 .Home .text-col .login-btn:focus {
