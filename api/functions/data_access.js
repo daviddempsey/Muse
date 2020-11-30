@@ -139,8 +139,8 @@ async function createUserStatsTopArtists(db, email, topArtists) {
   for( var i in topArtists ) {
     var entry = {
       "rank": (+i + +1),
-      "track_name": topArtists[i]["name"],
-      "track_id": topArtists[i]["id"]
+      "artist_name": topArtists[i]["name"],
+      "artist_id": topArtists[i]["id"]
     }
     formattedList["top_artists"].push(entry);
   } 

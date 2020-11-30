@@ -6,6 +6,7 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var data_access = require('./data_access'); // the database access functions
+var inHarmony = require('./inHarmony'); // inHarmony Algorithm
 
 var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
 var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
@@ -265,6 +266,46 @@ app.get("/api/user/stats/:section/:id", (req, res) => {
         }
     })();
 })
+
+// Compute In-Harmony Score
+app.get("/api/user/compute/:currUserId/:otherUserId", (req, res) => {
+    (async() => {
+        try {
+
+          // for every user in our database, run this method below 
+            // Computing the compatibility of two users 
+           let response = await inHarmony.computeCompatibility(
+             fsdb, req.params.currUserId, req.params.otherUserId);
+
+            // send product data to front end
+            return res.status(200).send(response.toString());
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+// TODO: DELETE LATER
+app.post('/api/user/stats/copy', (req, res) => {
+
+    (async () => {
+
+        try {
+            await fsdb.collection('stats').doc('test1@test.com')
+            .create( {
+                top_genres: req.body.top_genres,
+                top_artists: req.body.top_artists,
+                top_tracks: req.body.top_tracks,
+            })
+            return res.status(200).send();
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
 
 // Update, PUT
 
