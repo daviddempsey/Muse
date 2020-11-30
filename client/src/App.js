@@ -13,6 +13,7 @@ function App() {
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/profile' component={ProfilePage} />
           <Route exact path='/editprofile' component={EditProfilePage} />
+          <Route exact path='/logging' component={LoadingPage} />
         </Switch>
       </Router>
     </div>
