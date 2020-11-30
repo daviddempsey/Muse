@@ -26,21 +26,6 @@ const fsdb = admin.firestore();
 
 // create cores 
 const cors = require('cors');
-
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-var generateRandomString = function(length) {
-    var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
-    for (var i = 0; i < length; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-};
   
 var stateKey = 'spotify_auth_state';
   
@@ -50,6 +35,21 @@ app.use(express.static(__dirname + './../public'))
       'origin': '*',
       'preflightContinue': true}))
     .use(cookieParser());
+
+/**
+ * Generates a random string containing numbers and letters
+ * @param  {number} length The length of the string
+ * @return {string} The generated string
+ */
+var generateRandomString = function(length) {
+  var text = '';
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
 
 // Routes
 app.get('/', (req, res) => {
@@ -270,13 +270,9 @@ app.get("/api/user/stats/:section/:id", (req, res) => {
 
 // Delete, DELETE
 
-
-// other functions
-
 // app.listen(3000, function () {
 //   console.log('CORS-enabled web server listening on port 3000')
 // })
-
 
 // call function whenever there's a new request
 // export api to Firebase cloud functions
