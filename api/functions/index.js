@@ -133,7 +133,9 @@ app.get('/callback', function(req, res) {
             var spotifyUrl = body['external_urls']['spotify'];
   
             var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
-            firebaseToken.then((value) => res.cookie("token", value).redirect("http://localhost:3000"), (e) => console.log(e));
+
+            // redirect to profile
+            firebaseToken.then((value) => res.cookie("token", value).redirect("http://localhost:3001/profile"), (e) => console.log(e));
             data_access.createUserStats(fsdb, userEmail, access_token, refresh_token)
           });
   

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Cookies from 'js-cookie';
 import Biography from '../../components/Biography';
 import CurrentTrack from '../../components/CurrentTrack';
 import FeaturedArtist from '../../components/FeaturedArtist';
@@ -11,7 +12,10 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      firebaseToken: Cookies.get('token')
+    };
+    console.log("OH HELLO, TERMINAL", Cookies.get('token'));
   }
 
   componentDidMount = () => {};
@@ -26,6 +30,7 @@ class ProfilePage extends Component {
         <ProfileLink />
         <SocialMedia />
         <SpotifyStats />
+        <p>{Cookies.get('token')}</p>
       </div>
     );
   };
