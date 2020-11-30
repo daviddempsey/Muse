@@ -33,7 +33,7 @@ class FeaturedTrack extends Component {
         <h2 className="title"> Top Tracks </h2>
         <div className="trackelement">
           <div className="columns">
-            <img src={Album} className="album" alt="album" />
+            <img src={Album} alt="album" />
             <div className="trackcontent">
               <h2>{this.state.tracks[0].split("-")[0]}</h2>
               <p className="body">{this.state.tracks[0].split("-")[1]}</p>

@@ -20,24 +20,24 @@ const ProfilePage = () => {
           <div className="personal">
             <img src={Decal} className="decal" alt="decal" />
             <div className="rows">
-              <div className="rowTop">
+              <div className="row-1">
                 <ProfilePicture />
               </div>
-              <div className="rowMid">
+              <div className="row-2">
                 <h1 className="title">Frank_Ocean_22</h1>
                 <EditProfile />
                 <ProfileLink />
               </div>
-              <div className="rowMid">
+              <div className="row-2">
                 <SocialMedia />
               </div>
-              <div className="rowBot">
+              <div className="row-3">
                 <Biography />
               </div>
             </div>
           </div>
           <div className="columns">
-            <div className="columnLeft">
+            <div className="col-1">
               <div className="tracks">
                 <CurrentTrack />
               </div>
@@ -49,7 +49,7 @@ const ProfilePage = () => {
               </div>
               {/*<div className="playlists"></div>*/}
             </div>
-            <div className="columnRight">
+            <div className="col-2">
               <div className="stats">
                 <SpotifyStats />
               </div>

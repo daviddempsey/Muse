@@ -16,7 +16,7 @@ export default class EditProfile extends Component {
   render() {
     return (
       <div>
-        <button className="btn" onClick={this.togglePop}>
+        <button className="edit" onClick={this.togglePop}>
           <h3>Edit Profile</h3>
         </button>
         {this.state.seen ? (

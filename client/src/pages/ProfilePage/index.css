@@ -15,54 +15,27 @@
   margin: 50px 100px 50px 100px;
 }
 
-/* Row and column styles */
-.rows {
-  display: flex;
-  flex-direction: column;
-  margin-top: -80px;
-  margin-left: 20px;
-}
-
-.rowTop {
-  text-align: left;
-  padding-top: 100px;
-  padding-bottom: 30px;
-  padding-left: 10px;
-}
-
-.rowMid {
-  display: flex;
-  flex-direction: row;
-  padding-bottom: 15px;
-  padding-left: 10px;
-}
-
-.rowBot {
-  text-align: left;
-  padding-left: 10px;
-  padding-bottom: 30px;
-}
-
-.columns {
+/* Content styles */
+.content .columns {
   display: flex;
   flex-direction: row;
 }
 
-.columnLeft {
+.content .columns .col-1 {
   display: flex;
   flex: 0.5;
   flex-direction: column;
   margin-right: 10px;
 }
 
-.columnRight {
+.content .columns .col-2 {
   display: flex;
   flex: 0.5;
   flex-direction: column;
   margin-left: 10px;
 }
 
-/* Personal info styles */
+/* Personal info */
 .personal {
   overflow: hidden;
   margin-bottom: 30px;
@@ -72,14 +45,42 @@
   min-width: 776px;
 }
 
-.decal {
+.personal .decal {
   flex: 1;
   height: auto;
   width: 101%;
   margin-bottom: -30%;
 }
 
-.profilepicture {
+.personal .rows {
+  display: flex;
+  flex-direction: column;
+  margin-top: -80px;
+  margin-left: 20px;
+}
+
+.personal .rows .row-1 {
+  text-align: left;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+}
+
+.personal .rows .row-2 {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 15px;
+  padding-left: 10px;
+}
+
+.personal .rows .row-3 {
+  text-align: left;
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+
+/* PFP component */
+.pfp {
   width: 200px;
   height: 200px;
   border-style: solid;
@@ -88,7 +89,8 @@
   border-radius: 50%;
 }
 
-.btn {
+/* Edit profile component */
+.edit {
   width: auto;
   height: auto;
   max-height: 40px;
@@ -104,6 +106,7 @@
   margin-top: 2px;
 }
 
+/* Profile link component */
 .copylink {
   width: 45px;
   height: 45px;
@@ -116,13 +119,14 @@
   border-radius: 50%;
 }
 
-.link {
+.copylink .link {
   width: auto;
   height: auto;
   max-height: 25px;
   margin-top: 0.2rem;
 }
 
+/* Social media component */
 .socials {
   width: 50px;
   height: 50px;
@@ -130,7 +134,7 @@
   border-radius: 50%;
 }
 
-/* Track styles */
+/* Top tracks component */
 .tracks {
   padding: 30px;
   margin-bottom: 30px;
@@ -140,7 +144,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-.trackelement {
+.tracks .trackelement {
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -152,18 +156,23 @@
   border-radius: 15px;
 }
 
-.trackcontent {
+.tracks .trackelement .trackcontent {
   display: flex;
   flex-direction: column;
   margin-left: 10px;
 }
 
-.album {
+.tracks .trackelement .columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.tracks .trackelement img {
   width: 100px;
   height: 100px;
 }
 
-/* Artist styles */
+/* Top artists component */
 .artists {
   padding: 30px;
   margin-bottom: 30px;
@@ -173,14 +182,14 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-.artistimg {
+.artistimgs {
+  margin-top: 10px;
+}
+
+.artistimgs img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-}
-
-.artistimgs {
-  margin-top: 10px;
 }
 
 /* Playlist styles */
@@ -202,7 +211,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-.element {
+.stats .element {
   padding: 50px;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -212,7 +221,7 @@
   border-radius: 15px;
 }
 
-.altelement {
+.stats .altelement {
   padding: 50px;
   margin-top: 15px;
   margin-bottom: 15px;

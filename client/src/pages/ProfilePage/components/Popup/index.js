@@ -12,7 +12,7 @@ export default class Popup extends Component {
         <span className="close" onClick={this.handleClick}>
           &times;
         </span>
-        <div>
+        <div className="content">
           <div>
             <h1 className="title"> Edit Bio </h1>
           </div>

@@ -14,6 +14,19 @@
   text-align: right;
 }
 
+.modal .content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  margin-right: 3rem;
+  margin-bottom: 1rem;
+  margin-left: 3rem;
+}
+
+/*
+.modal .content .row-1 {
+}*/
+
 .close {
   font-size: 3rem;
   color: var(--red);

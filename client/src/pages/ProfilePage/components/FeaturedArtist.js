@@ -28,7 +28,7 @@ class FeaturedArtist extends Component {
       <div>
         <h2 className="title"> Top Artists </h2>
         <div className="artistimgs">
-          <img src={Artist} className="artistimg" alt="artist" />
+          <img src={Artist} alt="artist" />
         </div>
       </div>
     );

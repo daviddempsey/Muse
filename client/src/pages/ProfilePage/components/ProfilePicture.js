@@ -42,7 +42,7 @@ export default class ProfilePicture extends Component {
 
   render() {
     return (
-      <img src={PFP} className="profilepicture" alt="pfp" />
+      <img src={PFP} className="pfp" alt="pfp" />
       //<img src={this.state.url} />
       // write form code to upload and set new profile picture
     );
