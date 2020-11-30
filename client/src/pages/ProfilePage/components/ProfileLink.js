@@ -5,7 +5,7 @@ import "../index.css";
 
 const ProfileLink = () => {
   // let link = UserService.getProfileLink();
-  let link = "https://muse.com/test";
+  let link = window.location.href;
 
   return (
     <div>
