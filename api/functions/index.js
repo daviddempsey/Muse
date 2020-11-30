@@ -58,13 +58,13 @@ app.get('/', (req, res) => {
 
 // Create, POST
 
+// Read, GET
 app.options('/login', function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.end();
 });
-// Read, GET
 
 app.get('/login', function(req, res) {
     var state = generateRandomString(16);
@@ -132,14 +132,20 @@ app.get('/callback', function(req, res) {
             var imageUrl = body['images'][0]['url'];
             var spotifyUrl = body['external_urls']['spotify'];
   
-            var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, userId, imageUrl, spotifyUrl, refresh_token);
-
+            // create the user and create their stats
+            data_access.createUserStats(fsdb, userEmail, access_token, refresh_token) // dunno if the order matters
+            var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, 
+              userId, imageUrl, spotifyUrl, refresh_token);
             // redirect to profile
-            firebaseToken.then((value) => res.cookie("token", value).redirect("http://localhost:3001/profile"), (e) => console.log(e));
-            data_access.createUserStats(fsdb, userEmail, access_token, refresh_token)
+            firebaseToken
+            .then((value) => res.cookie("token", value)
+                  .redirect("http://localhost:3001/profile"), (e) => console.log(e));
+
           });
   
         } else {
+          
+          // if the token that comes back is invalid 
           res.redirect('/#' +
             querystring.stringify({
               error: 'invalid_token'
