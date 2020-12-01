@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import UserService from '../../services/user.service';
 // grabs the spotify stats for a user from firebase and returns it
 const SpotifyStats = () => {
@@ -22,3 +22,4 @@ const SpotifyStats = () => {
 };
 
 export default SpotifyStats;
+ */

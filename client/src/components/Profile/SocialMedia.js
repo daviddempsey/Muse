@@ -3,10 +3,10 @@ import UserService from '../../services/user.service';
 
 const SocialMedia = () => {
   // uncomment userservice once we get it to work.
-  let facebookLink = UserService.getFacebook();
-  let instagramLink = UserService.getInstagram();
-  let twitterLink = UserService.getTwitter();
-  let tiktokLink = UserService.getTikTok();
+  let facebookLink = UserService.getFacebook('cse110tester2@gmail.com');
+  let instagramLink = UserService.getInstagram('cse110tester2@gmail.com');
+  let twitterLink = UserService.getTwitter('cse110tester2@gmail.com');
+  let tiktokLink = UserService.getTikTok('cse110tester2@gmail.com');
 
   // check if component mounted
   React.useEffect(() => {
@@ -15,9 +15,11 @@ const SocialMedia = () => {
 
   return (
     <div id='socialmedia'>
-      <h1> Hello Social Media </h1> <a href={facebookLink}> FACEBOOK </a>{' '}
+      <h1> Hello Social Media </h1>
+      <a href={facebookLink}> FACEBOOK </a>{' '}
       <a href={instagramLink}> INSTAGRAM </a>{' '}
-      <a href={twitterLink}> TWITTER </a> <a href={tiktokLink}> TIKTOK </a>{' '}
+      <a href={twitterLink}> TWITTER </a>
+      <a href={tiktokLink}> TIKTOK </a>{' '}
     </div>
   );
 };

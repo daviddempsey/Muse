@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import UserService from '../../services/user.service';
 
 const TopStats = () => {
@@ -17,3 +17,4 @@ const TopStats = () => {
 };
 
 export default TopStats;
+ */

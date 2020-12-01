@@ -1,5 +1,5 @@
 import React from 'react';
-import UserService from '../../services/user.service';
+//import UserService from '../../services/user.service';
 
 /*update a user's biography.
   Current functionality: basic text element with a save button to 
@@ -12,7 +12,7 @@ const Biography = () => {
     console.log('Component is Mounted');
   }, []);
 
-  return <div> {UserService.getBiography()} </div>;
+  return <div> {/* {UserService.getBiography()} */} </div>;
 };
 
 export default Biography;

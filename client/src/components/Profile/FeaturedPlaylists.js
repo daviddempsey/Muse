@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import UserService from '../../services/user.service';
 
 const FeaturedPlaylists = () => {
@@ -15,3 +15,4 @@ const FeaturedPlaylists = () => {
 };
 
 export default FeaturedPlaylists;
+ */
