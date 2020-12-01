@@ -16,11 +16,9 @@ class UserService {
     return userCollection.doc(email).get()["profile_picture"];
   }
 
-  /* SOCIAL MEDIA GET FUNCTIONS *
-    /* SOCIAL MEDIA GET FUNCTIONS */
+  /* SOCIAL MEDIA GET FUNCTIONS */
   async getFacebook(email) {
-    var facebook = await profileCollection.doc(email).get();
-    return facebook.data()['social_media']['facebook'];
+    return userCollection.doc(email).get()["facebook"];
   }
 
   getInstagram(email) {
