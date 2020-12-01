@@ -17,7 +17,7 @@ class UserService {
   }
 
   /* SOCIAL MEDIA GET FUNCTIONS */
-  getFacebook(email) {
+  async getFacebook(email) {
     return userCollection.doc(email).get()["facebook"];
   }
 

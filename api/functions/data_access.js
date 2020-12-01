@@ -60,22 +60,20 @@ exports.createUser = async function createUser(
         email: userEmail
       }).then((userRecord) => {
         console.log('Successfully created new user with email: ', userRecord.email);
-        newUser = true;
+        
+        // go into the user tab and create the user
+        db.collection('user').doc(userEmail).set(userData).then((res) => {
+        
+        // create user profile
+        createUserProfile(db, userEmail, profilePicture, acctUrl);
+
+        // create user in harmony document
+        createUserInHarmony(db, userEmail, refreshToken);
+        });
+        
       });
     }
   });
-
-  if (newUser === true) {
-    // go into the user tab and create the user
-    const res = await db.collection('user').doc(userEmail).set(userData);
-
-    // add await and error checking 
-    // create user profile
-    createUserProfile(db, userEmail, profilePicture, acctUrl);
-
-    // create user in harmony document
-    createUserInHarmony(db, userEmail, refreshToken);
-  }
 
   // create a custom auth token and if user already exists, query for custom token 
   // surround a try catch block, and handle it with 
