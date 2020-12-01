@@ -2,14 +2,14 @@ import React, { useRef, useState } from 'react';
 // import './App.css';
 import ChatMessage from './ChatMessage';
 
-import firebase from 'firebase/app';
+import fb from '../../base';
 import 'firebase/firestore';
 import 'firebase/auth';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+const auth = fb.auth();
+const firestore = fb.firestore();
 
 const ChatroomPage = () => {
   const messagesRef = firestore.collection('messages');
@@ -26,7 +26,7 @@ const ChatroomPage = () => {
 
     await messagesRef.add({
       text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: fb.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
     })
