@@ -40,7 +40,7 @@ const LoadingPage = ({history}) => {
 
     return(
         <div>
-            <p>Spinner should be here</p>
+            <p>Please Wait while we sign you in!</p>
         </div>
     );
 }
