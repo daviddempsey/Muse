@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useRef, useState } from 'react';
 // import './App.css';
+import ChatMessage from './ChatMessage';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -10,20 +11,15 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-class ChatroomPage extends Component {
-  constructor(props) {
-    super(props);
-    this.messagesRef = firestore.collection('messages');
-    this.query = messagesRef.orderBy('createdAt').limit(25);
-    this.messages = useCollectionData(query, {idField: 'id'});
-    
-    this.state = {
-      formValue: ''
-    };
+const ChatroomPage = () => {
+  const messagesRef = firestore.collection('messages');
+  const query = messagesRef.orderBy('createdAt').limit(25);
 
-  }
+  const [messages] = useCollectionData(query, {idField: 'id'});
 
-  sendMessage = async(e) => {
+  const [formValue, setFormValue] = useState('');
+
+  const sendMessage = async(e) => {
     e.preventDefault();
 
     const { uid, photoURL } = auth.currentUser;
@@ -38,20 +34,18 @@ class ChatroomPage extends Component {
     setFormValue('');
   }
 
-  render = () => {
-    return (
-      <>
-        <div>
-          {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-        </div>
+  return (
+    <>
+      <div>
+        {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+      </div>
 
-        <form onSubmit={sendMessage}>
-          <input value={formValue} onChange={(e) => setState({formValue: e.target.value})} />
-          <button type="submit">Submit</button>
-        </form>
-      </>
-    );
-  }
+      <form onSubmit={sendMessage}>
+        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+        <button type="submit">Submit</button>
+      </form>
+    </>
+  )
 }
 
 export default ChatroomPage;
