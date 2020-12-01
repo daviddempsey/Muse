@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import fb from '../../base';
+import 'firebase/auth';
 import { useEffect } from 'react';
+
+const auth = fb.auth();
 
 const LoadingPage = ({history}) => {
 
@@ -9,7 +12,7 @@ const LoadingPage = ({history}) => {
         handleSignIn();
     })
 
-    const handleSignIn = () => {
+    const handleSignIn = async() => {
 
         // get token from cookie
         const token = Cookies.get('token');
