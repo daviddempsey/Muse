@@ -53,12 +53,26 @@ class UserService {
         }
     }
 
-    getInstagram(email) {
-        return profileCollection.doc(email).get()['social_media'];
+    async getInstagram(email) {
+        try {
+            const response = await profileCollection.doc(email);
+            const instaData = await response.get();
+            console.log(instaData.data()['social_media']['instagram']);
+            return instaData.data()['social_media']['instagram'];
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    getTwitter(email) {
-        return profileCollection.doc(email).get()['social_media'];
+    async getTwitter(email) {
+        try {
+            const response = await profileCollection.doc(email);
+            const twitterData = await response.get();
+            console.log(twitterData.data()['social_media']['twitter']);
+            return twitterData.data()['social_media']['twitter'];
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     getTikTok(email) {
