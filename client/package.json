@@ -17,6 +17,7 @@
     "js-cookie": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-firebase-hooks": "^2.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
     "request": "^2.88.2"
@@ -45,6 +46,5 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "author": "",
-  "license": "ISC",
-  "proxy": "http://localhost:5001/muse-eec76/us-central1/app/"
+  "license": "ISC"
 }
