@@ -31,7 +31,7 @@ class UserService {
        } */
 
     /* SOCIAL MEDIA GET FUNCTIONS */
-    async getFacebook(email) {
+    /*async getFacebook(email) {
         return new Promise((resolve, reject) => {
             profileCollection.doc(email).get().data()['social_media']['facebook']
                 .then(res => {
@@ -40,6 +40,16 @@ class UserService {
                     reject(err)
                 })
         })
+    }*/
+
+    async getFacebook(email) {
+        try {
+            const response = await profileCollection.doc(email);
+            const facebookData = await response.get();
+            return facebookData.data()['social_media']['facebook'];
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     getInstagram(email) {
