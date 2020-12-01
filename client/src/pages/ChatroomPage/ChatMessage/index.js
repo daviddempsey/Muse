@@ -16,3 +16,5 @@ const ChatMessage = (props) => {
       </div>
     )
 }
+
+export default ChatMessage;
