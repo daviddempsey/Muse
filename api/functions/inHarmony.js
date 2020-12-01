@@ -12,17 +12,19 @@ exports.computeCompatibility = async function (fsdb, currUserEmail, otherUserEma
   const otherUserTopStats = data.data();
 
   // Get respective scores
-  var compatiblityScores = {
+  var compatiblityScores = {};
+  compatiblityScores[otherUserEmail] = {
     "audio_features": await computeAudioFeatureScore(currUserTopStats.top_tracks, otherUserTopStats.top_tracks),
     "artist": await rbo(currUserTopStats.top_artists, otherUserTopStats.top_artists, "artists"),
     "genres": await rbo(currUserTopStats.top_genres, otherUserTopStats.top_genres, "genres"),
     "score": 0
   }
   // Get average for total compatibility percentage
-  compatiblityScores["score"] = (compatiblityScores["audio_features"] + compatiblityScores["artist"] + compatiblityScores["genres"]) / 3
+  compatiblityScores[otherUserEmail]["score"] = (compatiblityScores[otherUserEmail]["audio_features"] + 
+    compatiblityScores[otherUserEmail]["artist"] + compatiblityScores[otherUserEmail]["genres"]) / 3
 
   // Put compatibility score inside inHarmony
-  indexCompatibilityScoresIntoIndex(fsdb, currUserEmail, otherUserEmail, compatiblityScores);
+  indexCompatibilityScoresIntoIndex(fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
 
 
   // do we update the other user's in_harmony document as well? 

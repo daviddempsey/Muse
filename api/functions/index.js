@@ -267,18 +267,16 @@ app.get("/api/user/stats/:section/:id", (req, res) => {
     })();
 })
 
-// Compute In-Harmony Score
+// Compute In-Harmony Score of two users
 app.get("/api/user/compute/:currUserId/:otherUserId", (req, res) => {
     (async() => {
         try {
-
-          // for every user in our database, run this method below 
             // Computing the compatibility of two users 
            let response = await inHarmony.computeCompatibility(
              fsdb, req.params.currUserId, req.params.otherUserId);
 
             // send product data to front end
-            return res.status(200).send(response.toString());
+            return res.status(200).send(response);
         } catch (error) {
             console.log(error);
             return res.status(500).send(error);
