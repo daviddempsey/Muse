@@ -46,6 +46,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const facebookData = await response.get();
+            console.log(facebookData.data()['social_media']['facebook']);
             return facebookData.data()['social_media']['facebook'];
         } catch (error) {
             console.log(error);
