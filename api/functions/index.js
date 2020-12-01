@@ -135,10 +135,7 @@ app.get('/callback', function(req, res) {
             // create the user and create their stats
             data_access.createUserStats(fsdb, userEmail, access_token, refresh_token) // dunno if the order matters
             var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, 
-              userId, imageUrl, spotifyUrl, refresh_token);
-            // redirect to profile
-            firebaseToken
-            .then((value) => res.cookie("token", value)
+              userId, imageUrl, spotifyUrl, refresh_token).then((value) => res.cookie("token", value)
                   .redirect("http://localhost:3000/logging"), (e) => console.log(e));
 
           });
