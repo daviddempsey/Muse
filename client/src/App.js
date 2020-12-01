@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import LoadingPage from './pages/LoadingPage';
+import ChatroomPage from './pages/ChatroomPage';
 import './styles/index.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route exact path='/profile' component={ProfilePage} />
           <Route exact path='/editprofile' component={EditProfilePage} />
           <Route exact path='/logging' component={LoadingPage} />
+          <Route exact path='/messaging' component={ChatroomPage} />
         </Switch>
       </Router>
     </div>
