@@ -19,9 +19,9 @@ class UserService {
       }
     }
 
-    /*async setPlaylist(email, playlist) {
+    async setPlaylist(email, playlist) {
       
-    }*/
+    }
 
     /* SOCIAL MEDIA EDIT FUNCTIONS */
     async setFacebook(email, facebookLink) {
@@ -238,6 +238,11 @@ class UserService {
     }
 
     /* SPOTIFY REAL TIME DATA FETCH */
+    /*async getSpotifyPlaylists(refreshToken) {
+      // get the access token 
+      // get the spotify playlists
+
+    }*/
 
     /* Profile information get functions */
     /*
