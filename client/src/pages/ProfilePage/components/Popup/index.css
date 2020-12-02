@@ -71,6 +71,32 @@
 }
 */
 
+.modal .content .row-4 {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal .content .row-4 .btn {
+  background-color: var(--red);
+  border: 0px transparent;
+  border-radius: 1.875rem;
+  height: 3.75rem;
+  width: 12.5rem;
+}
+
+.modal .content .row-4 .btn:hover {
+  opacity: 75%;
+}
+
+.modal .content .row-4 .btn:focus {
+  outline: none;
+}
+
+.modal .content .row-4 .btn h3 {
+  font-size: 1.125rem;
+  color: var(--white);
+}
+
 .close {
   font-size: 3rem;
   color: var(--red);

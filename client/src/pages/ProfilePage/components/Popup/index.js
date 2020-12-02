@@ -27,6 +27,14 @@ const Popup = () => {
           <h1 className="title"> Manage Socials </h1>
           <div></div>
         </div>
+        <div className="row-4">
+          <button className="btn">
+            <h3>Save</h3>
+          </button>
+          <button className="btn">
+            <h3>Cancel</h3>
+          </button>
+        </div>
       </div>
     </div>
   );
