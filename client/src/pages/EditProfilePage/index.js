@@ -13,6 +13,7 @@ class EditProfilePage extends Component {
     super(props);
     // set default state of text element instead text box
     this.state = {
+      profilePicture: 'breh',
       biography: 'this is the client default bio',
       facebook: 'https://www.facebook.com',
       instagram: 'https://www.instagram.com',
@@ -22,6 +23,7 @@ class EditProfilePage extends Component {
     };
     //event handlers for when we update text field and submit button
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handlePFPChange = this.handlePFPChange.bind(this);
     this.handleBioChange = this.handleBioChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleFacebookChange = this.handleFacebookChange.bind(this);
@@ -41,50 +43,66 @@ class EditProfilePage extends Component {
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
 
+  getProfilePicture = async (email) => {
+    this.setState({
+      profilePicture: await UserService.getProfilePicture(email),
+    });
+  };
+
   getBiography = async (email) => {
-    this.setState({biography: await UserService.getBiography(email)});
-  }
+    this.setState({ biography: await UserService.getBiography(email) });
+  };
 
   getFacebook = async (email) => {
-    this.setState({facebook: await UserService.getFacebook(email)});
-  }
+    this.setState({ facebook: await UserService.getFacebook(email) });
+  };
 
   getInstagram = async (email) => {
-    this.setState({instagram: await UserService.getInstagram(email)});
-  }
+    this.setState({ instagram: await UserService.getInstagram(email) });
+  };
 
   getTwitter = async (email) => {
-    this.setState({twitter: await UserService.getTwitter(email)});
-  }
+    this.setState({ twitter: await UserService.getTwitter(email) });
+  };
 
   getTikTok = async (email) => {
-    this.setState({tiktok: await UserService.getTikTok(email)});
-  }
+    this.setState({ tiktok: await UserService.getTikTok(email) });
+  };
 
   getPlaylists() {
     let playlists = ['A', 'B', 'C'];
     this.setState({ playlists: playlists });
   }
 
+  // SETTERS TO DATABSE
+
+  setProfilePicture = (email) => {
+    UserService.setProfilePicture(email, this.state.profilePicture);
+  };
+
   setBiography = (email) => {
-      UserService.setBiography(email, this.state.biography);
-  }
-  
+    UserService.setBiography(email, this.state.biography);
+  };
+
   setFacebook = (email) => {
     UserService.setFacebook(email, this.state.facebook);
-  }
-  
+  };
+
   setInstagram = (email) => {
     UserService.setInstagram(email, this.state.instagram);
-  }
+  };
   setTwitter = (email) => {
     UserService.setTwitter(email, this.state.twitter);
-  }
+  };
   setTikTok = (email) => {
     UserService.setTiktok(email, this.state.tiktok);
-  }
+  };
 
   // onCHange updates the state
+  handlePFPChange(event) {
+    this.setState({ profilePicture: event.target.value });
+  }
+
   handleBioChange(event) {
     this.setState({ biography: event.target.value});
   }
@@ -93,16 +111,16 @@ class EditProfilePage extends Component {
     this.setState({ facebook: event.target.value});
   }
 
-  handleInstagramChange(event){
-    this.setState({ instagram: event.target.value});
+  handleInstagramChange(event) {
+    this.setState({ instagram: event.target.value });
   }
 
-  handleTwitterChange(event){
-    this.setState({ twitter: event.target.value});
+  handleTwitterChange(event) {
+    this.setState({ twitter: event.target.value });
   }
 
-  handleTikTokChange(event){
-    this.setState({ tiktok : event.target.value});
+  handleTikTokChange(event) {
+    this.setState({ tiktok: event.target.value });
   }
 
   /* event handler for when user hits submit button*/
@@ -125,11 +143,22 @@ class EditProfilePage extends Component {
     return (
       <DefaultLayout>
         <form id='edit-profile-form' onSubmit={this.handleSubmit}>
+          <div id='pfpicture-form'>
+            <label>
+              Profile Picture:
+              <input
+                name='pfpicture'
+                type='text'
+                value={this.state.profilePicture}
+                onChange={this.handlePFPChange}
+              />
+            </label>
+          </div>
           <div id='biography-form'>
             <label>
               Biography:
               <input
-                name ='biography'
+                name='biography'
                 type='text'
                 value={this.state.biography}
                 onChange={this.handleBioChange}
