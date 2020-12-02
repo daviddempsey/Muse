@@ -12,7 +12,7 @@ const ProfileLink = () => {
   React.useEffect(() => {
     console.log('Hi');
     getProfileLink('cse110tester2@gmail.com');
-  }, [getProfileLink]);
+  }, []);
 
   return <div id='profilelink'> {ProfileLink} </div>;
 };

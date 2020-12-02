@@ -10,7 +10,7 @@ const ProfilePicture = () =>{
   React.useEffect(() => {
     console.log('Component is Mounted');
     getProfilePicture('cse110tester2@gmail.com');
-  }, [getProfilePicture]);
+  }, []);
 
   return <div>
     <img src={profilePicture} />

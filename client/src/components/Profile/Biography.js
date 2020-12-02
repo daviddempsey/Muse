@@ -17,7 +17,7 @@ const Biography = () => {
   React.useEffect(() => {
     console.log('Component is Mounted');
     getBiography('cse110tester2@gmail.com');
-  }, [getBiography]);
+  }, []);
   
 
   return <div> {bioText} </div>;

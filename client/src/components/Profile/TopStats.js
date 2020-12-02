@@ -49,7 +49,7 @@ const TopStats = () => {
     getTopArtists('davidgdempsey@gmail.com');
     getTopTracks('davidgdempsey@gmail.com');
     getTopGenres('davidgdempsey@gmail.com');
-  }, [getTopArtists]);
+  }, []);
 
   return (
     <div id='topstats'>
