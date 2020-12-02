@@ -10,6 +10,7 @@ const Biography = () => {
   // uncomment userservice once we get it to work
   // check if component mounted
   const [bioText, setBio] = useState("");
+  
   const getBiography = async(email) => {
     setBio(await UserService.getBiography(email));
   }

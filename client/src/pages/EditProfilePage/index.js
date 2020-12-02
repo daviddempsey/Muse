@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import UserService from '../../services/user.service';
 import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
@@ -9,10 +10,11 @@ class EditProfilePage extends Component {
     super(props);
     // set default state of text element instead text box
     this.state = {
-      Biography: 'Edit your biography!',
+      biography: 'this is the client default bio',
       facebook: 'https://www.facebook.com',
       instagram: 'https://www.instagram.com',
       twitter: 'https://www.twitter.com',
+      tiktok: 'https://www.tiktok.com',
       playlists: ['A', 'B', 'C'],
     };
     //event handlers for when we update text field and submit button
@@ -24,34 +26,33 @@ class EditProfilePage extends Component {
   //checks if component mounted
   componentDidMount() {
     console.log('mounted ;)');
-    this.getBiography();
-    this.getFacebook();
-    this.getInstagram();
-    this.getTwitter();
-    this.getPlaylists();
+    this.getBiography('cse110tester2@gmail.com');
+    this.getFacebook('cse110tester2@gmail.com');
+    this.getInstagram('cse110tester2@gmail.com');
+    this.getTwitter('cse110tester2@gmail.com');
+    this.getTikTok('cse110tester2@gmail.com');
   }
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
 
-  getBiography() {
-    //var bioText = UserService.getBiography();
-    let bioText = 'place holder for UserService';
-    this.setState({ biography: bioText });
+  getBiography = async (email) => {
+    this.setState({biography: await UserService.getBiography(email)});
   }
 
-  getFacebook() {
-    let facebookURL = 'https://www.facebook.com/';
-    this.setState({ facebook: facebookURL });
+  getFacebook = async (email) => {
+    this.setState({facebook: await UserService.getFacebook(email)});
   }
 
-  getInstagram() {
-    let instagramURL = 'https://www.instagram.com';
-    this.setState({ instagram: instagramURL });
+  getInstagram = async (email) => {
+    this.setState({instagram: await UserService.getInstagram(email)});
   }
 
-  getTwitter() {
-    let twitterURL = 'https://www.twitter.com';
-    this.setState({ twitter: twitterURL });
+  getTwitter = async (email) => {
+    this.setState({twitter: await UserService.getTwitter(email)});
+  }
+
+  getTikTok = async (email) => {
+    this.setState({tiktok: await UserService.getTikTok(email)});
   }
 
   getPlaylists() {
@@ -65,6 +66,7 @@ class EditProfilePage extends Component {
     this.setState({ facebook: event.target.facebook });
     this.setState({ twitter: event.target.twitter });
     this.setState({ instagram: event.target.instagram });
+    this.setState({ tiktok: event.target.tiktok });
     this.setState({ playlists: event.target.playlists });
   }
 
@@ -90,8 +92,8 @@ class EditProfilePage extends Component {
                 type='text'
                 value={this.state.biography}
                 onChange={this.handleChange}
-              />{' '}
-            </label>{' '}
+              />
+            </label>
           </div>
           <div id='socials-form'>
             <div id='facebook-form'>
@@ -101,8 +103,8 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.facebook}
                   onChange={this.handleChange}
-                />{' '}
-              </label>{' '}
+                />
+              </label>
             </div>
             <div id='instagram-form'>
               <label>
@@ -111,8 +113,8 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.instagram}
                   onChange={this.handleChange}
-                />{' '}
-              </label>{' '}
+                />
+              </label>
             </div>
             <div id='twitter-form'>
               <label>
@@ -121,8 +123,18 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.twitter}
                   onChange={this.handleChange}
-                />{' '}
-              </label>{' '}
+                />
+              </label>
+            </div>
+            <div id='tiktok-form'>
+              <label>
+                TikTok:
+                <input
+                  type='text'
+                  value={this.state.tiktok}
+                  onChange={this.handleChange}
+                />
+              </label>
             </div>
           </div>
           <div id='playlist-form'>
@@ -132,14 +144,12 @@ class EditProfilePage extends Component {
               onChange={this.handleChange}
               multiple
             >
-              <option value='$'>$</option>
-              <option value='T'>T</option>
-              <option value='S'>S</option>
-              <option value='L'>L</option>
-              <option value='A'>A</option>
+              <option value='$'> $ </option> <option value='T'> T </option>
+              <option value='S'> S </option> <option value='L'> L </option>
+              <option value='A'> A </option>
             </select>
           </div>
-          <input type='submit' value='Submit' />{' '}
+          <input type='submit' value='Submit' />
         </form>
       </DefaultLayout>
     );
