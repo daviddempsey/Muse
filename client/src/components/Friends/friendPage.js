@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
+import {Link} from "react-router-dom";
+
 
 /* functional component that creates a friends list
  * It calls a child Friends component for each friend */
@@ -27,7 +29,8 @@ const FriendPage = () => {
     /* renders the friend page */
     return (
         <div id='friendPage'>
-            <h1>Friends Page</h1>
+            <h1>Friends</h1>
+            <br />
             <Friends friendsList={friendsList} />
         </div> 
     );
@@ -39,12 +42,14 @@ const Friend = ({ email }) => {
     /* store and set the bio for each friend */
     const [bio, setBio] = useState("");
     const [name, setName] = useState("");
+    const [pic, setPic] = useState("");
+    const [profile, setProfile] = useState("");
+    // Need to implement compatibility first
+    // const [compatibility, setCompatibility] = useState(0);
 
     /* get the bio of each friend from the database */
     const getBio = async (email) => {
         setBio(await UserService.getBiography(email));
-        // const checkBio = await UserService.getBiography(email);
-        // setBio(checkBio !== undefined ? checkBio : "I have not written my biography yet!");
     };
 
     /* get the name of each friend from the database */
@@ -52,20 +57,48 @@ const Friend = ({ email }) => {
         setName(await UserService.getUserName(email));
     }
 
+    /* get the profile pic of each friend from the database */
+    const getPic = async (email) => {
+        setPic(await UserService.getProfilePicture(email));
+    }
+
+    /* get the profile of each friend from the database */
+    const getProfile = async (email) => {
+        setProfile(await UserService.getProfileLink(email));
+    }
+
+    // Need to implement compatibility first
+
+    /* get the compatibility of each friend from the database */
+    // const getCompatibility = async (email) => {
+    //     setCompatibility(await UserService.getCompatibility(email));
+    // }
+
     /* check if component mounted */
     React.useEffect(() => {
         getBio(email);
-        getname(email);
+        getname(email)
+        getPic(email);
+        getProfile(email);
+        // getCompatibility(email);
     });
     
     /* renders each friend with their name, bio, and compatibility to the current user*/
     return (
-        <div id={email}>
-            <h2>{name}</h2>
+        <div className="friend">
+            <img alt='pro pic not found' src={pic}/>            
+            <div className="text">
+                <h2>
+                    {/* Replace this with the actual profile page */}
+                    <Link to={profile} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                        {name}
+                    </Link>
+                </h2>
             <p>{bio}</p>
+            </div>
             <br />
             {/* need to wait for compatibilitiy to be implemented */}
-            {/* <h3>{compatibility}</h3> */}
+            {/* <h1>{compatibility}</h1> */}
         </div>
     );
 };

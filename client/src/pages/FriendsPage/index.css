@@ -1,1 +1,25 @@
 @import '../../styles/index.css';
+
+.friend {
+    border-radius: 30px;
+    background: var(--almost-white);
+    border: 1px solid var(--grey);
+    width: 90%;
+    height: 100px;
+    /* padding-top: center; */
+    /* padding-left: 15px; */
+    margin: 2.75rem auto;
+}
+
+.friend img {
+    float: left;
+    border-radius: 30%;
+    max-height: 80%;
+    max-width: 80%;
+    margin: auto;
+}
+
+.friend .text {
+    padding-top: 2%;
+    text-indent: 2%;
+}

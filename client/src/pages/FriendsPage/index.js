@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
-import FriendsPage from '../../components/friendPage';
+import FriendsPage from '../../components/Friends/friendPage';
 
 export default function FriendPage() {
   return (
