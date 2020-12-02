@@ -19,7 +19,7 @@ class EditProfilePage extends Component {
     };
     //event handlers for when we update text field and submit button
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleBioChange = this.handleBioChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
@@ -60,37 +60,23 @@ class EditProfilePage extends Component {
     this.setState({ playlists: playlists });
   }
 
-  setBiography = async (email) => {
-    this.setState({ biography: await UserService.setBiography(email)});
+  setBiography = (email) => {
+      console.log("PENIS HERE");
+      console.log(this.state.biography);
+      UserService.setBiography(email, this.state.biography);
   }
 
-  setFacebook = async (email) => {
-    this.setState({ facebook: await UserService.setFacebook(email)});
-  }
-  setTwitter = async (email) => {
-    this.setState({ twitter: await UserService.setTwitter(email)});
-  }
-  setInstagram = async (email) => {
-    this.setState({ instagram: await UserService.setInstagram(email)});
-  }
-  setTiktok = async (email) => {
-    this.setState({ tiktok: await UserService.setTiktok(email)});
-  }
   // onCHange updates the state
-  handleChange(event) {
-    this.setBiography();
-    this.setFacebook();
-    this.setTwitter();
-    this.setInstagram();
-    this.setTiktok();
-    this.setState({ playlists: event.target.playlists});
+  handleBioChange(event) {
+    console.log(event.target.value);
+    this.setState({ biography: event.target.value});
   }
 
   /* event handler for when user hits submit button*/
   // onSubmit updates database once user is done.
   handleSubmit(event) {
     //bioText = this.state.value;
-    alert('Stuff is updated' + this.state.Biography + this.state.facebook);
+    this.setBiography('cse110tester2@gmail.com');
     event.preventDefault();
   }
 
@@ -105,9 +91,10 @@ class EditProfilePage extends Component {
             <label>
               Biography:
               <input
+                name ='biography'
                 type='text'
                 value={this.state.biography}
-                onChange={this.handleChange}
+                onChange={this.handleBioChange}
               />
             </label>
           </div>
