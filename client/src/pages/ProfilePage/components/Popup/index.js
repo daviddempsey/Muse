@@ -1,4 +1,5 @@
 import React from "react";
+import PFP from "../../assets/PFP.png";
 import "./index.css";
 
 const Popup = () => {
@@ -14,6 +15,9 @@ const Popup = () => {
       </span>
       <div className="content">
         <div className="row-1">
+          <div className="col-1">
+            <img src={PFP} className="pfp" alt="pfp" />
+          </div>
           <div className="col-2">
             <h1 className="title"> Edit Bio </h1>
             <div className="form"></div>

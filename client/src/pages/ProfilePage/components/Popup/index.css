@@ -23,13 +23,19 @@
   flex-direction: row;
 }
 
-/*
 .modal .content .row-1 .col-1 {
+  display: flex;
+  display: column;
 }
 
 .modal .content .row-1 .col-1 img {
+  width: 200px;
+  height: 200px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--black);
+  border-radius: 50%;
 }
-*/
 
 .modal .content .row-1 .col-2 {
   display: flex;
@@ -79,8 +85,9 @@
 .modal .content .row-4 .btn {
   background-color: var(--red);
   border: 0px transparent;
-  border-radius: 1.875rem;
-  height: 3.75rem;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+  height: 3rem;
   width: 12.5rem;
 }
 
