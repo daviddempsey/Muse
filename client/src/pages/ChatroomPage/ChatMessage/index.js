@@ -1,13 +1,15 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import fb from '../../../base';
+import '../App.css';
 
-const auth = firebase.auth();
+const auth = fb.auth();
 
 const ChatMessage = (props) => {
-    const { text, uid, photoURL } = props.message;
-  
-    const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received'; // styling on whether sent or received
+    const { text, uid, photoURL, status } = props.message;
+
+    const messageClass = status; // styling on whether sent or received
   
     return (
       <div className={`message ${messageClass}`}>
