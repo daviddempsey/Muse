@@ -1,5 +1,22 @@
 @import "../../styles/index.css";
 
+.filter {
+  filter: brightness(1);
+}
+
+.page {
+  background-color: var(--white);
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -500px;
+  margin-left: -500px;
+}
+
 /* General text styles */
 .title {
   text-align: left;

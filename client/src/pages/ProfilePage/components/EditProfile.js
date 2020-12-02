@@ -1,28 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import "../index.css";
-import Popup from "./Popup";
 
-export default class EditProfile extends Component {
-  state = {
-    seen: false,
+const EditProfile = () => {
+  const togglePop = () => {
+    document.getElementById("popup").style.display = "initial";
+    document.getElementById("page").style.filter = "blur(2px) brightness(0.5)";
   };
 
-  togglePop = () => {
-    this.setState({
-      seen: !this.state.seen,
-    });
-  };
+  return (
+    <div>
+      <button className="edit" onClick={togglePop}>
+        <h3>Edit Profile</h3>
+      </button>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div>
-        <button className="edit" onClick={this.togglePop}>
-          <h3>Edit Profile</h3>
-        </button>
-        {this.state.seen ? (
-          <Popup className="popup" toggle={this.togglePop} />
-        ) : null}
-      </div>
-    );
-  }
-}
+export default EditProfile;

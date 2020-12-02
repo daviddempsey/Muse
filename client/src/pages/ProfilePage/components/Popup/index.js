@@ -1,34 +1,35 @@
-import React, { Component } from "react";
+import React from "react";
 import "./index.css";
 
-export default class Popup extends Component {
-  handleClick = () => {
-    this.props.toggle();
+const Popup = () => {
+  const togglePop = () => {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("page").style.filter = "brightness(1)";
   };
 
-  render() {
-    return (
-      <div className="modal">
-        <span className="close" onClick={this.handleClick}>
-          &times;
-        </span>
-        <div className="content">
-          <div className="row-1">
-            <div className="col-2">
-              <h1 className="title"> Edit Bio </h1>
-              <div className="form"></div>
-            </div>
-          </div>
-          <div className="row-2">
-            <h1 className="title"> Manage Featured Playlists </h1>
+  return (
+    <div className="modal">
+      <span className="close" onClick={togglePop}>
+        &times;
+      </span>
+      <div className="content">
+        <div className="row-1">
+          <div className="col-2">
+            <h1 className="title"> Edit Bio </h1>
             <div className="form"></div>
           </div>
-          <div className="row-3">
-            <h1 className="title"> Manage Socials </h1>
-            <div></div>
-          </div>
+        </div>
+        <div className="row-2">
+          <h1 className="title"> Manage Featured Playlists </h1>
+          <div className="form"></div>
+        </div>
+        <div className="row-3">
+          <h1 className="title"> Manage Socials </h1>
+          <div></div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Popup;
