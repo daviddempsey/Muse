@@ -1,7 +1,6 @@
 import React from 'react';
 import './index.css';
 
-
 import DefaultLayout from '../DefaultLayout';
 import FriendsPage from '../../components/friendPage';
 

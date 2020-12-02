@@ -63,6 +63,7 @@ const Friend = ({ email }) => {
         <div id={email}>
             <h2>{name}</h2>
             <p>{bio}</p>
+            <br />
             {/* need to wait for compatibilitiy to be implemented */}
             {/* <h3>{compatibility}</h3> */}
         </div>
