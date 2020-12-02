@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
+import fb from '../../base.js';
+
+let userEmail = fb.auth().getCurrentUser.email;
 
 const TopStats = () => {
   const [topArtists, setTopArtists] = useState('');
@@ -45,10 +48,9 @@ const TopStats = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    console.log('Hi');
-    getTopArtists('davidgdempsey@gmail.com');
-    getTopTracks('davidgdempsey@gmail.com');
-    getTopGenres('davidgdempsey@gmail.com');
+    getTopArtists(userEmail);
+    getTopTracks(userEmail);
+    getTopGenres(userEmail);
   }, []);
 
   return (

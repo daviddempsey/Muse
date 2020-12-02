@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
+import fb from '../../base';
+
+
+let userEmail = fb.auth().getCurrentUser.email;
 
 const ProfilePicture = () => {
   const [profilePicture, setProfilePicture] = useState('');
@@ -8,8 +12,7 @@ const ProfilePicture = () => {
   };
 
   React.useEffect(() => {
-    console.log('Component is Mounted');
-    getProfilePicture('cse110tester2@gmail.com');
+    getProfilePicture(userEmail);
   }, []);
 
   return (

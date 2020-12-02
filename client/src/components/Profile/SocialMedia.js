@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
+import fb from '../../base'
+
+let userEmail = fb.auth().getCurrentUser.email;
 
 const SocialMedia = () => {
   // uncomment userservice once we get it to work.
@@ -31,12 +34,11 @@ const SocialMedia = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    console.log('Hi');
-    getFacebookLink('cse110tester2@gmail.com');
-    getInstagramLink('cse110tester2@gmail.com');
-    getTwitterLink('cse110tester2@gmail.com');
-    getTiktokLink('cse110tester2@gmail.com');
-    getSpotifyLink('cse110tester2@gmail.com');
+    getFacebookLink(userEmail);
+    getInstagramLink(userEmail);
+    getTwitterLink(userEmail);
+    getTiktokLink(userEmail);
+    getSpotifyLink(userEmail);
   }, []);
 
 

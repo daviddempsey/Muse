@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import UserService from '../../services/user.service';
 import './index.css';
+import fb from '../../base.js';
 
 import DefaultLayout from '../DefaultLayout';
+
+const userEmail = fb.auth().getCurrentUser.email;
 
 class EditProfilePage extends Component {
   //constructor
@@ -29,12 +32,11 @@ class EditProfilePage extends Component {
 
   //checks if component mounted
   componentDidMount() {
-    console.log('mounted ;)');
-    this.getBiography('cse110tester2@gmail.com');
-    this.getFacebook('cse110tester2@gmail.com');
-    this.getInstagram('cse110tester2@gmail.com');
-    this.getTwitter('cse110tester2@gmail.com');
-    this.getTikTok('cse110tester2@gmail.com');
+    this.getBiography(email);
+    this.getFacebook(email);
+    this.getInstagram(email);
+    this.getTwitter(email);
+    this.getTikTok(email);
   }
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
@@ -84,12 +86,10 @@ class EditProfilePage extends Component {
 
   // onCHange updates the state
   handleBioChange(event) {
-    console.log(event.target.value);
     this.setState({ biography: event.target.value});
   }
 
   handleFacebookChange(event){
-    console.log(event.target.value);
     this.setState({ facebook: event.target.value});
   }
 
@@ -109,12 +109,11 @@ class EditProfilePage extends Component {
   // onSubmit updates database once user is done.
   handleSubmit(event) {
     //bioText = this.state.value;
-    this.setBiography('cse110tester2@gmail.com');
-    this.setFacebook('cse110tester2@gmail.com');
-    this.setInstagram('cse110tester2@gmail.com');
-    this.setTwitter('cse110tester2@gmail.com');
-    this.setTikTok('cse110tester2@gmail.com');
-    this.setProfilePicture('cse110tester2@gmail.com');
+    this.setBiography(userEmail);
+    this.setFacebook(userEmail);
+    this.setInstagram(userEmail);
+    this.setTwitter(userEmail);
+    this.setTikTok(userEmail);
 
     event.preventDefault();
   }

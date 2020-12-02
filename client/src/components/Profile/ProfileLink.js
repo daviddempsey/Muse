@@ -1,5 +1,8 @@
 import React,{useState} from 'react';
 import UserService from '../../services/user.service';
+import fb from '../../base';
+
+let userEmail = fb.auth().getCurrentUser.email;
 
 const ProfileLink = () => {
   const [ProfileLink, setProfileLink] = useState("");
@@ -10,8 +13,7 @@ const ProfileLink = () => {
 
   //check if component mounted
   React.useEffect(() => {
-    console.log('Hi');
-    getProfileLink('cse110tester2@gmail.com');
+    getProfileLink(userEmail);
   }, []);
 
   return <div id='profilelink'> {ProfileLink} </div>;
