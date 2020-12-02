@@ -4,7 +4,7 @@ import './index.css';
 import DefaultLayout from '../DefaultLayout';
 //import ProfilePicture from '../../components/Profile/ProfilePicture';
 import Biography from '../../components/Profile/Biography';
-/* import ProfileLink from '../../components/Profile/ProfileLink'; */
+ import ProfileLink from '../../components/Profile/ProfileLink'; 
 import SocialMedia from '../../components/Profile/SocialMedia';
 /* import SpotifyStats from '../../components/Profile/SpotifyStats';
 import TopStats from '../../components/Profile/TopStats';
@@ -26,7 +26,7 @@ class ProfilePage extends Component {
           <div id='profile-section'>
             { /*<ProfilePicture/> */}
             {<Biography/>}
-            {/* <ProfileLink /> */}
+            { <ProfileLink /> }
             <SocialMedia />{' '}
             {/* <SpotifyStats />
                             <TopStats />

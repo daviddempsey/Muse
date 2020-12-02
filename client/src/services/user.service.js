@@ -152,7 +152,7 @@ class UserService {
       try {
         const response = await profileCollection.doc(email);
         const profileLink = await response.get();
-        return profileLink.data()['profile_link'];
+        return profileLink.data()['profile_url'];
       } catch (error) {
         alert(error);
         console.log(error);
