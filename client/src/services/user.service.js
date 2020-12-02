@@ -9,9 +9,22 @@ class UserService {
     async setBiography(email, bio) {
       try {
         // get the document to be changed
-        const bioDoc = await profileCollection.doc(email);
-        await bioDoc.update({
+        const profileDoc = await profileCollection.doc(email);
+        await profileDoc.update({
           biography: bio
+        });
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    }
+
+    async setProfilePicture(email, profilePicLink) {
+      try {
+        // get the profile document to be changed
+        const profileDoc = await profileCollection.doc(email);
+        await profileDoc.update({
+          profile_picture: profilePicLink
         });
       } catch (error) {
         alert(error);
