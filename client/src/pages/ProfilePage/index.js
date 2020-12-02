@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
-//import ProfilePicture from '../../components/Profile/ProfilePicture';
+import ProfilePicture from '../../components/Profile/ProfilePicture';
 import Biography from '../../components/Profile/Biography';
  import ProfileLink from '../../components/Profile/ProfileLink'; 
 import SocialMedia from '../../components/Profile/SocialMedia';
@@ -24,7 +24,7 @@ class ProfilePage extends Component {
       <div id='profile-page'>
         <DefaultLayout>
           <div id='profile-section'>
-            { /*<ProfilePicture/> */}
+            { <ProfilePicture/> }
             {<Biography/>}
             { <ProfileLink /> }
             <SocialMedia />{' '}
