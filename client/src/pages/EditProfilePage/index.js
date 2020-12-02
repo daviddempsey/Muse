@@ -60,14 +60,30 @@ class EditProfilePage extends Component {
     this.setState({ playlists: playlists });
   }
 
+  setBiography = async (email) => {
+    this.setState({ biography: await UserService.setBiography(email)});
+  }
+
+  setFacebook = async (email) => {
+    this.setState({ facebook: await UserService.setFacebook(email)});
+  }
+  setTwitter = async (email) => {
+    this.setState({ twitter: await UserService.setTwitter(email)});
+  }
+  setInstagram = async (email) => {
+    this.setState({ instagram: await UserService.setInstagram(email)});
+  }
+  setTiktok = async (email) => {
+    this.setState({ tiktok: await UserService.setTiktok(email)});
+  }
   // onCHange updates the state
   handleChange(event) {
-    this.setState({ biography: event.target.biography });
-    this.setState({ facebook: event.target.facebook });
-    this.setState({ twitter: event.target.twitter });
-    this.setState({ instagram: event.target.instagram });
-    this.setState({ tiktok: event.target.tiktok });
-    this.setState({ playlists: event.target.playlists });
+    this.setBiography();
+    this.setFacebook();
+    this.setTwitter();
+    this.setInstagram();
+    this.setTiktok();
+    this.setState({ playlists: event.target.playlists});
   }
 
   /* event handler for when user hits submit button*/
