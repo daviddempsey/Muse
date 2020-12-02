@@ -4,7 +4,6 @@ import React from 'react';
 const ComparedUser = () => {
   return (
     <div className="ComparedUser">
-        
     </div>
   );
 };
