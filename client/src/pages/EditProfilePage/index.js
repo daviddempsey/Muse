@@ -21,6 +21,10 @@ class EditProfilePage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBioChange = this.handleBioChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleFacebookChange = this.handleFacebookChange.bind(this);
+    this.handleInstagramChange = this.handleInstagramChange.bind(this);
+    this.handleTikTokChange = this.handleTikTokChange.bind(this);
+    this.handleTwitterChange = this.handleTwitterChange.bind(this);
   }
 
   //checks if component mounted
@@ -61,9 +65,21 @@ class EditProfilePage extends Component {
   }
 
   setBiography = (email) => {
-      console.log("PENIS HERE");
-      console.log(this.state.biography);
       UserService.setBiography(email, this.state.biography);
+  }
+  
+  setFacebook = (email) => {
+    UserService.setFacebook(email, this.state.facebook);
+  }
+  
+  setInstagram = (email) => {
+    UserService.setInstagram(email, this.state.instagram);
+  }
+  setTwitter = (email) => {
+    UserService.setTwitter(email, this.state.twitter);
+  }
+  setTikTok = (email) => {
+    UserService.setTiktok(email, this.state.tiktok);
   }
 
   // onCHange updates the state
@@ -72,11 +88,34 @@ class EditProfilePage extends Component {
     this.setState({ biography: event.target.value});
   }
 
+  handleFacebookChange(event){
+    console.log(event.target.value);
+    this.setState({ facebook: event.target.value});
+  }
+
+  handleInstagramChange(event){
+    this.setState({ instagram: event.target.value});
+  }
+
+  handleTwitterChange(event){
+    this.setState({ twitter: event.target.value});
+  }
+
+  handleTikTokChange(event){
+    this.setState({ tiktok : event.target.value});
+  }
+
   /* event handler for when user hits submit button*/
   // onSubmit updates database once user is done.
   handleSubmit(event) {
     //bioText = this.state.value;
     this.setBiography('cse110tester2@gmail.com');
+    this.setFacebook('cse110tester2@gmail.com');
+    this.setInstagram('cse110tester2@gmail.com');
+    this.setTwitter('cse110tester2@gmail.com');
+    this.setTikTok('cse110tester2@gmail.com');
+    this.setProfilePicture('cse110tester2@gmail.com');
+
     event.preventDefault();
   }
 
@@ -105,7 +144,7 @@ class EditProfilePage extends Component {
                 <input
                   type='text'
                   value={this.state.facebook}
-                  onChange={this.handleChange}
+                  onChange={this.handleFacebookChange}
                 />
               </label>
             </div>
@@ -115,7 +154,7 @@ class EditProfilePage extends Component {
                 <input
                   type='text'
                   value={this.state.instagram}
-                  onChange={this.handleChange}
+                  onChange={this.handleInstagramChange}
                 />
               </label>
             </div>
@@ -125,7 +164,7 @@ class EditProfilePage extends Component {
                 <input
                   type='text'
                   value={this.state.twitter}
-                  onChange={this.handleChange}
+                  onChange={this.handleTwitterChange}
                 />
               </label>
             </div>
@@ -135,7 +174,7 @@ class EditProfilePage extends Component {
                 <input
                   type='text'
                   value={this.state.tiktok}
-                  onChange={this.handleChange}
+                  onChange={this.handleTikTokChange}
                 />
               </label>
             </div>
