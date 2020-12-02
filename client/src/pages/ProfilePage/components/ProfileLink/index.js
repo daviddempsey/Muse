@@ -1,6 +1,6 @@
 import React from "react";
-import Link from "../assets/link.svg";
-import "../index.css";
+import Link from "../../assets/link.svg";
+import "./index.css";
 //import UserService from "../services/user.service";
 
 const ProfileLink = () => {

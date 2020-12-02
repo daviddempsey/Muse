@@ -1,5 +1,5 @@
 import React from "react";
-import "../index.css";
+import "./index.css";
 //import UserService from '../services/user.service';
 
 /*update a user's biography.

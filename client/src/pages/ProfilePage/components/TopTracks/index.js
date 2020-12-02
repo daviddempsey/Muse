@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Album from "../assets/Channel_ORANGE.jpg";
-import "../index.css";
+import Album from "../../assets/Channel_ORANGE.jpg";
+import "./index.css";
 //import UserService from "../services/user.service";
 
-class FeaturedTrack extends Component {
+class TopTracks extends Component {
   // constructor
   constructor(props) {
     super(props);
@@ -46,4 +46,4 @@ class FeaturedTrack extends Component {
   }
 }
 
-export default FeaturedTrack;
+export default TopTracks;

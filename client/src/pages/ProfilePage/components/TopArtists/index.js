@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Artist from "../assets/frankocean.png";
-import "../index.css";
+import Artist from "../../assets/frankocean.png";
+import "./index.css";
 //import UserService from "../services/user.service";
 
-class FeaturedArtist extends Component {
+class TopArtists extends Component {
   // constructor
   constructor(props) {
     super(props);
@@ -35,4 +35,4 @@ class FeaturedArtist extends Component {
   }
 }
 
-export default FeaturedArtist;
+export default TopArtists;

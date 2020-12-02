@@ -1,0 +1,26 @@
+@import "../../../../styles/index.css";
+
+.title {
+  text-align: left;
+  color: var(--red);
+}
+
+.stats .element {
+  padding: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: var(--yellow);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.stats .altelement {
+  padding: 50px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: var(--red);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}

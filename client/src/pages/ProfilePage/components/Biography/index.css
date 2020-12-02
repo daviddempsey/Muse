@@ -1,0 +1,5 @@
+@import "../../../../styles/index.css";
+
+.body {
+  color: var(--grey);
+}

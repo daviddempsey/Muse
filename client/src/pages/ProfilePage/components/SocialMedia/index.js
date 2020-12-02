@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Facebook from "../assets/fb.png";
-import Instagram from "../assets/ig.png";
-import Twitter from "../assets/twitter.png";
-import "../index.css";
+import Facebook from "../../assets/fb.png";
+import Instagram from "../../assets/ig.png";
+import Twitter from "../../assets/twitter.png";
+import "./index.css";
 //import UserService from "../services/user.service";
 
 class SocialMedia extends Component {
