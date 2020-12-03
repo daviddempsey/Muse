@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import UserService from '../../services/user.service';
 import fb from '../../base.js';
 
-let userEmail = fb.auth().getCurrentUser.email;
-
 const TopStats = () => {
   const [topArtists, setTopArtists] = useState('');
   const [topTracks, setTopTracks] = useState('');
@@ -12,7 +10,9 @@ const TopStats = () => {
   const ArtistLister = ({ topArtists }) =>
     Object.keys(topArtists).map((item, i) => (
       <li key={i}>
-        <a href={'https://open.spotify.com/artist/' + topArtists[item].track_id}>
+        <a
+          href={'https://open.spotify.com/artist/' + topArtists[item].track_id}
+        >
           <span>{topArtists[item].track_name}</span>
         </a>
       </li>
@@ -48,6 +48,7 @@ const TopStats = () => {
 
   // check if component mounted
   React.useEffect(() => {
+    let userEmail = fb.auth().currentUser.email;
     getTopArtists(userEmail);
     getTopTracks(userEmail);
     getTopGenres(userEmail);

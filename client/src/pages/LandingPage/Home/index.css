@@ -54,7 +54,7 @@
 }
 
 .Home .desc .text-col {
-    flex: 50%
+    flex: 50%;
 }
 
 .Home .desc .text-col h1 {
@@ -78,6 +78,7 @@
 
 .Home .text-col .login-btn:hover {
     opacity: 75%;
+    cursor: pointer;
 }
 
 .Home .text-col .login-btn:focus {

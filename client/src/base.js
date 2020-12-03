@@ -1,9 +1,9 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 var fb = firebase.initializeApp({
     apiKey: 'AIzaSyCXHNEOM_Y2rdIC3kvncBsYd7gAf88HJ6g',
     authDomain: 'muse-eec76.firebaseapp.com',
-    databaseURL: 'https://muse-eec76.firebaseio.com/',
+    databaseURL: 'https://muse-eec76.firebaseio.com',
     projectId: 'muse-eec76',
     storageBucket: 'muse-eec76.appspot.com',
     messagingSenderId: '1076771976447',

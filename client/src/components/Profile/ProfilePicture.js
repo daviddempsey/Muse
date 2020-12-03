@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
 import fb from '../../base';
-
-
-let userEmail = fb.auth().getCurrentUser.email;
+import 'firebase/auth';
 
 const ProfilePicture = () => {
   const [profilePicture, setProfilePicture] = useState('');
@@ -12,6 +10,7 @@ const ProfilePicture = () => {
   };
 
   React.useEffect(() => {
+    let userEmail = fb.auth().currentUser.email;
     getProfilePicture(userEmail);
   }, []);
 
