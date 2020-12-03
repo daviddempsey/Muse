@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import UserService from '../../services/user.service';
 import fb from '../../base';
 import 'firebase/auth';
+const auth = fb.auth();
 
 /*update a user's biography.
   Current functionality: basic text element with a save button to 
@@ -17,8 +18,16 @@ const Biography = () => {
   };
 
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getBiography(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getBiography(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getBiography(user.email);
+        }
+      });
+    }
   }, []);
 
   return <div> {bioText} </div>;

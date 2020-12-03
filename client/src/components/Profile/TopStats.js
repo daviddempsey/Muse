@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
-import fb from '../../base.js';
+import fb from '../../base';
+import 'firebase/auth';
+const auth = fb.auth();
 
 const TopStats = () => {
   const [topArtists, setTopArtists] = useState('');
@@ -10,9 +12,7 @@ const TopStats = () => {
   const ArtistLister = ({ topArtists }) =>
     Object.keys(topArtists).map((item, i) => (
       <li key={i}>
-        <a
-          href={'https://open.spotify.com/artist/' + topArtists[item].track_id}
-        >
+        <a href={'https://open.spotify.com/artist/' + topArtists[item].track_id}>
           <span>{topArtists[item].track_name}</span>
         </a>
       </li>
@@ -48,10 +48,20 @@ const TopStats = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getTopArtists(userEmail);
-    getTopTracks(userEmail);
-    getTopGenres(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getTopArtists(userEmail);
+      getTopTracks(userEmail);
+      getTopGenres(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getTopArtists(user.email);
+          getTopTracks(user.email);
+          getTopGenres(user.email);
+        }
+      });
+    }
   }, []);
 
   return (

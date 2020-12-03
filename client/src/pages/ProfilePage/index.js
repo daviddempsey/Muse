@@ -12,7 +12,6 @@ import TopStats from '../../components/Profile/TopStats';
 import Cookies from 'js-cookie';
 import fb from '../../base';
 import 'firebase/auth';
-
 const auth = fb.auth();
 
 class ProfilePage extends Component {
@@ -33,17 +32,17 @@ class ProfilePage extends Component {
           <DefaultLayout>
             <div id='profile-section'>
               <ProfilePicture />
-              {/* <button onClick={() => this.props.history.push('/editprofile')}>
+              <button onClick={() => this.props.history.push('/editprofile')}>
                 Edit Profile
               </button>
-              {<Biography />}
-              {<ProfileLink />}
-              {<SocialMedia />}
-              {<TopStats />} */}
+              <Biography />
+              <ProfileLink />
+              <SocialMedia />
+              <TopStats />
             </div>
           </DefaultLayout>
         </div>
-       {/*  <div id='cookie stuff'>
+        {/* <div id='cookie stuff'>
           <p>{Cookies.get('token')}</p>
           <p>{auth.currentUser.email}</p>
         </div> */}

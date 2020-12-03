@@ -8,6 +8,7 @@ import DefaultLayout from '../DefaultLayout';
 import fb from '../../base.js';
 import Cookies from 'js-cookie';
 import 'firebase/auth';
+const auth = fb.auth();
 
 class EditProfilePage extends Component {
   //constructor
@@ -37,13 +38,28 @@ class EditProfilePage extends Component {
 
   //checks if component mounted
   componentDidMount() {
-    let userEmail = fb.auth().currentUser.email;
-    this.getProfilePicture(userEmail);
-    this.getBiography(userEmail);
-    this.getFacebook(userEmail);
-    this.getInstagram(userEmail);
-    this.getTwitter(userEmail);
-    this.getTikTok(userEmail);
+    let that = this;
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      this.getProfilePicture(userEmail);
+      this.getBiography(userEmail);
+      this.getFacebook(userEmail);
+      this.getInstagram(userEmail);
+      this.getTwitter(userEmail);
+      this.getTikTok(userEmail);
+    } else {
+      auth.onAuthStateChanged(async function (user) {
+        if (user) {
+          let userEmail = user.email;
+          that.getProfilePicture(userEmail);
+          that.getBiography(userEmail);
+          that.getFacebook(userEmail);
+          that.getInstagram(userEmail);
+          that.getTwitter(userEmail);
+          that.getTikTok(userEmail);
+        }
+      });
+    }
   }
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
@@ -131,16 +147,33 @@ class EditProfilePage extends Component {
   /* event handler for when user hits submit button*/
   // onSubmit updates database once user is done.
   handleSubmit(event) {
-    const userEmail = fb.auth().currentUser.email;
-    //bioText = this.state.value;
-    this.setProfilePicture(userEmail);
-    this.setBiography(userEmail);
-    this.setFacebook(userEmail);
-    this.setInstagram(userEmail);
-    this.setTwitter(userEmail);
-    this.setTikTok(userEmail);
-    event.preventDefault();
-    this.props.history.push('/profile');
+    let that = this;
+    if (auth.currentUser) {
+      const userEmail = fb.auth().currentUser.email;
+      //bioText = this.state.value;
+      this.setProfilePicture(userEmail);
+      this.setBiography(userEmail);
+      this.setFacebook(userEmail);
+      this.setInstagram(userEmail);
+      this.setTwitter(userEmail);
+      this.setTikTok(userEmail);
+      event.preventDefault();
+      this.props.history.push('/profile');
+    } else {
+      auth.onAuthStateChanged(async function (user) {
+        if (user) {
+          let userEmail = user.email;
+          that.setProfilePicture(userEmail);
+          that.setBiography(userEmail);
+          that.setFacebook(userEmail);
+          that.setInstagram(userEmail);
+          that.setTwitter(userEmail);
+          that.setTikTok(userEmail);
+          event.preventDefault();
+          that.props.history.push('/profile');
+        }
+      });
+    }
   }
 
   /* TODO: edit social media, edit profile picture, featured artist and track*/
@@ -158,9 +191,9 @@ class EditProfilePage extends Component {
                 type='text'
                 value={this.state.profilePicture}
                 onChange={this.handlePFPChange}
-              />{' '}
-            </label>{' '}
-          </div>{' '}
+              />
+            </label>
+          </div>
           <div id='biography-form'>
             <label>
               Biography:
@@ -169,9 +202,9 @@ class EditProfilePage extends Component {
                 type='text'
                 value={this.state.biography}
                 onChange={this.handleBioChange}
-              />{' '}
-            </label>{' '}
-          </div>{' '}
+              />
+            </label>
+          </div>
           <div id='socials-form'>
             <div id='facebook-form'>
               <label>
@@ -180,9 +213,9 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.facebook}
                   onChange={this.handleFacebookChange}
-                />{' '}
-              </label>{' '}
-            </div>{' '}
+                />
+              </label>
+            </div>
             <div id='instagram-form'>
               <label>
                 Instagram:
@@ -190,9 +223,9 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.instagram}
                   onChange={this.handleInstagramChange}
-                />{' '}
-              </label>{' '}
-            </div>{' '}
+                />
+              </label>
+            </div>
             <div id='twitter-form'>
               <label>
                 Twitter:
@@ -200,9 +233,9 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.twitter}
                   onChange={this.handleTwitterChange}
-                />{' '}
-              </label>{' '}
-            </div>{' '}
+                />
+              </label>
+            </div>
             <div id='tiktok-form'>
               <label>
                 TikTok:
@@ -210,12 +243,12 @@ class EditProfilePage extends Component {
                   type='text'
                   value={this.state.tiktok}
                   onChange={this.handleTikTokChange}
-                />{' '}
-              </label>{' '}
-            </div>{' '}
-          </div>{' '}
+                />
+              </label>
+            </div>
+          </div>
           <div id='playlist-form'>
-            <label> Playlists: </label>{' '}
+            <label> Playlists: </label>
             <select
               value={this.state.playlists}
               onChange={this.handleChange}
@@ -223,11 +256,11 @@ class EditProfilePage extends Component {
             >
               <option value='$'> $ </option> <option value='T'> T </option>
               <option value='S'> S </option> <option value='L'> L </option>
-              <option value='A'> A </option>{' '}
-            </select>{' '}
-          </div>{' '}
+              <option value='A'> A </option>
+            </select>
+          </div>
           <input type='submit' value='Submit' />
-        </form>{' '}
+        </form>
       </DefaultLayout>
     );
   }

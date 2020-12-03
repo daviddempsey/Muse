@@ -6,35 +6,36 @@ import { useEffect } from 'react';
 
 const auth = fb.auth();
 
-const LoadingPage = ({history}) => {
+const LoadingPage = ({ history }) => {
+  useEffect(() => {
+    handleSignIn();
+  });
 
-    useEffect(() => {
-        handleSignIn();
-    })
+  const handleSignIn = async () => {
+    // get token from cookie
+    const token = Cookies.get('token');
 
-    const handleSignIn = async() => {
+    // attempt to sign in to the application
+    fb.auth()
+      .signInWithCustomToken(token)
+      .then((user) => {
+        // redirect
+        history.push('/profile');
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-        // get token from cookie
-        const token = Cookies.get('token');
+        // log the error to the console
+        alert(errorMessage);
+      });
+  };
 
-        // attempt to sign in to the application
-        fb.auth().signInWithCustomToken(token).then((user) => {
-            // redirect
-            history.push("/profile");
-        }).catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-
-            // log the error to the console
-            alert(errorMessage);
-        });
-    }
-
-    return(
-        <div>
-            <p>Please Wait while we sign you in!</p>
-        </div>
-    );
-}
+  return (
+    <div>
+      <p>Please Wait while we sign you in!</p>
+    </div>
+  );
+};
 
 export default LoadingPage;
