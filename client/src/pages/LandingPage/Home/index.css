@@ -1,5 +1,4 @@
 @import '../../../styles/index.css';
-
 .Home header h3 {
     font-size: 18px;
 }
@@ -45,10 +44,9 @@
     padding: 1em;
 }
 
-.Home .desc{
+.Home .desc {
     display: flex;
     align-items: center;
-    
     min-height: 100vh;
     padding: 0rem 6rem;
 }
