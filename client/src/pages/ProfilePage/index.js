@@ -33,20 +33,20 @@ class ProfilePage extends Component {
           <DefaultLayout>
             <div id='profile-section'>
               <ProfilePicture />
-              <button onClick={() => this.props.history.push('/editprofile')}>
+              {/* <button onClick={() => this.props.history.push('/editprofile')}>
                 Edit Profile
               </button>
               {<Biography />}
               {<ProfileLink />}
               {<SocialMedia />}
-              {<TopStats />}
+              {<TopStats />} */}
             </div>
           </DefaultLayout>
         </div>
-        <div id='cookie stuff'>
+       {/*  <div id='cookie stuff'>
           <p>{Cookies.get('token')}</p>
           <p>{auth.currentUser.email}</p>
-        </div>
+        </div> */}
       </div>
     );
   };
