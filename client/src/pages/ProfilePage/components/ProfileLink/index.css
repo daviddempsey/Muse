@@ -6,10 +6,19 @@
   margin-top: 2px;
   margin-left: 20px;
   color: var(--red);
-  background-color: var(--almost-white);
+  background-color: inherit;
   border-color: var(--red);
   border-width: 0.3rem;
   border-radius: 50%;
+  cursor: pointer;
+}
+
+.copylink:focus {
+  outline: none;
+}
+
+.copylink:active {
+  transform: translate(1px, 1px);
 }
 
 .copylink .link {

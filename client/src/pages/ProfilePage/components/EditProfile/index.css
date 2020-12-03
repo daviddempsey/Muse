@@ -5,7 +5,7 @@
   height: auto;
   max-height: 40px;
   color: var(--red);
-  background-color: var(--almost-white);
+  background-color: inherit;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-bottom: 2.2rem;
@@ -14,4 +14,13 @@
   border-radius: 2rem;
   margin-left: 30px;
   margin-top: 2px;
+  cursor: pointer;
+}
+
+.edit:focus {
+  outline: none;
+}
+
+.edit:active {
+  transform: translate(1px, 1px);
 }

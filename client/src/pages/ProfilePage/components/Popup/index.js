@@ -10,13 +10,16 @@ const Popup = () => {
 
   return (
     <div className="modal">
-      <span className="close" onClick={togglePop}>
+      <button className="close" onClick={togglePop}>
         &times;
-      </span>
+      </button>
       <div className="content">
         <div className="row-1">
           <div className="col-1">
             <img src={PFP} className="pfp" alt="pfp" />
+            <button className="btn">
+              <h3>Change</h3>
+            </button>
           </div>
           <div className="col-2">
             <h1 className="title"> Edit Bio </h1>
@@ -29,13 +32,13 @@ const Popup = () => {
         </div>
         <div className="row-3">
           <h1 className="title"> Manage Socials </h1>
-          <div></div>
+          <div className="form"></div>
         </div>
         <div className="row-4">
           <button className="btn">
             <h3>Save</h3>
           </button>
-          <button className="btn">
+          <button className="btn" onClick={togglePop}>
             <h3>Cancel</h3>
           </button>
         </div>
