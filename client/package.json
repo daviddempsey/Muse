@@ -1,52 +1,50 @@
 {
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.20.0",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "eslint": "^7.14.0",
-    "firebase": "^8.1.1",
-    "firebase-admin": "^9.4.1",
-    "font-awesome": "^4.7.0",
-    "js-cookie": "^2.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-promise-tracker": "^2.1.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.0",
-    "reactjs-popup": "^2.0.4",
-    "request": "^2.88.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "index.js",
-  "author": "",
-  "license": "ISC",
-  "proxy": "http://localhost:5001/muse-eec76/us-central1/app/"
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@testing-library/jest-dom": "^5.11.6",
+        "@testing-library/react": "^11.2.2",
+        "@testing-library/user-event": "^12.4.0",
+        "axios": "^0.21.0",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "firebase": "^8.1.1",
+        "firebase-admin": "^9.4.1",
+        "firebase-functions": "^3.12.0",
+        "js-cookie": "^2.2.1",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "react-promise-tracker": "^2.1.0",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^4.0.1",
+        "request": "^2.88.2",
+        "typescript": "^3.2.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+    "main": "index.js",
+    "author": "",
+    "license": "ISC",
+    "proxy": "http://localhost:5001/muse-eec76/us-central1/app/"
 }
