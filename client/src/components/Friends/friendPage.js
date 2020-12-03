@@ -23,12 +23,12 @@ const FriendPage = () => {
 
     /* gets the friends list of the current user */
     React.useEffect(() => {
-        getfriendsList('cse110spotifytester1@gmail.com');
+        getfriendsList("cse110spotifytester1@gmail.com");
     }, []);
     
     /* renders the friend page */
     return (
-        <div id='friendPage'>
+        <div className='friendPage'>
             <h1>Friends</h1>
             <br />
             <Friends friendsList={friendsList} />
@@ -53,7 +53,7 @@ const Friend = ({ email }) => {
     };
 
     /* get the name of each friend from the database */
-    const getname = async (email) => {
+    const getName = async (email) => {
         setName(await UserService.getUserName(email));
     }
 
@@ -77,7 +77,7 @@ const Friend = ({ email }) => {
     /* check if component mounted */
     React.useEffect(() => {
         getBio(email);
-        getname(email)
+        getName(email)
         getPic(email);
         getProfile(email);
         // getCompatibility(email);

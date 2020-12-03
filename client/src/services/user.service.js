@@ -12,7 +12,7 @@ class UserService {
       const friends = await response.get();
       return friends.data()['friends'];
     } catch (error) {
-      alert(error);
+      // alert(error);
       console.log(error);
     }
   }
@@ -23,7 +23,7 @@ class UserService {
       const userName = await response.get();
       return userName.data()['name'];
     } catch (error) {
-      alert(error);
+      // alert(error);
       console.log(error);
     }
   }
@@ -37,7 +37,7 @@ class UserService {
           biography: bio
         });
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     }
@@ -50,7 +50,7 @@ class UserService {
           profile_picture: profilePicLink
         });
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     }
@@ -130,7 +130,7 @@ class UserService {
         const userDoc = await response.get();
         return userDoc.data();
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     }
@@ -141,7 +141,7 @@ class UserService {
         const userProfileDoc = await response.get();
         return userProfileDoc.data();
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     }
@@ -153,7 +153,7 @@ class UserService {
         const biography = await response.get();
         return biography.data()['biography'];
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     }
@@ -165,7 +165,7 @@ class UserService {
         const profilePic = await response.get();
         return profilePic.data()['profile_picture'];
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     } 
@@ -177,7 +177,7 @@ class UserService {
         const profileLink = await response.get();
         return profileLink.data()['profile_url'];
       } catch (error) {
-        alert(error);
+        // alert(error);
         console.log(error);
       }
     }

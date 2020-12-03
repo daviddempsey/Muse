@@ -1,14 +1,18 @@
 @import '../../styles/index.css';
 
+.friendPage h1 {
+    text-align:center;
+    padding-top: 2%;
+}
 .friend {
     border-radius: 30px;
     background: var(--almost-white);
     border: 1px solid var(--grey);
-    width: 90%;
+    width: 85%;
     height: 100px;
     /* padding-top: center; */
     /* padding-left: 15px; */
-    margin: 2.75rem auto;
+    margin: .75rem auto;
 }
 
 .friend img {
@@ -20,6 +24,6 @@
 }
 
 .friend .text {
-    padding-top: 2%;
+    padding-top: 1.5%;
     text-indent: 2%;
 }
