@@ -1,5 +1,49 @@
 const fetch = require('node-fetch');
-exports.computeCompatibility = async function (fsdb, currUserEmail, otherUserEmail) {
+
+/**
+ * Computes compatibility of all users within range
+ * @param {Firestore} fsdb Reference to the Firestore database
+ * @param {String} currUserId Email of the user used to access info from fsdb
+ * @param {Number} distanceLimit Maximum radius users must be within when computing score
+ * @param {Firestore} querySnapshot Firestore snapshot used to collect all docs within table
+ */
+exports.populateLeaderboard = async function (fsdb, currUserId, distanceLimit, querySnapshot) {
+    var response = [];
+
+    let currUserLocation = await getLocation(fsdb, currUserId);
+    let docs = querySnapshot.docs; // the result of the query
+
+    // Iterate through all the documents
+    for (let doc of docs) {
+        let otherUserId = doc.data().in_harmony;
+        let otherUserLocation = await getLocation(fsdb, otherUserId);
+        let distance = getDistanceFromLatLon(
+            currUserLocation.latitude, currUserLocation.longitude,
+            otherUserLocation.latitude, otherUserLocation.longitude);
+
+        // Calculate the compatibility score between two users
+        if (doc.id != currUserId && distance <= distanceLimit && (doc.id === "test1@test.com" || doc.id === "test2@test.com")) {
+            let otherUserEmail = await doc.data().in_harmony;
+            response.push(await computeCompatibility(fsdb, currUserId, otherUserEmail));
+        }
+    }
+    return response;
+}
+
+/**
+ * Compute the compatibility score between two users (including breakdown of each category)
+ * Format Example:
+ *     "test1@test.com": {
+ *      "audio_features": 0.8694175,
+ *      "artist": 0.05999221968262216,
+ *      "genres": 0.11401209424476016,
+ *      "score": 0.3478072713091274
+ *     }
+ * @param {Firestore} fsdb Reference to the Firestore database
+ * @param {String} currUserEmail ID to obtain info from Firestore
+ * @param {String} otherUserEmail ID to obtain info from Firestore
+ */
+async function computeCompatibility(fsdb, currUserEmail, otherUserEmail) {
 
   // Get top data by making a Firestore call for current user
   let document = fsdb.collection('stats').doc(currUserEmail);
@@ -20,15 +64,14 @@ exports.computeCompatibility = async function (fsdb, currUserEmail, otherUserEma
     "score": 0
   }
   // Get average for total compatibility percentage
-  compatiblityScores[otherUserEmail]["score"] = (compatiblityScores[otherUserEmail]["audio_features"] + 
+  compatiblityScores[otherUserEmail]["score"] = (compatiblityScores[otherUserEmail]["audio_features"] +
     compatiblityScores[otherUserEmail]["artist"] + compatiblityScores[otherUserEmail]["genres"]) / 3
 
-  // Put compatibility score inside inHarmony
-  indexCompatibilityScoresIntoIndex(fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
-
+  // Put compatibility score inside the in_harmony table on Firestore 
+  indexCompatibilityScoresIntoTable(fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
 
   // do we update the other user's in_harmony document as well? 
-//  indexCompatibilityScoresIntoIndex(fsdb, otherUserEmail, currUserEmail, compatiblityScores);
+  //  indexCompatibilityScoresIntoIndex(fsdb, otherUserEmail, currUserEmail, compatiblityScores);
 
 
   return JSON.stringify(compatiblityScores);
@@ -90,12 +133,15 @@ async function rbo(currList, otherList, type) {
   var jaccards = [];
   var tempCurrList = [];
   var tempOtherList = [];
+
+  // Compute Jaccard similarity in every iteration 
   for (let i = 0; i < currList.length; i++) {
     tempCurrList.push(currList[i]);
     tempOtherList.push(otherList[i]);
     jaccards.push(intersection(tempCurrList, tempOtherList).size / union(tempCurrList, tempOtherList).size);
   }
 
+  // Compute and return average of Jaccard similarity
   var sum = 0;
   for (let i in jaccards) {
     sum += jaccards[i];
@@ -104,8 +150,6 @@ async function rbo(currList, otherList, type) {
 
 }
 
-
-/* Helper methods */
 
 /**
  * Calculates the mean of an audio feature contained in a JSON
@@ -183,6 +227,10 @@ function intersection(currList, otherList) {
   return results;
 }
 
+/**
+ * Returns array containing the IDS of all entries from top stats
+ * @param {Object} doc top stats of a user
+ */
 async function getIdsFromTopStats(doc) {
   var ids = [];
   for (let i = 1; i < doc.length; i++) {
@@ -191,6 +239,11 @@ async function getIdsFromTopStats(doc) {
   return ids;
 }
 
+/**
+ * Returns array containing the IDS of all artists/genres from top stats
+ * @param {Object} doc top stats of a user
+ * @param {String} type returning the artists or the genres
+ */
 async function getNamesFromTopStats(doc, type) {
   var names = [];
   if (type === "artists") {
@@ -215,12 +268,15 @@ async function getNamesFromTopStats(doc, type) {
  * @param {String} targetUser the document belonging to sourceUser will be updated with targetUser info
  * @param {Object} compatiblityScores contains the breakdown of the compatibility scores
  */
-async function indexCompatibilityScoresIntoIndex(fsdb, sourceUser, targetUser, compatiblityScores) {
+async function indexCompatibilityScoresIntoTable(fsdb, sourceUser, targetUser, compatiblityScores) {
   let document = fsdb.collection('in_harmony').doc(sourceUser);
   let data = await document.get();
   let entry = data.data();
 
+  // TODO: Hey David, should i add the date here so I have record of when this was last updated? 
 
+
+  // Case 1: the document exists but there are no fields inside - add field
   if (entry !== undefined && Object.keys(entry).length === 0) {
     var similarUsers = {};
     similarUsers[targetUser] = compatiblityScores;
@@ -230,8 +286,7 @@ async function indexCompatibilityScoresIntoIndex(fsdb, sourceUser, targetUser, c
       });
   }
 
-
-  // This won't work if the document is exists but is empty 
+  // Case 2: document exists but new user was calculated - add new user calculations
   else if (entry === undefined || entry['similar_users'][targetUser] === 'undefined') {
     // add to table and then push
     /* old version
@@ -247,6 +302,7 @@ async function indexCompatibilityScoresIntoIndex(fsdb, sourceUser, targetUser, c
       });
   }
 
+  // Case 3: previously calculated user compatibility - update user compatibility scores
   else {
     entry['similar_users'][targetUser] = compatiblityScores;
     await document.update({
@@ -257,15 +313,59 @@ async function indexCompatibilityScoresIntoIndex(fsdb, sourceUser, targetUser, c
 }
 
 
+/* Location functions */
 
-const clientId = '3068918efe6349bfa18633d5dd854b6a';
-const clientSecret = '93f20dfbf9a64d7cbf7f0832e5f0ccf3';
+/**
+ * Gets the latitude and longitude of the user
+ * @param {Firestore} fsdb Reference to the Firestore database
+ * @param {String} user ID used to obtain data from Firestore
+ */
+async function getLocation(fsdb, user) {
+  const document = fsdb.collection('user').doc(user);
+  let profile = await document.get();
+  let response = profile.data();
+  return response.location;
+}
+
+/**
+ * Finds the distance in miles given lat and long of two positions
+ * Source: https://www.movable-type.co.uk/scripts/latlong.html
+ * @param {Number} lat1 Latitude of position 1
+ * @param {Number} lon1 Longitude of position 1
+ * @param {Number} lat2 Latitude of position 2
+ * @param {Number} lon2 Longitude of position 2
+ */
+function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
+
+  // Base case: if they don't have a location, don't apply distance filter
+  if ((lat1 === 0 && lon1 === 0) || (lat2 === 0 && lon2 === 0)) {
+    return 0;
+  }
+
+  const R = 6371e3; // metres
+  const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+  const φ2 = lat2 * Math.PI / 180;
+  const Δφ = (lat2 - lat1) * Math.PI / 180;
+  const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const d = R * c * 0.000621371; // in metres
+  return d;
+}
+
 
 /**
  * This API controller is used to call Spotify APIs. Most of these
  * functions are not actually used in this file, but will be left 
  * here for reference. 
  */
+const clientId = '3068918efe6349bfa18633d5dd854b6a';
+const clientSecret = '93f20dfbf9a64d7cbf7f0832e5f0ccf3';
+
 const APIController = (function () {
   const _getToken = async () => {
 

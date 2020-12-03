@@ -267,13 +267,14 @@ app.get("/api/user/stats/:section/:id", (req, res) => {
     })();
 })
 
-// Compute In-Harmony Score of two users
-app.get("/api/user/compute/:currUserId/:otherUserId", (req, res) => {
+// Get In-Harmony Data from Firestore 
+app.get("/api/in_harmony/:id", (req, res) => {
     (async() => {
         try {
-            // Computing the compatibility of two users 
-           let response = await inHarmony.computeCompatibility(
-             fsdb, req.params.currUserId, req.params.otherUserId);
+            // try getting the information from the database
+            const document = fsdb.collection('in_harmony').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data();
 
             // send product data to front end
             return res.status(200).send(response);
@@ -284,18 +285,46 @@ app.get("/api/user/compute/:currUserId/:otherUserId", (req, res) => {
     })();
 })
 
-// TODO: DELETE LATER
-app.post('/api/user/stats/copy', (req, res) => {
+
+// Go through every user in our database and compute compatibility score
+app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
+    (async () => {
+        try {
+            var query = fsdb.collection('user');
+            var response = [];
+
+            await query.get().then(querySnapshot => {
+                response = inHarmony.populateLeaderboard(fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+                /* Uncomment this when changing to GET
+                Promise.all([response]).then((values) => {
+                    response = values[0];
+                    return response;
+                });
+                return response;
+                */
+            })
+
+            return res.status(200).send();
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+// Indexes top stats of a user
+app.post('/api/user/stats/index/:id', (req, res) => {
 
     (async () => {
 
         try {
-            await fsdb.collection('stats').doc('test1@test.com')
-            .create( {
-                top_genres: req.body.top_genres,
-                top_artists: req.body.top_artists,
-                top_tracks: req.body.top_tracks,
-            })
+            await fsdb.collection('stats').doc(req.params.id)
+                .create({
+                    top_genres: req.body.top_genres,
+                    top_artists: req.body.top_artists,
+                    top_tracks: req.body.top_tracks,
+                })
             return res.status(200).send();
 
         } catch (error) {
