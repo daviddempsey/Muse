@@ -2,6 +2,7 @@ import React from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoadingPage from "./pages/LoadingPage";
+import ProfilePage from "./pages/ProfilePage";
 import "./styles/index.css";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/logging" component={LoadingPage} />
+          <Route exact path="/profile" component={ProfilePage} />
         </Switch>
       </Router>
     </div>
