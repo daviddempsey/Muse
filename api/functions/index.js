@@ -129,7 +129,13 @@ app.get('/callback', function(req, res) {
             var displayName = body['display_name'];
             var userEmail = body['email'];
             var userId = body['id']; 
-            var imageUrl = body['images'][0]['url'];
+            var imageUrl = '';
+            try {
+              imageUrl = body['images'][0]['url'];
+            } catch (error) {
+              imageUrl = '';
+            }
+            
             var spotifyUrl = body['external_urls']['spotify'];
   
             // create the user and create their stats

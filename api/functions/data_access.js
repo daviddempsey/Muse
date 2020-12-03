@@ -18,6 +18,16 @@ var request = require('request'); // "Request" library
  * @param {*} spotifyID Spotify ID of the user
  * @param {*} refreshToken Spotify refresh token of the user 
  */
+/**
+ * Creates a user based on the user's Spotify information into the database
+ * that's passed in. 
+ * 
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} displayName name of the user
+ * @param {*} spotifyID Spotify ID of the user
+ * @param {*} refreshToken Spotify refresh token of the user 
+ */
 exports.createUser = async function createUser(
   admin, 
   db, 
@@ -27,8 +37,6 @@ exports.createUser = async function createUser(
   profilePicture, 
   acctUrl,
   refreshToken) {
-
-  var newUser = false;
 
   // create a data document to be stored 
   const userData = {
@@ -43,37 +51,33 @@ exports.createUser = async function createUser(
     in_harmony: userEmail,
   }
 
-  // creates a firebase user
-  // add then OR do a try catch block 
-  admin.auth().updateUser(
-    spotifyID, 
-    { 
+  // try creating user
+  try {
+    await admin.auth().updateUser(spotifyID, {
       displayName: displayName,
       email: userEmail
-    }).catch((error) => {
-    // if user does not exist, we create one
+    })
+  } catch (error) {
     if (error.code === 'auth/user-not-found') {
-      admin.auth().createUser({
-        uid: spotifyID,
-        displayName: displayName,
-        refreshToken: refreshToken, 
+      let response = await admin.auth().createUser({
+        uid: spotifyID, 
+        displayName: displayName, 
+        refreshToken: refreshToken,
         email: userEmail
-      }).then((userRecord) => {
-        console.log('Successfully created new user with email: ', userRecord.email);
-        
-        // go into the user tab and create the user
-        db.collection('user').doc(userEmail).set(userData).then((res) => {
-        
-        // create user profile
-        createUserProfile(db, userEmail, profilePicture, acctUrl);
+      }); 
+      console.log('Successfully created new user with email: ', response.email);
 
-        // create user in harmony document
-        createUserInHarmony(db, userEmail, refreshToken);
-        });
+      // go into the user tab and create the user
+      await db.collection('user').doc(userEmail).set(userData);
         
-      });
+      // create user profile
+      await createUserProfile(db, userEmail, profilePicture, acctUrl);
+
+      // create user in harmony document
+      await createUserInHarmony(db, userEmail, refreshToken);
+      
     }
-  });
+  }
 
   // create a custom auth token and if user already exists, query for custom token 
   // surround a try catch block, and handle it with 
