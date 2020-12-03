@@ -6,6 +6,7 @@ const statsCollection = fb.firestore().collection('stats');
 
 class UserService {
 
+  /* get the user's friends list */
   async getUserFriends(email) {
     try {
       const response = userCollection.doc(email);
@@ -17,6 +18,7 @@ class UserService {
     }
   }
 
+  /* get the user's name */
   async getUserName(email) {
     try {
       const response = userCollection.doc(email);
