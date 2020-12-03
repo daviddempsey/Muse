@@ -16,16 +16,9 @@ const LoadingPage = ({history}) => {
 
         // get token from cookie
         const token = Cookies.get('token');
-        
-        // try to sign user in 
-        // fb.auth().signInWithCustomToken(token).then(history.push("/profile"));
 
         // attempt to sign in to the application
         fb.auth().signInWithCustomToken(token).then((user) => {
-            // Signed in 
-            console.log('Signed in successfully');
-            console.log('Added', user);
-
             // redirect
             history.push("/profile");
         }).catch((error) => {
@@ -33,7 +26,6 @@ const LoadingPage = ({history}) => {
             var errorMessage = error.message;
 
             // log the error to the console
-            console.log(errorCode, errorMessage);
             alert(errorMessage);
         });
     }

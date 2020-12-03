@@ -15,20 +15,7 @@ const Home = () => {
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth' });
 
   const loginToSpotify = () => {
-    // var state = generateRandomString(16);
-    // res.cookie(stateKey, state);
-    var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
-    var redirect_uri = 'http://localhost:5001/muse-eec76/us-central1/app/callback'; // Your redirect uri
-  
-    // your application requests authorization
-    var scope = 'user-read-private user-read-email user-top-read';
-    // window.location = "https://accounts.spotify.com/authorize?client_id=" + client_id + "&response_type=token" + "&redirect_uri=" + encodeURIComponent(redirect_uri) + "&scope=" + encodeURIComponent(scope) + "&show_dialog=true"
     window.location = "http://localhost:5001/muse-eec76/us-central1/app/login";
-    // .then(res => res.json())
-    // .then((data) => {
-    //   this.setState({contacts: data})
-    // })
-    // .catch(console.log)
   };
 
   return <div className="Home" id="home">
