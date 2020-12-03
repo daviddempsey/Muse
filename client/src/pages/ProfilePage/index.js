@@ -20,7 +20,7 @@ const ProfilePage = () => {
         <DefaultLayout>
           <div className="content">
             <div className="personal">
-              <img src={Decal} className="decal" alt="decal" />
+              <img src={Decal} className="decal" alt="" />
               <div className="rows">
                 <div className="row-1">
                   <ProfilePicture />
@@ -55,6 +55,7 @@ const ProfilePage = () => {
                 <div className="stats">
                   <SpotifyStats />
                 </div>
+                {/*<div className="fromfriends"></div>*/}
               </div>
             </div>
           </div>

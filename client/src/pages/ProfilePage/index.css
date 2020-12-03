@@ -8,6 +8,7 @@
   background-color: var(--white);
 }
 
+/* Edit profile */
 .popup {
   display: none;
   position: absolute;
@@ -27,12 +28,12 @@
   color: var(--grey);
 }
 
-/* Margins for content */
+/* Margins */
 .content {
   margin: 50px 100px 50px 100px;
 }
 
-/* Content styles */
+/* Content */
 .content .columns {
   display: flex;
   flex-direction: row;
@@ -96,7 +97,7 @@
   padding-bottom: 30px;
 }
 
-/* Top tracks component */
+/* Top tracks */
 .tracks {
   padding: 30px;
   margin-bottom: 30px;
@@ -106,7 +107,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Top artists component */
+/* Top artists */
 .artists {
   padding: 30px;
   margin-bottom: 30px;
@@ -116,7 +117,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Playlist styles */
+/* Playlists */
 .playlists {
   padding: 30px;
   margin-bottom: 30px;
@@ -126,7 +127,7 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Spotify Stats styles */
+/* Spotify stats */
 .stats {
   padding: 30px;
   text-align: left;
