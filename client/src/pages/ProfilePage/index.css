@@ -59,7 +59,7 @@
   margin-bottom: 30px;
   background-color: var(--almost-white);
   border-radius: 15px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   min-width: 776px;
 }
 
@@ -104,7 +104,7 @@
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Top artists */
@@ -114,7 +114,7 @@
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Playlists */
@@ -124,7 +124,7 @@
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Spotify stats */
@@ -133,5 +133,5 @@
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
