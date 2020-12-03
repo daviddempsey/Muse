@@ -5,25 +5,35 @@
     padding-top: 2%;
 }
 .friend {
-    border-radius: 30px;
+    border-radius: 20px;
     background: var(--almost-white);
-    border: 1px solid var(--grey);
+    /* border: 1px solid var(--grey); */
     width: 85%;
     height: 100px;
-    /* padding-top: center; */
-    /* padding-left: 15px; */
     margin: .75rem auto;
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
 }
 
 .friend img {
     float: left;
-    border-radius: 30%;
-    max-height: 80%;
-    max-width: 80%;
-    margin: auto;
+    border-radius: 50%;
+    height: 80%;
+    width: 80px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
-.friend .text {
-    padding-top: 1.5%;
-    text-indent: 2%;
+.friend .name {
+    padding-top: 15px;
+    text-indent: 15px;
+    margin-bottom: 15px;
+}
+
+.friend .bio {
+    text-indent: 15px;
 }

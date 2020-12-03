@@ -165,8 +165,9 @@ class UserService {
         const profilePic = await response.get();
         return profilePic.data()['profile_picture'];
       } catch (error) {
-        // alert(error);
         console.log(error);
+        return 'https://cse.ucsd.edu/sites/cse.ucsd.edu/files/faculty/gillespie17M-115x150.jpg'
+        // alert(error);
       }
     } 
 

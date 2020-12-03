@@ -87,18 +87,22 @@ const Friend = ({ email }) => {
     return (
         <div className="friend">
             <img alt='pro pic not found' src={pic}/>            
-            <div className="text">
-                <h2>
+            <h2>
+                <div className="name">
                     {/* Replace this with the actual profile page */}
                     <Link to={profile} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         {name}
                     </Link>
-                </h2>
-            <p>{bio}</p>
+                </div>
+            </h2>
+            <div className="bio">
+                <p>{bio}</p>
             </div>
             <br />
             {/* need to wait for compatibilitiy to be implemented */}
-            {/* <h1>{compatibility}</h1> */}
+            {/* <div className="compability">
+                <h1>{compatibility}</h1>
+            </div> */}
         </div>
     );
 };
