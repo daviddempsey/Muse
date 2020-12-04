@@ -16,21 +16,39 @@ import EditProfile from "./components/EditProfile";
 import Popup from "./components/Popup";
 //import SpotifyPlaylists from "./components/SpotifyPlaylists";
 
+import UserService from "../../services/user.service";
 import Cookies from "js-cookie";
-//import fb from "../../base";
+import fb from "../../base";
 import "firebase/auth";
-//const auth = fb.auth();
+const auth = fb.auth();
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      name: "",
       firebaseToken: Cookies.get("token"),
     };
   }
 
-  componentDidMount = () => {};
+  getName = async (email) => {
+    this.setState({ name: await UserService.getName(email) });
+  };
+
+  componentDidMount = () => {
+    let that = this;
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      this.getName(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          that.getName(user.email);
+        }
+      });
+    }
+  };
 
   render = () => {
     return (
@@ -45,7 +63,7 @@ class ProfilePage extends Component {
                     <ProfilePicture />
                   </div>
                   <div className="row-2">
-                    <h1 className="title">Username</h1>
+                    <h1 className="title">{this.state.name}</h1>
                     <EditProfile />
                     <ProfileLink />
                   </div>
@@ -70,16 +88,16 @@ class ProfilePage extends Component {
                   <div className="artists">
                     <TopArtists />
                   </div>
-                  {/*
-                <div className="playlists">
-                  <SpotifyPlaylists />
-                </div>
-                */}
                 </div>
                 <div className="col-2">
                   <div className="stats">
                     <SpotifyStats />
                   </div>
+                  {/*
+                  <div className="playlists">
+                    <SpotifyPlaylists />
+                  </div>
+                  */}
                   {/*<div className="fromfriends"></div>*/}
                 </div>
               </div>

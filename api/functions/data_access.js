@@ -6,6 +6,7 @@
  * etc.
  */
 
+const { response } = require("express");
 var request = require("request"); // "Request" library
 
 /**
@@ -115,6 +116,46 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
 
   // log to console the result
   return res;
+}
+
+/**
+ * Updates user playlists upon.
+ * @param {*} db
+ * @param {*} email
+ * @param {*} playlists
+ */
+async function updateUserPlaylists(db, email, playlists) {
+  // create data object to be stored
+  var formattedList = {
+    public_playlists: [],
+  };
+
+  for (var i in playlists) {
+    // Get image URL
+    var image_url = playlists[i]["images"][0]["url"];
+
+    // get playlist name
+    var playlist_name = playlists[i]["name"];
+
+    // playlist link
+    var playlist_id = playlists[i]["id"];
+
+    // entry
+    var entry = {
+      image: image_url,
+      playlist_name: playlist_name,
+      playlist_id: playlist_id,
+    };
+
+    // push it into formatted list
+    formattedList["public_playlists"].push(entry);
+  }
+
+  // add populated list to database
+  const document = db.collection("stats").doc(email);
+  await document.update({
+    public_playlists: formattedList["public_playlists"],
+  });
 }
 
 /**
@@ -297,6 +338,15 @@ exports.createUserStats = async function createUserStats(
   };
   request.get(topTracksCall, function (error, response, topTracks) {
     createUserStatsTopTracks(db, email, topTracks.items);
+  });
+
+  var userPlaylistCall = {
+    url: "https://api.spotify.com/v1/me/playlists",
+    headers: { Authorization: "Bearer " + access_token },
+    json: true,
+  };
+  request.get(userPlaylistCall, function (error, response, playlists) {
+    updateUserPlaylists(db, email, playlists.items);
   });
 
   console.log("Added", res);

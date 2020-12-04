@@ -88,6 +88,31 @@ class UserService {
     }
   }
 
+  /* USER GET FUNCTIONS */
+  async getRefreshToken(email) {
+    try {
+      const response = await userCollection.doc(email);
+      const userDoc = await response.get();
+      const userRefresh = userDoc.data()["refresh_token"];
+      console.log(userRefresh);
+      return userRefresh;
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
+
+  async getName(email) {
+    try {
+      const response = await userCollection.doc(email);
+      const userDoc = await response.get();
+      return userDoc.data()["name"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
+
   /* DOCUMENT GET FUNCTIONS */
   async getAll() {
     try {
@@ -105,6 +130,18 @@ class UserService {
       const response = await userCollection.doc(email);
       const userDoc = await response.get();
       return userDoc.data();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
+
+  // get the user's friends list
+  async getUserFriends(email) {
+    try {
+      const response = userCollection.doc(email);
+      const friends = await response.get();
+      return friends.data()["friends"];
     } catch (error) {
       alert(error);
       console.log(error);
@@ -245,15 +282,27 @@ class UserService {
     }
   }
 
-  /* SPOTIFY REAL TIME DATA FETCH */
-  /*async getSpotifyPlaylists(refreshToken) {
+  async getSpotifyPlaylists(email) {
+    try {
+      const response = await statsCollection.doc(email);
+      const playlists = await response.get();
+      return playlists.data()["public_playlists"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
+}
+
+/* SPOTIFY REAL TIME DATA FETCH */
+/*async getSpotifyPlaylists(refreshToken) {
               // get the access token 
               // get the spotify playlists
 
             }*/
 
-  /* Profile information get functions */
-  /*
+/* Profile information get functions */
+/*
                 getSongStats() {
                     // NO SONG STATS IN DATABASE YET
                 }
@@ -268,8 +317,8 @@ class UserService {
                 }
             */
 
-  // what is this function
-  /* 
+// what is this function
+/* 
                 create(user) {
                   return db.add(user);
                 }
@@ -284,6 +333,5 @@ class UserService {
                   return db.doc(email).delete();
                 }
             */
-}
 
 export default new UserService();
