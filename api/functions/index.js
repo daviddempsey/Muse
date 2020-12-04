@@ -168,7 +168,7 @@ app.get('/callback', function(req, res) {
                             (value) =>
                             res
                             .cookie('token', value)
-                            .redirect('http://localhost:3000/logging'),
+                            .redirect('http://localhost:3001/logging'),
                             (e) => console.log(e)
                         );
                 });

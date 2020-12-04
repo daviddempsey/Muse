@@ -14,7 +14,7 @@ const TopStats = () => {
       <li key={i}>
         <a href={'https://open.spotify.com/artist/' + topArtists[item].track_id}>
           <span>{topArtists[item].track_name}</span>
-          <img alt='pfp' src={topArtists[item]['images'][2]} />
+          <img alt='pfp' src={topArtists[item]['images'][0]} />
         </a>
       </li>
     ));
@@ -24,7 +24,7 @@ const TopStats = () => {
       <li key={i}>
         <a href={'https://open.spotify.com/track/' + topTracks[item].track_id}>
           <span>{topTracks[item].track_name}</span>
-          <img alt='pfp' src={topTracks[item]['images'][2]} />
+          <img alt='pfp' src={topTracks[item]['images'][0]} />
 
         </a>
       </li>
