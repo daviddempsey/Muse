@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import "./index.css";
 
+//import CurrentTrack from "./components/CurrentTrack";
 import DefaultLayout from "../DefaultLayout";
 import Decal from "./assets/decal.png";
 import ProfilePicture from "./components/ProfilePicture";
 import Biography from "./components/Biography";
-import CurrentTrack from "./components/CurrentTrack";
 import TopArtists from "./components/TopArtists";
 import TopTracks from "./components/TopTracks";
 import ProfileLink from "./components/ProfileLink";
@@ -45,7 +45,7 @@ class ProfilePage extends Component {
                     <ProfilePicture />
                   </div>
                   <div className="row-2">
-                    <h1 className="title">Frank_Ocean_22</h1>
+                    <h1 className="title">Username</h1>
                     <EditProfile />
                     <ProfileLink />
                   </div>
@@ -59,9 +59,11 @@ class ProfilePage extends Component {
               </div>
               <div className="columns">
                 <div className="col-1">
+                  {/*
                   <div className="tracks">
                     <CurrentTrack />
                   </div>
+                  */}
                   <div className="tracks">
                     <TopTracks />
                   </div>

@@ -113,9 +113,11 @@ class Popup extends Component {
   setInstagram = (email) => {
     UserService.setInstagram(email, this.state.instagram);
   };
+
   setTwitter = (email) => {
     UserService.setTwitter(email, this.state.twitter);
   };
+
   setTikTok = (email) => {
     UserService.setTiktok(email, this.state.tiktok);
   };
@@ -174,8 +176,8 @@ class Popup extends Component {
         <button className="close" onClick={this.togglePop}>
           &times;
         </button>
-        <form id="edit-profile-form" onSubmit={this.handleSubmit}>
-          <div className="content">
+        <div className="content">
+          <form id="edit-profile-form" onSubmit={this.handleSubmit}>
             <div className="row-1">
               <div className="col-1">
                 <img
@@ -250,12 +252,12 @@ class Popup extends Component {
               <button className="btn" type="submit" onClick={this.togglePop}>
                 <h3> Save </h3>
               </button>
-              <button className="btn" onClick={this.togglePop}>
+              <button className="btn" type="button" onClick={this.togglePop}>
                 <h3>Cancel</h3>
               </button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     );
   }

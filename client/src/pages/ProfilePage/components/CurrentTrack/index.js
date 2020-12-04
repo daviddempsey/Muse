@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Album from "../../assets/Channel_ORANGE.jpg";
 import "./index.css";
 //import userService from "../services/user.service";
 
@@ -45,7 +44,7 @@ class CurrentTrack extends Component {
         <h2 className="title">Now Listening To</h2>
         <div className="trackelement">
           <div className="columns">
-            <img src={Album} alt="album" />
+            {/*<img src={Album} alt="album" />*/}
             <div className="trackcontent">
               <h2>{this.state.name}</h2>
               <p className="body">{this.state.album}</p>
