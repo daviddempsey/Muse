@@ -90,6 +90,20 @@ class UserService {
         }
     }
 
+    /* USER GET FUNCTIONS */
+    async getRefreshToken(email) {
+        try {
+            const response = await userCollection.doc(email).get();
+            const userDoc = await response.get();
+            const userRefresh = userDoc.data()['refresh_token'];
+            console.log(userRefresh);
+            return userRefresh;
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
     /* DOCUMENT GET FUNCTIONS */
     async getAll() {
         try {
@@ -247,8 +261,16 @@ class UserService {
         }
     }
 
-    async getSpotifyPlaylists(refreshToken) {
-        const clientID = "d81dc76912324d4085250cc20a84ebeb";
+    async getSpotifyPlaylists(email) {
+        try {
+            const response = await statsCollection.doc(email);
+            const playlists = await response.get();
+            return playlists.data()['public_playlists'];
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+        /*const clientID = "d81dc76912324d4085250cc20a84ebeb";
         const clientSecret = "9160d378ee03457dbb3d30a54e79d6ab";
         // get the access token
         const headers = {
@@ -292,7 +314,8 @@ class UserService {
             return playlists.items;
         } catch (error) {
             console.log(error);
-        }
+        }*/
+
     }
 
     /* SPOTIFY REAL TIME DATA FETCH */
