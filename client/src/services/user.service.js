@@ -1,7 +1,5 @@
 import fb from "../base.js";
 import "firebase/firestore";
-import axios from 'axios';
-import qs from 'qs';
 
 const userCollection = fb.firestore().collection("user");
 const profileCollection = fb.firestore().collection("profile");
@@ -93,11 +91,22 @@ class UserService {
     /* USER GET FUNCTIONS */
     async getRefreshToken(email) {
         try {
-            const response = await userCollection.doc(email).get();
+            const response = await userCollection.doc(email);
             const userDoc = await response.get();
             const userRefresh = userDoc.data()['refresh_token'];
             console.log(userRefresh);
             return userRefresh;
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
+    async getName(email) {
+        try { 
+            const response = await userCollection.doc(email);
+            const userDoc = await response.get();
+            return userDoc.data()['name'];
         } catch (error) {
             alert(error);
             console.log(error);
