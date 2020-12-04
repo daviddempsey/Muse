@@ -9,7 +9,11 @@ const TopArtists = () => {
 
   const ArtistLister = ({ topArtists }) =>
     Object.keys(topArtists).map((item, i) => (
-      <a href={"https://open.spotify.com/artist/" + topArtists[item].track_id}>
+      <a
+        href={"https://open.spotify.com/artist/" + topArtists[item].track_id}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {i < 6 ? (
           <img src={topArtists[item]["images"][2]} alt="artist" />
         ) : null}

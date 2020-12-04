@@ -13,6 +13,8 @@ const TopTracks = () => {
         {i < 5 ? (
           <a
             href={"https://open.spotify.com/track/" + topTracks[item].track_id}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <div className="trackelement">
               <div className="columns">

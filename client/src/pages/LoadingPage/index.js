@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import fb from "../../base";
 import "firebase/auth";
-import { useEffect } from "react";
+import "./index.css";
 
 //const auth = fb.auth();
 
@@ -31,8 +31,8 @@ const LoadingPage = ({ history }) => {
   };
 
   return (
-    <div>
-      <p>Please Wait while we sign you in!</p>
+    <div className="loading">
+      <h1>Please wait while we sign you in!</h1>
     </div>
   );
 };
