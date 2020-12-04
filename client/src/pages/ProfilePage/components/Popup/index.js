@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import Facebook from "../../assets/fb.png";
+import Instagram from "../../assets/ig.png";
+import Twitter from "../../assets/twitter.png";
+import TikTok from "../../assets/tiktok.png";
 import { withRouter } from "react-router-dom";
 import UserService from "../../../../services/user.service";
 import "./index.css";
@@ -13,13 +17,13 @@ class Popup extends Component {
     super(props);
     // set default state of text element instead text box
     this.state = {
-      profilePicture: "breh",
-      biography: "this is the client default bio",
+      profilePicture: "",
+      biography: "",
       facebook: "https://www.facebook.com",
       instagram: "https://www.instagram.com",
       twitter: "https://www.twitter.com",
       tiktok: "https://www.tiktok.com",
-      playlists: ["A", "B", "C"],
+      playlists: [],
       firebaseToken: Cookies.get("token"),
     };
     //event handlers for when we update text field and submit button
@@ -186,75 +190,63 @@ class Popup extends Component {
               <div className="col-2">
                 <h1 className="title"> Edit Bio </h1>
                 <div className="form" id="biography-form">
-                  <input
-                    name="biography"
+                  <textarea
+                    className="input"
                     type="text"
+                    name="biography"
+                    placeholder="Enter bio..."
                     value={this.state.biography}
                     onChange={this.handleBioChange}
-                  />
+                  ></textarea>
                 </div>
               </div>
             </div>
             <div className="row-2">
-              <h1 className="title"> Manage Featured Playlists </h1>
-              <div className="form" id="playlist-form">
-                <select
-                  value={this.state.playlists}
-                  onChange={this.handleChange}
-                  multiple
-                >
-                  <option value="$"> $ </option> <option value="T"> T </option>
-                  <option value="S"> S </option> <option value="L"> L </option>
-                  <option value="A"> A </option>
-                </select>
-              </div>
-            </div>
-            <div className="row-3">
               <h1 className="title"> Manage Socials </h1>
               <div className="form" id="socials-form">
                 <div id="facebook-form">
-                  <label>
-                    Facebook:
-                    <input
-                      type="text"
-                      value={this.state.facebook}
-                      onChange={this.handleFacebookChange}
-                    />
-                  </label>
+                  <img src={Facebook} className="socials" alt="fb" />
+                  <textarea
+                    className="input"
+                    type="text"
+                    placeholder="Enter username..."
+                    value={this.state.facebook}
+                    onChange={this.handleFacebookChange}
+                  />
                 </div>
                 <div id="instagram-form">
-                  <label>
-                    Instagram:
-                    <input
-                      type="text"
-                      value={this.state.instagram}
-                      onChange={this.handleInstagramChange}
-                    />
-                  </label>
+                  <img src={Instagram} className="socials" alt="fb" />
+                  <textarea
+                    className="input"
+                    type="text"
+                    placeholder="Enter username..."
+                    value={this.state.instagram}
+                    onChange={this.handleInstagramChange}
+                  />
                 </div>
                 <div id="twitter-form">
-                  <label>
-                    Twitter:
-                    <input
-                      type="text"
-                      value={this.state.twitter}
-                      onChange={this.handleTwitterChange}
-                    />
-                  </label>
+                  <img src={Twitter} className="socials" alt="fb" />
+                  <textarea
+                    className="input"
+                    type="text"
+                    placeholder="Enter username..."
+                    value={this.state.twitter}
+                    onChange={this.handleTwitterChange}
+                  />
                 </div>
                 <div id="tiktok-form">
-                  <label>
-                    TikTok:
-                    <input
-                      type="text"
-                      value={this.state.tiktok}
-                      onChange={this.handleTikTokChange}
-                    />
-                  </label>
+                  <img src={TikTok} className="socials" alt="fb" />
+                  <textarea
+                    className="input"
+                    type="text"
+                    placeholder="Enter username..."
+                    value={this.state.tiktok}
+                    onChange={this.handleTikTokChange}
+                  />
                 </div>
               </div>
             </div>
-            <div className="row-4">
+            <div className="row-3">
               <button className="btn" type="submit" onClick={this.togglePop}>
                 <h3> Save </h3>
               </button>

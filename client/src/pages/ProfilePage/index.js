@@ -14,7 +14,7 @@ import SocialMedia from "./components/SocialMedia";
 import SpotifyStats from "./components/SpotifyStats";
 import EditProfile from "./components/EditProfile";
 import Popup from "./components/Popup";
-//import FeaturedPlaylists from "./components/FeaturedPlaylists";
+//import SpotifyPlaylists from "./components/SpotifyPlaylists";
 
 import Cookies from "js-cookie";
 //import fb from "../../base";
@@ -70,7 +70,7 @@ class ProfilePage extends Component {
                   </div>
                   {/*
                 <div className="playlists">
-                  <FeaturedPlaylists />
+                  <SpotifyPlaylists />
                 </div>
                 */}
                 </div>

@@ -3,7 +3,7 @@ import React from "react";
 import UserService from "../../../../services/user.service";
 import "./index.css";
 
-const FeaturedPlaylists = () => {
+const SpotifyPlaylists = () => {
   // check if component mounted
   React.useEffect(() => {
     console.log("Component is Mounted");
@@ -16,5 +16,5 @@ const FeaturedPlaylists = () => {
   );
 };
 
-export default FeaturedPlaylists;
+export default SpotifyPlaylists;
 */

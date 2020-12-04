@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
 import fb from "../../../../base.js";
+import Spotify from "../../assets/spotify.png";
 import Facebook from "../../assets/fb.png";
 import Instagram from "../../assets/ig.png";
 import Twitter from "../../assets/twitter.png";
@@ -10,10 +11,15 @@ const auth = fb.auth();
 
 const SocialMedia = () => {
   // uncomment userservice once we get it to work.
+  const [spotifyLink, setSpotifyLink] = useState("");
   const [facebookLink, setFacebookLink] = useState("");
   const [instagramLink, setInstagramLink] = useState("");
   const [twitterLink, setTwitterLink] = useState("");
   const [tiktokLink, setTiktokLink] = useState("");
+
+  const getSpotifyLink = async (email) => {
+    setSpotifyLink(await UserService.getSpotify(email));
+  };
 
   const getInstagramLink = async (email) => {
     setInstagramLink(await UserService.getInstagram(email));
@@ -35,6 +41,7 @@ const SocialMedia = () => {
   React.useEffect(() => {
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
+      getSpotifyLink(userEmail);
       getFacebookLink(userEmail);
       getInstagramLink(userEmail);
       getTwitterLink(userEmail);
@@ -42,6 +49,7 @@ const SocialMedia = () => {
     } else {
       auth.onAuthStateChanged(function (user) {
         if (user) {
+          getSpotifyLink(user.email);
           getFacebookLink(user.email);
           getInstagramLink(user.email);
           getTwitterLink(user.email);
@@ -53,18 +61,31 @@ const SocialMedia = () => {
 
   return (
     <div>
-      <a href={facebookLink}>
-        <img src={Facebook} className="socials" alt="fb" />
-      </a>
-      <a href={instagramLink}>
-        <img src={Instagram} className="socials" alt="ig" />
-      </a>
-      <a href={twitterLink}>
-        <img src={Twitter} className="socials" alt="twitter" />
-      </a>
-      <a href={tiktokLink}>
-        <img src={TikTok} className="socials" alt="tiktok" />
-      </a>
+      {spotifyLink !== "" ? (
+        <a href={spotifyLink}>
+          <img src={Spotify} className="socials" alt="fb" />
+        </a>
+      ) : null}
+      {facebookLink !== "" ? (
+        <a href={"https://www.facebook.com/" + facebookLink}>
+          <img src={Facebook} className="socials" alt="fb" />
+        </a>
+      ) : null}
+      {instagramLink !== "" ? (
+        <a href={"https://www.instagram.com/" + instagramLink}>
+          <img src={Instagram} className="socials" alt="fb" />
+        </a>
+      ) : null}
+      {twitterLink !== "" ? (
+        <a href={"https://www.twitter.com/" + twitterLink}>
+          <img src={Twitter} className="socials" alt="fb" />
+        </a>
+      ) : null}
+      {tiktokLink !== "" ? (
+        <a href={"https://www.tiktok.com/" + tiktokLink}>
+          <img src={TikTok} className="socials" alt="fb" />
+        </a>
+      ) : null}
     </div>
   );
 };
