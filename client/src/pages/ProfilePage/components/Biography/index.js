@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import UserService from "../../../../services/user.service";
+import fb from "../../../../base.js";
+import "firebase/auth";
 import "./index.css";
-//import UserService from '../services/user.service';
 
 /*update a user's biography.
   Current functionality: basic text element with a save button to 
   handle updating firestore database in the future*/
 
 const Biography = () => {
-  // uncomment userservice once we get it to work.
-  //let bioText = UserService.getBiography();
+  // uncomment userservice once we get it to work
   // check if component mounted
+  const [bioText, setBio] = useState("");
+
+  const getBiography = async (email) => {
+    setBio(await UserService.getBiography(email));
+  };
+
   React.useEffect(() => {
-    console.log("Hi");
+    let userEmail = fb.auth().currentUser.email;
+    getBiography(userEmail);
   }, []);
-  let bioText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
-    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
-    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";
+
   return <p className="body"> {bioText} </p>;
 };
 

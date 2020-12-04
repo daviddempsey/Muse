@@ -12,6 +12,7 @@ import SocialMedia from "./components/SocialMedia";
 import SpotifyStats from "./components/SpotifyStats";
 import EditProfile from "./components/EditProfile";
 import Popup from "./components/Popup";
+import FeaturedPlaylists from "./components/FeaturedPlaylists";
 
 const ProfilePage = () => {
   return (
@@ -49,7 +50,11 @@ const ProfilePage = () => {
                 <div className="artists">
                   <TopArtists />
                 </div>
-                {/*<div className="playlists"></div>*/}
+                {/*
+                <div className="playlists">
+                  <FeaturedPlaylists />
+                </div>
+                */}
               </div>
               <div className="col-2">
                 <div className="stats">

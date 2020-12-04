@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import Cookies from "js-cookie";
 import fb from "../../base";
 import "firebase/auth";
 import { useEffect } from "react";
 
-const auth = fb.auth();
+//const auth = fb.auth();
 
 const LoadingPage = ({ history }) => {
   useEffect(() => {
@@ -23,7 +23,7 @@ const LoadingPage = ({ history }) => {
         history.push("/profile");
       })
       .catch((error) => {
-        var errorCode = error.code;
+        //var errorCode = error.code;
         var errorMessage = error.message;
 
         // log the error to the console

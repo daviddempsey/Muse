@@ -1,38 +1,44 @@
-import React, { Component } from "react";
-import Artist from "../../assets/frankocean.png";
+import React, { useState } from "react";
+import UserService from "../../../../services/user.service";
+import fb from "../../../../base.js";
 import "./index.css";
-//import UserService from "../services/user.service";
 
-class TopArtists extends Component {
-  // constructor
-  constructor(props) {
-    super(props);
-    this.state = {
-      artists: "Kanye West,",
-    };
-    this.changeArtist = this.changeArtist.bind(this);
-  }
+const TopArtists = () => {
+  const [topArtists, setTopArtists] = useState("");
 
-  // check mount
-  componentDidMount() {}
-
-  getFeaturedArtist() {}
-
-  changeArtist(newArtist) {
-    this.setState({ artist: newArtist });
-  }
-
-  // render function
-  render() {
-    return (
+  const ArtistLister = ({ topArtists }) =>
+    Object.keys(topArtists).map((item, i) => (
       <div>
-        <h2 className="title"> Top Artists </h2>
-        <div className="artistimgs">
-          <img src={Artist} alt="artist" />
-        </div>
+        {i < 7 ? (
+          <a
+            href={
+              "https://open.spotify.com/artist/" + topArtists[item].track_id
+            }
+          >
+            <img src={topArtists[item]["images"][2]} alt="artist" />
+          </a>
+        ) : null}
       </div>
-    );
-  }
-}
+    ));
+
+  const getTopArtists = async (email) => {
+    setTopArtists(await UserService.getTopArtists(email));
+  };
+
+  // check if component mounted
+  React.useEffect(() => {
+    let userEmail = fb.auth().currentUser.email;
+    getTopArtists(userEmail);
+  }, []);
+
+  return (
+    <div>
+      <h2 className="title"> Top Artists </h2>
+      <div className="artistimgs">
+        <ArtistLister topArtists={topArtists} />
+      </div>
+    </div>
+  );
+};
 
 export default TopArtists;

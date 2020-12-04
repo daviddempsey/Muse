@@ -1,50 +1,21 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import UserService from "../../../../services/user.service";
+import fb from "../../../../base.js";
+import "firebase/auth";
 import "./index.css";
-import PFP from "../../assets/PFP.png";
-//import UserService from "../../../services/user.service";
 
-export default class ProfilePicture extends Component {
-  constructor(props) {
-    super(props);
-    //this.onChangePicture = this.onChangePicture.bind(this);
+const ProfilePicture = () => {
+  const [profilePicture, setProfilePicture] = useState("");
+  const getProfilePicture = async (email) => {
+    setProfilePicture(await UserService.getProfilePicture(email));
+  };
 
-    this.state = {
-      url: "",
-    };
-  }
+  React.useEffect(() => {
+    let userEmail = fb.auth().currentUser.email;
+    getProfilePicture(userEmail);
+  }, []);
 
-  /*
-  componentDidMount() {
-    this.getProfilePicture();
-  }
+  return <img src={profilePicture} className="pfp" alt="pfp" />;
+};
 
-  getProfilePicture() {
-    let profilePictureURL = UserService.getProfilePicture();
-    this.setState({ url: profilePictureURL });
-  }
-
-  onChangePicture() {
-    this.setState({
-      url: e.target.value,
-    });
-  }
-
-  savePicture() {
-    UserService.update({ profile_picture: this.state.url })
-      .then(() => {
-        console.log("Uploaded new picture successfully!");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-  */
-
-  render() {
-    return (
-      <img src={PFP} className="pfp" alt="pfp" />
-      //<img src={this.state.url} />
-      // write form code to upload and set new profile picture
-    );
-  }
-}
+export default ProfilePicture;

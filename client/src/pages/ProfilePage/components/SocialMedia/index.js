@@ -1,92 +1,60 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import UserService from "../../../../services/user.service";
+import fb from "../../../../base.js";
 import Facebook from "../../assets/fb.png";
 import Instagram from "../../assets/ig.png";
 import Twitter from "../../assets/twitter.png";
+import TikTok from "../../assets/tiktok.png";
 import "./index.css";
-//import UserService from "../services/user.service";
 
-class SocialMedia extends Component {
-  // constructor
-  constructor(props) {
-    super(props);
-    this.state = {
-      userid: "12345",
-      facebook: "https://www.facebook.com",
-      instagram: "https://www.instagram.com",
-      twitter: "https://www.twitter.com",
-    };
-    // change functions
-    this.changeFacebook = this.changeFacebook.bind(this);
-    this.changeInstagram = this.changeInstagram.bind(this);
-    this.changeTwitter = this.changeTwitter.bind(this);
-  }
+const SocialMedia = () => {
+  // uncomment userservice once we get it to work.
+  const [facebookLink, setFacebookLink] = useState("");
+  const [instagramLink, setInstagramLink] = useState("");
+  const [twitterLink, setTwitterLink] = useState("");
+  const [tiktokLink, setTiktokLink] = useState("");
 
-  // check mount
-  componentDidMount() {
-    this.getSocials();
-  }
+  const getInstagramLink = async (email) => {
+    setInstagramLink(await UserService.getInstagram(email));
+  };
 
-  /* NOT FINISHED */
-  getSocials() {
-    //let socials = UserService.getSocials();
-    //this.setState();
-  }
+  const getFacebookLink = async (email) => {
+    setFacebookLink(await UserService.getFacebook(email));
+  };
 
-  // change facebook URL
-  changeFacebook(facebookURL) {
-    this.setState({ facebook: facebookURL });
-    /* USER SERVICE DOESNT WORK FOR NOW
-        UserService.update({ facebook: this.state.facebook })
-          .then(() => {
-            console.log("Updated Facebook URL succesfully!");
-          })
-          .catch((e) => {
-            console.log(e);
-          });*/
-  }
+  const getTwitterLink = async (email) => {
+    setTwitterLink(await UserService.getTwitter(email));
+  };
 
-  // change instagram URL
-  changeInstagram(instagramURL) {
-    this.setState({ instagram: instagramURL });
-    /* USER SERVICE DOESNT WORK FOR NOW
-        UserService.update({ instagram: this.state.instagram })
-          .then(() => {
-            console.log("Updated Instagram URL succesfully!");
-          })
-          .catch((e) => {
-            console.log(e);
-          });*/
-  }
+  const getTiktokLink = async (email) => {
+    setTiktokLink(await UserService.getTikTok(email));
+  };
 
-  // change twitter URL
-  changeTwitter(twitterURL) {
-    this.setState({ twitter: twitterURL });
-    /* USER SERVICE DOESNT WORK FOR NOW
-        UserService.update({ twitter: this.state.twitter })
-          .then(() => {
-            console.log("Updated Twitter URL succesfully!");
-          })
-          .catch((e) => {
-            console.log(e);
-          });*/
-  }
+  // check if component mounted
+  React.useEffect(() => {
+    let userEmail = fb.auth().currentUser.email;
+    getFacebookLink(userEmail);
+    getInstagramLink(userEmail);
+    getTwitterLink(userEmail);
+    getTiktokLink(userEmail);
+  }, []);
 
-  // render functionn
-  render() {
-    return (
-      <div>
-        <a href={this.state.facebook}>
-          <img src={Facebook} className="socials" alt="fb" />
-        </a>
-        <a href={this.state.instagram}>
-          <img src={Instagram} className="socials" alt="ig" />
-        </a>
-        <a href={this.state.twitter}>
-          <img src={Twitter} className="socials" alt="twitter" />
-        </a>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <a href={facebookLink}>
+        <img src={Facebook} className="socials" alt="fb" />
+      </a>
+      <a href={instagramLink}>
+        <img src={Instagram} className="socials" alt="ig" />
+      </a>
+      <a href={twitterLink}>
+        <img src={Twitter} className="socials" alt="twitter" />
+      </a>
+      <a href={tiktokLink}>
+        <img src={TikTok} className="socials" alt="tiktok" />
+      </a>
+    </div>
+  );
+};
 
 export default SocialMedia;

@@ -1,49 +1,50 @@
-import React, { Component } from "react";
-import Album from "../../assets/Channel_ORANGE.jpg";
+import React, { useState } from "react";
+import UserService from "../../../../services/user.service";
+import fb from "../../../../base.js";
 import "./index.css";
-//import UserService from "../services/user.service";
 
-class TopTracks extends Component {
-  // constructor
-  constructor(props) {
-    super(props);
-    this.state = {
-      tracks: [
-        "Lost-channel ORANGE-Frank Ocean",
-        "Forrest Gump-channel ORANGE-Frank Ocean",
-        "Super Rich Kids-channel ORANGE-Frank Ocean",
-      ],
-    };
-    this.changeTrack = this.changeTrack.bind(this);
-  }
+const TopTracks = () => {
+  const [topTracks, setTopTracks] = useState("");
 
-  // check mount
-  componentDidMount() {}
-
-  getFeaturedTrack() {}
-
-  changeTrack(newTrack) {
-    this.setState({ track: newTrack });
-  }
-
-  // render function
-  render() {
-    return (
+  const TrackLister = ({ topTracks }) =>
+    Object.keys(topTracks).map((item, i) => (
       <div>
-        <h2 className="title"> Top Tracks </h2>
-        <div className="trackelement">
-          <div className="columns">
-            <img src={Album} alt="album" />
-            <div className="trackcontent">
-              <h2>{this.state.tracks[0].split("-")[0]}</h2>
-              <p className="body">{this.state.tracks[0].split("-")[1]}</p>
-              <p className="body">{this.state.tracks[0].split("-")[2]}</p>
+        {i < 6 ? (
+          <a
+            href={"https://open.spotify.com/track/" + topTracks[item].track_id}
+          >
+            <div className="trackelement">
+              <div className="columns">
+                <img src={topTracks[item]["images"][2]} alt="album" />
+
+                <div className="trackcontent">
+                  <h2>{topTracks[item].track_name}</h2>
+                  {/*<p className="body">{topTracks[item].track_album}</p>
+                  <p className="body">{topTracks[item].track_artist}</p>*/}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </a>
+        ) : null}
       </div>
-    );
-  }
-}
+    ));
+
+  const getTopTracks = async (email) => {
+    setTopTracks(await UserService.getTopTracks(email));
+  };
+
+  // check if component mounted
+  React.useEffect(() => {
+    let userEmail = fb.auth().currentUser.email;
+    getTopTracks(userEmail);
+  }, []);
+
+  return (
+    <div>
+      <h2 className="title"> Top Tracks </h2>
+      <TrackLister topTracks={topTracks} />
+    </div>
+  );
+};
 
 export default TopTracks;
