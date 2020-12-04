@@ -136,6 +136,18 @@ class UserService {
         }
     }
 
+    // get the user's friends list
+    async getUserFriends(email) {
+        try {
+          const response = userCollection.doc(email);
+          const friends = await response.get();
+          return friends.data()['friends'];
+        } catch (error) {
+          alert(error);
+          console.log(error);
+        }
+    }
+
     async getUserProfile(email) {
         try {
             const response = await profileCollection.doc(email);
@@ -279,52 +291,6 @@ class UserService {
             alert(error);
             console.log(error);
         }
-        /*const clientID = "d81dc76912324d4085250cc20a84ebeb";
-        const clientSecret = "9160d378ee03457dbb3d30a54e79d6ab";
-        // get the access token
-        const headers = {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-            auth: {
-                username: clientID,
-                password: clientSecret,
-            },
-        };
-        const data = {
-            grant_type: "refresh_token",
-            refresh_token: refreshToken,
-        };
-
-        try {
-            const response = await axios.post(
-                "https://accounts.spotify.com/api/token",
-                qs.stringify(data),
-                headers
-            );
-            console.log(response.data.access_token);
-            // get the spotify playlists
-            var playlistConfig = {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + response.data.access_token,
-                },
-                json: true,
-            };
-
-            var playlists = await fetch(
-                "https://api.spotify.com/v1/me/playlists",
-                playlistConfig
-            )
-                .then((response) => response.json())
-                .catch((error) => console.log(error));
-            console.log(playlists);
-            return playlists.items;
-        } catch (error) {
-            console.log(error);
-        }*/
-
     }
 
     /* SPOTIFY REAL TIME DATA FETCH */
