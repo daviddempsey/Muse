@@ -1,9 +1,9 @@
-import fb from '../base.js';
-import 'firebase/firestore';
+import fb from "../base.js";
+import "firebase/firestore";
 
-const userCollection = fb.firestore().collection('user');
-const profileCollection = fb.firestore().collection('profile');
-const statsCollection = fb.firestore().collection('stats');
+const userCollection = fb.firestore().collection("user");
+const profileCollection = fb.firestore().collection("profile");
+const statsCollection = fb.firestore().collection("stats");
 
 class UserService {
     /* PROFILE EDIT FUNCTIONS */
@@ -41,7 +41,7 @@ class UserService {
             // get the document to be changed
             const profileDoc = profileCollection.doc(email);
             await profileDoc.update({
-                'social_media.facebook': facebookLink,
+                "social_media.facebook": facebookLink,
             });
         } catch (error) {
             alert(error);
@@ -54,7 +54,7 @@ class UserService {
             // get the document to be changed
             const profileDoc = profileCollection.doc(email);
             await profileDoc.update({
-                'social_media.instagram': instaLink,
+                "social_media.instagram": instaLink,
             });
         } catch (error) {
             alert(error);
@@ -67,7 +67,7 @@ class UserService {
             // get the document to be changed
             const profileDoc = profileCollection.doc(email);
             await profileDoc.update({
-                'social_media.twitter': twitterLink,
+                "social_media.twitter": twitterLink,
             });
         } catch (error) {
             alert(error);
@@ -80,8 +80,33 @@ class UserService {
             // get the document to be changed
             const profileDoc = profileCollection.doc(email);
             await profileDoc.update({
-                'social_media.tiktok': tiktokLink,
+                "social_media.tiktok": tiktokLink,
             });
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
+    /* USER GET FUNCTIONS */
+    async getRefreshToken(email) {
+        try {
+            const response = await userCollection.doc(email);
+            const userDoc = await response.get();
+            const userRefresh = userDoc.data()['refresh_token'];
+            console.log(userRefresh);
+            return userRefresh;
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
+    async getName(email) {
+        try { 
+            const response = await userCollection.doc(email);
+            const userDoc = await response.get();
+            return userDoc.data()['name'];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -111,6 +136,18 @@ class UserService {
         }
     }
 
+    // get the user's friends list
+    async getUserFriends(email) {
+        try {
+          const response = userCollection.doc(email);
+          const friends = await response.get();
+          return friends.data()['friends'];
+        } catch (error) {
+          alert(error);
+          console.log(error);
+        }
+    }
+
     async getUserProfile(email) {
         try {
             const response = await profileCollection.doc(email);
@@ -127,7 +164,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const biography = await response.get();
-            return biography.data()['biography'];
+            return biography.data()["biography"];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -139,7 +176,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const profilePic = await response.get();
-            return profilePic.data()['profile_picture'];
+            return profilePic.data()["profile_picture"];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -151,7 +188,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const profileLink = await response.get();
-            return profileLink.data()['profile_url'];
+            return profileLink.data()["profile_url"];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -163,7 +200,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const facebookData = await response.get();
-            return facebookData.data()['social_media']['facebook'];
+            return facebookData.data()["social_media"]["facebook"];
         } catch (error) {
             console.log(error);
         }
@@ -173,7 +210,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const instaData = await response.get();
-            return instaData.data()['social_media']['instagram'];
+            return instaData.data()["social_media"]["instagram"];
         } catch (error) {
             console.log(error);
         }
@@ -183,7 +220,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const twitterData = await response.get();
-            return twitterData.data()['social_media']['twitter'];
+            return twitterData.data()["social_media"]["twitter"];
         } catch (error) {
             console.log(error);
         }
@@ -193,7 +230,7 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const tiktokData = await response.get();
-            return tiktokData.data()['social_media']['tiktok'];
+            return tiktokData.data()["social_media"]["tiktok"];
         } catch (error) {
             console.log(error);
         }
@@ -203,8 +240,8 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const spotifyData = await response.get();
-            console.log(spotifyData.data()['social_media']['spotify']);
-            return spotifyData.data()['social_media']['spotify'];
+            console.log(spotifyData.data()["social_media"]["spotify"]);
+            return spotifyData.data()["social_media"]["spotify"];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -216,7 +253,7 @@ class UserService {
         try {
             const response = await statsCollection.doc(email);
             const topArtists = await response.get();
-            return topArtists.data()['top_artists'];
+            return topArtists.data()["top_artists"];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -227,7 +264,7 @@ class UserService {
         try {
             const response = await statsCollection.doc(email);
             const topGenres = await response.get();
-            return topGenres.data()['top_genres'];
+            return topGenres.data()["top_genres"];
         } catch (error) {
             alert(error);
             console.log(error);
@@ -238,7 +275,18 @@ class UserService {
         try {
             const response = await statsCollection.doc(email);
             const topTracks = await response.get();
-            return topTracks.data()['top_tracks'];
+            return topTracks.data()["top_tracks"];
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
+    async getSpotifyPlaylists(email) {
+        try {
+            const response = await statsCollection.doc(email);
+            const playlists = await response.get();
+            return playlists.data()['public_playlists'];
         } catch (error) {
             alert(error);
             console.log(error);

@@ -1,6 +1,19 @@
-api/node_modules
-client/node_modules
+api/node_modules/*
+client/node_modules/*
+./node_modules
 data-node
+client/.eslintcache
+.DS_Store
+client/.DS_Store
+api/.DS_Store
+.DS_Store
+./client/.DS_Store
+./client/src/.DS_Store
+./client/src/components/.DS_Store
+./api/.DS_Store
+./api/src/.DS_Store
+./api/src/components/.DS_Store
+
 
 # firebase stuff
 .firebaserc
@@ -11,3 +24,4 @@ database-debug.log
 database.rules.json
 firestore-debug.log
 ui-debug.log
+client/.eslintcache

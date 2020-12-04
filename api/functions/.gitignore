@@ -2,3 +2,4 @@ node_modules/
 firebase-debug.log
 ui-debug.log
 .eslintrc.json
+login.js
