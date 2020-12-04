@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
 import fb from "../../../../base.js";
 import "./index.css";
+const auth = fb.auth();
 
 const TopArtists = () => {
   const [topArtists, setTopArtists] = useState("");
@@ -27,8 +28,16 @@ const TopArtists = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getTopArtists(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getTopArtists(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getTopArtists(user.email);
+        }
+      });
+    }
   }, []);
 
   return (

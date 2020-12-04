@@ -5,7 +5,7 @@
 }
 
 .container:after {
-    content: "";
+    content: '';
     display: block;
     height: 4rem;
 }

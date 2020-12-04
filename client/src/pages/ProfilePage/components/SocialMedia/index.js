@@ -6,6 +6,7 @@ import Instagram from "../../assets/ig.png";
 import Twitter from "../../assets/twitter.png";
 import TikTok from "../../assets/tiktok.png";
 import "./index.css";
+const auth = fb.auth();
 
 const SocialMedia = () => {
   // uncomment userservice once we get it to work.
@@ -32,11 +33,22 @@ const SocialMedia = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getFacebookLink(userEmail);
-    getInstagramLink(userEmail);
-    getTwitterLink(userEmail);
-    getTiktokLink(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getFacebookLink(userEmail);
+      getInstagramLink(userEmail);
+      getTwitterLink(userEmail);
+      getTiktokLink(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getFacebookLink(user.email);
+          getInstagramLink(user.email);
+          getTwitterLink(user.email);
+          getTiktokLink(user.email);
+        }
+      });
+    }
   }, []);
 
   return (

@@ -5,6 +5,7 @@ import "./index.css";
 import fb from "../../../../base.js";
 import Cookies from "js-cookie";
 import "firebase/auth";
+const auth = fb.auth();
 
 class Popup extends Component {
   //constructor
@@ -34,13 +35,28 @@ class Popup extends Component {
 
   //checks if component mounted
   componentDidMount() {
-    let userEmail = fb.auth().currentUser.email;
-    this.getProfilePicture(userEmail);
-    this.getBiography(userEmail);
-    this.getFacebook(userEmail);
-    this.getInstagram(userEmail);
-    this.getTwitter(userEmail);
-    this.getTikTok(userEmail);
+    let that = this;
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      this.getProfilePicture(userEmail);
+      this.getBiography(userEmail);
+      this.getFacebook(userEmail);
+      this.getInstagram(userEmail);
+      this.getTwitter(userEmail);
+      this.getTikTok(userEmail);
+    } else {
+      auth.onAuthStateChanged(async function (user) {
+        if (user) {
+          let userEmail = user.email;
+          that.getProfilePicture(userEmail);
+          that.getBiography(userEmail);
+          that.getFacebook(userEmail);
+          that.getInstagram(userEmail);
+          that.getTwitter(userEmail);
+          that.getTikTok(userEmail);
+        }
+      });
+    }
   }
 
   // GET STUFF NEEDS TO BE UPDATED WITH USERSERVICE
@@ -100,7 +116,7 @@ class Popup extends Component {
     UserService.setTiktok(email, this.state.tiktok);
   };
 
-  // onCHange updates the state
+  // onChange updates the state
   handlePFPChange(event) {
     this.setState({ profilePicture: event.target.value });
   }
@@ -250,91 +266,6 @@ class Popup extends Component {
         </form>
       </div>
     );
-    /*
-    return (
-      <DefaultLayout>
-        <form id="edit-profile-form" onSubmit={this.handleSubmit}>
-          <div id="pfpicture-form">
-            <label>
-              Profile Picture:
-              <input
-                name="pfpicture"
-                type="text"
-                value={this.state.profilePicture}
-                onChange={this.handlePFPChange}
-              />{" "}
-            </label>{" "}
-          </div>{" "}
-          <div id="biography-form">
-            <label>
-              Biography:
-              <input
-                name="biography"
-                type="text"
-                value={this.state.biography}
-                onChange={this.handleBioChange}
-              />{" "}
-            </label>{" "}
-          </div>{" "}
-          <div id="socials-form">
-            <div id="facebook-form">
-              <label>
-                Facebook:
-                <input
-                  type="text"
-                  value={this.state.facebook}
-                  onChange={this.handleFacebookChange}
-                />{" "}
-              </label>{" "}
-            </div>{" "}
-            <div id="instagram-form">
-              <label>
-                Instagram:
-                <input
-                  type="text"
-                  value={this.state.instagram}
-                  onChange={this.handleInstagramChange}
-                />{" "}
-              </label>{" "}
-            </div>{" "}
-            <div id="twitter-form">
-              <label>
-                Twitter:
-                <input
-                  type="text"
-                  value={this.state.twitter}
-                  onChange={this.handleTwitterChange}
-                />{" "}
-              </label>{" "}
-            </div>{" "}
-            <div id="tiktok-form">
-              <label>
-                TikTok:
-                <input
-                  type="text"
-                  value={this.state.tiktok}
-                  onChange={this.handleTikTokChange}
-                />{" "}
-              </label>{" "}
-            </div>{" "}
-          </div>{" "}
-          <div id="playlist-form">
-            <label> Playlists: </label>{" "}
-            <select
-              value={this.state.playlists}
-              onChange={this.handleChange}
-              multiple
-            >
-              <option value="$"> $ </option> <option value="T"> T </option>
-              <option value="S"> S </option> <option value="L"> L </option>
-              <option value="A"> A </option>{" "}
-            </select>{" "}
-          </div>{" "}
-          <input type="submit" value="Submit" />
-        </form>{" "}
-      </DefaultLayout>
-    );
-    */
   }
 }
 

@@ -163,7 +163,6 @@ class UserService {
     try {
       const response = await profileCollection.doc(email);
       const facebookData = await response.get();
-      console.log(facebookData.data()["social_media"]["facebook"]);
       return facebookData.data()["social_media"]["facebook"];
     } catch (error) {
       console.log(error);
@@ -174,7 +173,6 @@ class UserService {
     try {
       const response = await profileCollection.doc(email);
       const instaData = await response.get();
-      console.log(instaData.data()["social_media"]["instagram"]);
       return instaData.data()["social_media"]["instagram"];
     } catch (error) {
       console.log(error);
@@ -185,7 +183,6 @@ class UserService {
     try {
       const response = await profileCollection.doc(email);
       const twitterData = await response.get();
-      console.log(twitterData.data()["social_media"]["twitter"]);
       return twitterData.data()["social_media"]["twitter"];
     } catch (error) {
       console.log(error);
@@ -196,7 +193,6 @@ class UserService {
     try {
       const response = await profileCollection.doc(email);
       const tiktokData = await response.get();
-      console.log(tiktokData.data()["social_media"]["tiktok"]);
       return tiktokData.data()["social_media"]["tiktok"];
     } catch (error) {
       console.log(error);
@@ -251,43 +247,43 @@ class UserService {
 
   /* SPOTIFY REAL TIME DATA FETCH */
   /*async getSpotifyPlaylists(refreshToken) {
-          // get the access token 
-          // get the spotify playlists
+              // get the access token 
+              // get the spotify playlists
 
-        }*/
+            }*/
 
   /* Profile information get functions */
   /*
-            getSongStats() {
-                // NO SONG STATS IN DATABASE YET
-            }
-            getAlbumStats() {
-                // NO ALBUM STATS IN DATABASE YET
-            }
-            getArtistStats() {
-                // NO ARTIST STATS IN DATABASE YET
-            }
-            getMinuteStats() {
-                // NO MINUTES STATS IN DATABASE YET
-            }
-        */
+                getSongStats() {
+                    // NO SONG STATS IN DATABASE YET
+                }
+                getAlbumStats() {
+                    // NO ALBUM STATS IN DATABASE YET
+                }
+                getArtistStats() {
+                    // NO ARTIST STATS IN DATABASE YET
+                }
+                getMinuteStats() {
+                    // NO MINUTES STATS IN DATABASE YET
+                }
+            */
 
   // what is this function
   /* 
-            create(user) {
-              return db.add(user);
-            }
+                create(user) {
+                  return db.add(user);
+                }
 
-            // I don't think email can be changed
-            update(email, value) {
-              return db.doc(email).update(value);
-            }
+                // I don't think email can be changed
+                update(email, value) {
+                  return db.doc(email).update(value);
+                }
 
-            // i don't think we can delete this email
-            delete(email) {
-              return db.doc(email).delete();
-            }
-        */
+                // i don't think we can delete this email
+                delete(email) {
+                  return db.doc(email).delete();
+                }
+            */
 }
 
 export default new UserService();

@@ -24,4 +24,4 @@ database-debug.log
 database.rules.json
 firestore-debug.log
 ui-debug.log
-
+client/.eslintcache

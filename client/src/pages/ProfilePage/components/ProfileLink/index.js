@@ -3,6 +3,7 @@ import UserService from "../../../../services/user.service";
 import Link from "../../assets/link.svg";
 import fb from "../../../../base.js";
 import "./index.css";
+const auth = fb.auth();
 
 const ProfileLink = () => {
   const [ProfileLink, setProfileLink] = useState("");
@@ -13,8 +14,16 @@ const ProfileLink = () => {
 
   //check if component mounted
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getProfileLink(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getProfileLink(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getProfileLink(user.email);
+        }
+      });
+    }
   }, []);
 
   //let link = window.location.href;

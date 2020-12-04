@@ -23,7 +23,6 @@ const LoadingPage = ({ history }) => {
         history.push("/profile");
       })
       .catch((error) => {
-        //var errorCode = error.code;
         var errorMessage = error.message;
 
         // log the error to the console

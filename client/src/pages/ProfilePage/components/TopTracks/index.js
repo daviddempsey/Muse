@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
 import fb from "../../../../base.js";
 import "./index.css";
+const auth = fb.auth();
 
 const TopTracks = () => {
   const [topTracks, setTopTracks] = useState("");
@@ -35,8 +36,16 @@ const TopTracks = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getTopTracks(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getTopTracks(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getTopTracks(user.email);
+        }
+      });
+    }
   }, []);
 
   return (

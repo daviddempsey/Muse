@@ -3,6 +3,7 @@ import UserService from "../../../../services/user.service";
 import fb from "../../../../base.js";
 import "firebase/auth";
 import "./index.css";
+const auth = fb.auth();
 
 const ProfilePicture = () => {
   const [profilePicture, setProfilePicture] = useState("");
@@ -11,8 +12,16 @@ const ProfilePicture = () => {
   };
 
   React.useEffect(() => {
-    let userEmail = fb.auth().currentUser.email;
-    getProfilePicture(userEmail);
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      getProfilePicture(userEmail);
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          getProfilePicture(user.email);
+        }
+      });
+    }
   }, []);
 
   return <img src={profilePicture} className="pfp" alt="pfp" />;
