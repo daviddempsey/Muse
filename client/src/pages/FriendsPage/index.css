@@ -4,6 +4,11 @@
     text-align:center;
     padding-top: 2%;
 }
+
+.friendPage {
+    height: 100vh;
+}
+
 .friend {
     border-radius: 20px;
     background: var(--almost-white);

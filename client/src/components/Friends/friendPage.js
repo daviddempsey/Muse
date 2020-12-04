@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import UserService from "../../services/user.service";
 import {Link} from "react-router-dom";
+import fb from '../../base';
+import 'firebase/auth';
+const auth = fb.auth();
 
 
 /* functional component that creates a friends list
@@ -17,13 +20,24 @@ const FriendPage = () => {
         ));
 
     /* get the friends list from the database */
-    const getfriendsList = async (email) => {
+    const getFriendsList = async (email) => {
         setFriendsList(await UserService.getUserFriends(email));
     };
 
     /* gets the friends list of the current user */
     React.useEffect(() => {
-        getfriendsList("cse110spotifytester1@gmail.com");
+        if (auth.currentUser) {
+            let userEmail = fb.auth().currentUser.email;
+            getFriendsList(userEmail);
+            getFriendsList(userEmail);
+        } else {
+            auth.onAuthStateChanged(function (user) {
+              if (user) {
+                getFriendsList(user.email);
+                getFriendsList(user.email);
+              }
+            });
+        }
     }, []);
     
     /* renders the friend page */
@@ -54,7 +68,7 @@ const Friend = ({ email }) => {
 
     /* get the name of each friend from the database */
     const getName = async (email) => {
-        setName(await UserService.getUserName(email));
+        setName(await UserService.getName(email));
     }
 
     /* get the profile pic of each friend from the database */
