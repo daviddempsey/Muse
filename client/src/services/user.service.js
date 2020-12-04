@@ -4,6 +4,7 @@ import "firebase/firestore";
 const userCollection = fb.firestore().collection("user");
 const profileCollection = fb.firestore().collection("profile");
 const statsCollection = fb.firestore().collection("stats");
+const inHarmonyCollection = fb.firestore().collection("in_harmony");
 
 class UserService {
     /* PROFILE EDIT FUNCTIONS */
@@ -183,6 +184,22 @@ class UserService {
         }
     }
 
+    async getProfilePictureOfInHarmonyUsers(email) {
+        // try getting the profile picture
+        try {
+            var topUsers = await this.getTopUsers(email);
+            var topUserEmails = Object.keys(topUsers);
+            var profilePics = [];
+            for( let i in topUserEmails ) {
+                profilePics.push( await this.getProfilePicture(topUserEmails[i]) );
+            }
+            return profilePics;
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
     async getProfileLink(email) {
         // try getting the profile link
         try {
@@ -287,6 +304,17 @@ class UserService {
             const response = await statsCollection.doc(email);
             const playlists = await response.get();
             return playlists.data()['public_playlists'];
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
+    async getTopUsers(email) {
+        try {
+            const response = await inHarmonyCollection.doc(email);
+            const users = await response.get();
+            return users.data()['similar_users'];
         } catch (error) {
             alert(error);
             console.log(error);

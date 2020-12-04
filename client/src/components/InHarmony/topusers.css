@@ -1,0 +1,17 @@
+@import "../../../../styles/index.css";
+
+.title {
+  text-align: left;
+  color: var(--red);
+}
+
+.userimgs {
+  margin-top: 10px;
+}
+
+.userimgs img {
+  padding: 1rem;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
