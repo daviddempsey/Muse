@@ -9,17 +9,11 @@ const TopArtists = () => {
 
   const ArtistLister = ({ topArtists }) =>
     Object.keys(topArtists).map((item, i) => (
-      <div>
-        {i < 7 ? (
-          <a
-            href={
-              "https://open.spotify.com/artist/" + topArtists[item].track_id
-            }
-          >
-            <img src={topArtists[item]["images"][2]} alt="artist" />
-          </a>
+      <a href={"https://open.spotify.com/artist/" + topArtists[item].track_id}>
+        {i < 6 ? (
+          <img src={topArtists[item]["images"][2]} alt="artist" />
         ) : null}
-      </div>
+      </a>
     ));
 
   const getTopArtists = async (email) => {

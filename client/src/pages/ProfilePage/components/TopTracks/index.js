@@ -10,7 +10,7 @@ const TopTracks = () => {
   const TrackLister = ({ topTracks }) =>
     Object.keys(topTracks).map((item, i) => (
       <div>
-        {i < 6 ? (
+        {i < 5 ? (
           <a
             href={"https://open.spotify.com/track/" + topTracks[item].track_id}
           >
@@ -19,9 +19,13 @@ const TopTracks = () => {
                 <img src={topTracks[item]["images"][2]} alt="album" />
 
                 <div className="trackcontent">
-                  <h2>{topTracks[item].track_name}</h2>
-                  {/*<p className="body">{topTracks[item].track_album}</p>
-                  <p className="body">{topTracks[item].track_artist}</p>*/}
+                  <h2>
+                    {i + 1}. {topTracks[item].track_name}
+                  </h2>
+                  <p className="body">album{/*topTracks[item].track_album*/}</p>
+                  <p className="body">
+                    artist{/*topTracks[item].track_artist*/}
+                  </p>
                 </div>
               </div>
             </div>

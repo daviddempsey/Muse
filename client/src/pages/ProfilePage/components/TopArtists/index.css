@@ -10,6 +10,7 @@
 }
 
 .artistimgs img {
+  padding: 1rem;
   width: 150px;
   height: 150px;
   border-radius: 50%;
