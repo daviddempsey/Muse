@@ -8,6 +8,7 @@ import Biography from '../../components/Profile/Biography';
 import ProfileLink from '../../components/Profile/ProfileLink';
 import SocialMedia from '../../components/Profile/SocialMedia';
 import TopStats from '../../components/Profile/TopStats';
+import PublicPlaylists from '../../components/Profile/PublicPlaylists';
 
 import Cookies from 'js-cookie';
 import fb from '../../base';
@@ -39,6 +40,7 @@ class ProfilePage extends Component {
               <ProfileLink />
               <SocialMedia />
               <TopStats />
+              <PublicPlaylists />
             </div>
           </DefaultLayout>
         </div>

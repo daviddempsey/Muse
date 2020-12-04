@@ -22,7 +22,6 @@ class EditProfilePage extends Component {
       instagram: 'https://www.instagram.com',
       twitter: 'https://www.twitter.com',
       tiktok: 'https://www.tiktok.com',
-      playlists: ['A', 'B', 'C'],
       firebaseToken: Cookies.get('token'),
     };
     //event handlers for when we update text field and submit button
@@ -89,11 +88,6 @@ class EditProfilePage extends Component {
   getTikTok = async (email) => {
     this.setState({ tiktok: await UserService.getTikTok(email) });
   };
-
-  getPlaylists() {
-    let playlists = ['A', 'B', 'C'];
-    this.setState({ playlists: playlists });
-  }
 
   // SETTERS TO DATABSE
 
@@ -246,18 +240,6 @@ class EditProfilePage extends Component {
                 />
               </label>
             </div>
-          </div>
-          <div id='playlist-form'>
-            <label> Playlists: </label>
-            <select
-              value={this.state.playlists}
-              onChange={this.handleChange}
-              multiple
-            >
-              <option value='$'> $ </option> <option value='T'> T </option>
-              <option value='S'> S </option> <option value='L'> L </option>
-              <option value='A'> A </option>
-            </select>
           </div>
           <input type='submit' value='Submit' />
         </form>
