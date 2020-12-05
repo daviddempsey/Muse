@@ -2,9 +2,14 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../assets/logo.svg';
 import './index.css';
+import fb from '../../base';
+import 'firebase/auth';
+const auth = fb.auth();
 
 const Header = () => {
   const SPACE = '\u00a0';
+
+  //let userCode = btoa(auth.currentUser.email);
 
   return (
     <div className='Header'>

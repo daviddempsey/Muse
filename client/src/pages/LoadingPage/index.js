@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Cookies from 'js-cookie';
 import fb from '../../base';
 import 'firebase/auth';
@@ -19,11 +19,14 @@ const LoadingPage = ({ history }) => {
     fb.auth()
       .signInWithCustomToken(token)
       .then((user) => {
+        // convert the user's email to 64bit encoded
+        var encodedEmail = btoa(user['user']['email']);
+        console.log(encodedEmail);
+
         // redirect
-        history.push('/profile');
+        history.push('/profile/' + encodedEmail);
       })
       .catch((error) => {
-        var errorCode = error.code;
         var errorMessage = error.message;
 
         // log the error to the console

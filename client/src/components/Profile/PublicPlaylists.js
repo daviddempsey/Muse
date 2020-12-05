@@ -4,9 +4,9 @@ import fb from '../../base';
 import 'firebase/auth';
 const auth = fb.auth();
 
-const PublicPlaylists = () => {
+const PublicPlaylists = ({userEmail}) => {
   // use state to get the playlists
-  const [playlists, setPlaylists] = useState("");
+  const [playlistList, setPlaylists] = useState("");
 
   // get the playlist
   const getPlaylists = async(email) => {
@@ -26,25 +26,14 @@ const PublicPlaylists = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    // get the user's refresh token
-    if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
-      getPlaylists(userEmail);
-    } else {
-      auth.onAuthStateChanged(function (user) {
-        if (user) {
-          getPlaylists(user.email);
-        }
-      });
-    }
-    console.log('Component is Mounted');
-  }, []);
+    getPlaylists(userEmail);
+  }, [userEmail]);
 
   return (
     <div id='playlists'>
       <h2>Your Public Playlists</h2>
       <br />
-      <PlaylistLister playlists={playlists} />
+      <PlaylistLister playlists={playlistList} />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './index.css';
+import fb from '../../base';
+import 'firebase/auth';
 
 import DefaultLayout from '../DefaultLayout';
 import ProfilePicture from '../../components/Profile/ProfilePicture';
@@ -10,21 +12,47 @@ import SocialMedia from '../../components/Profile/SocialMedia';
 import TopStats from '../../components/Profile/TopStats';
 import PublicPlaylists from '../../components/Profile/PublicPlaylists';
 
-import Cookies from 'js-cookie';
-import fb from '../../base';
-import 'firebase/auth';
-const auth = fb.auth();
-
 class ProfilePage extends Component {
+
   constructor(props) {
     super(props);
 
+    // get email
+    let email = this.props.match.params.user_email;
+    let decodedEmail = atob(email);
+
     this.state = {
-      firebaseToken: Cookies.get('token'),
+      userEmail: decodedEmail,
+      userEdit: false,
     };
+
+    this.userEditCompare = this.userEditCompare.bind(this);
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    let edit = this.userEditCompare(); 
+    this.setState({userEdit: edit});
+  };
+
+  async userEditCompare() {
+    if (fb.auth().currentUser) {
+      let currEmail = fb.auth().currentUser.email;
+      if (currEmail === this.state.userEmail) {
+        console.log(currEmail);
+        return true;
+      } 
+    } else {
+      fb.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          if (user.email === this.state.userEmail) {
+            console.log(user.email);
+            return true;
+          }
+        }
+      });
+    }
+    return false;
+  }
 
   render = () => {
     return (
@@ -32,22 +60,17 @@ class ProfilePage extends Component {
         <div id='profile-page'>
           <DefaultLayout>
             <div id='profile-section'>
-              <ProfilePicture />
-              <button onClick={() => this.props.history.push('/editprofile')}>
-                Edit Profile
-              </button>
-              <Biography />
-              <ProfileLink />
-              <SocialMedia />
-              <TopStats />
-              <PublicPlaylists />
+              <ProfilePicture userEmail={this.state.userEmail}/>
+              <button onClick={() => this.props.history.push('/editprofile')}>Edit Profile</button>
+              <p>{this.state.userEmail}</p>
+              <Biography userEmail={this.state.userEmail}/>
+              <ProfileLink userEmail={this.state.userEmail}/>
+              <SocialMedia userEmail={this.state.userEmail}/>
+              <TopStats userEmail={this.state.userEmail}/>
+              <PublicPlaylists userEmail={this.state.userEmail}/>
             </div>
           </DefaultLayout>
         </div>
-        {/* <div id='cookie stuff'>
-          <p>{Cookies.get('token')}</p>
-          <p>{auth.currentUser.email}</p>
-        </div> */}
       </div>
     );
   };
