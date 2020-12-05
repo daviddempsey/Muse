@@ -1,9 +1,7 @@
 @import '../../../styles/index.css';
-
 .About {
     display: flex;
     align-items: center;
-    
     min-height: 100vh;
     padding: 0rem 6rem;
 }
