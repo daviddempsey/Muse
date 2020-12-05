@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 // import fb from '../../base';
 // import 'firebase/firestore';
 // import 'firebase/auth';
-// import './index.css';
+import './index.css';
+import Graphic from './in_harmony_graphic.svg';
 
 class Leaderboard extends Component {
     constructor(props) {
@@ -60,6 +61,13 @@ class Leaderboard extends Component {
     render() {
         return (
             <div className="Leaderboard">
+                <div className="text">
+                    <h1>In Harmony</h1>
+                    <h2>Make a new friend!</h2>
+                </div>
+                <div className="image">
+                    <img src={Graphic} alt="two listeners connecting"/>
+                </div>
                 {topUsers.map(user => <ComparedUser user={user.email} />)}
             </div>
         );

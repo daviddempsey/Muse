@@ -1,0 +1,24 @@
+@import '../../../styles/index.css';
+
+.Leaderboard {
+    display: flex;
+    align-items: center;
+    
+    min-height: 100vh;
+    padding: 0rem 6rem;
+}
+
+.Leaderboard .image {
+    flex: 50%;
+}
+
+.Leaderboard .text h1 {
+    font-size: 4rem;
+    line-height: 4.74rem;
+    padding-bottom: 1rem;
+}
+
+.Leaderboard .text h2 {
+    line-height: 3.75rem;
+    padding-bottom: 1rem;
+}

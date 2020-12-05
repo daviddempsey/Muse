@@ -2,8 +2,7 @@ import React from 'react';
 import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
-import Leaderboard from './Leaderboard'
-import IHGraphic from './in_harmony_graphic.svg'
+import Leaderboard from './Leaderboard';
 
 const InHarmonyPage = () => {
   return (
