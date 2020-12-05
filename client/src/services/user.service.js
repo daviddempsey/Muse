@@ -88,6 +88,22 @@ class UserService {
         }
     }
 
+    /* UPDATE USER FRIENDLIST (ADD FRIEND)*/
+    async addFriend(email) {
+        try {
+            // get the document to be changed
+            const userDoc = userCollection.doc(email);
+            await userDoc.update({
+                // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk 
+                // need to change from hardcoded email to passed in parameter later on
+                "friends": fb.Firestore.FieldValue.arrayUnion('edmondchoi69@gmail.com')
+            });
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
     /* USER GET FUNCTIONS */
     async getRefreshToken(email) {
         try {

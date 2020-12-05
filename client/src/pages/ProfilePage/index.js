@@ -13,6 +13,7 @@ import PublicPlaylists from '../../components/Profile/PublicPlaylists';
 import Cookies from 'js-cookie';
 import fb from '../../base';
 import 'firebase/auth';
+import AddFriend from '../../components/Profile/AddFriend';
 const auth = fb.auth();
 
 class ProfilePage extends Component {
@@ -36,6 +37,7 @@ class ProfilePage extends Component {
               <button onClick={() => this.props.history.push('/editprofile')}>
                 Edit Profile
               </button>
+              <AddFriend/>
               <Biography />
               <ProfileLink />
               <SocialMedia />
