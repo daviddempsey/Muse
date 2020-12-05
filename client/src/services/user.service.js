@@ -1,4 +1,5 @@
 import fb from "../base.js";
+import firebase from 'firebase/app'
 import "firebase/firestore";
 
 const userCollection = fb.firestore().collection("user");
@@ -89,14 +90,14 @@ class UserService {
     }
 
     /* UPDATE USER FRIENDLIST (ADD FRIEND)*/
-    async addFriend(email) {
+    async addFriend(myEmail, newEmail) {
         try {
             // get the document to be changed
-            const userDoc = userCollection.doc(email);
+            const userDoc = userCollection.doc(myEmail);
             await userDoc.update({
                 // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk 
                 // need to change from hardcoded email to passed in parameter later on
-                "friends": fb.Firestore.FieldValue.arrayUnion('edmondchoi69@gmail.com')
+                friends: firebase.firestore.FieldValue.arrayUnion(newEmail)
             });
         } catch (error) {
             alert(error);
@@ -119,7 +120,7 @@ class UserService {
     }
 
     async getName(email) {
-        try { 
+        try {
             const response = await userCollection.doc(email);
             const userDoc = await response.get();
             return userDoc.data()['name'];
@@ -155,12 +156,12 @@ class UserService {
     // get the user's friends list
     async getUserFriends(email) {
         try {
-          const response = userCollection.doc(email);
-          const friends = await response.get();
-          return friends.data()['friends'];
+            const response = userCollection.doc(email);
+            const friends = await response.get();
+            return friends.data()['friends'];
         } catch (error) {
-          alert(error);
-          console.log(error);
+            alert(error);
+            console.log(error);
         }
     }
 
