@@ -9,6 +9,7 @@ import ProfileLink from '../../components/Profile/ProfileLink';
 import SocialMedia from '../../components/Profile/SocialMedia';
 import TopStats from '../../components/Profile/TopStats';
 import PublicPlaylists from '../../components/Profile/PublicPlaylists';
+import CopyProfileLink from '../../components/Profile/CopyProfileLink';
 
 import Cookies from 'js-cookie';
 import fb from '../../base';
@@ -37,6 +38,10 @@ class ProfilePage extends Component {
               <button onClick={() => this.props.history.push('/editprofile')}>
                 Edit Profile
               </button>
+              <button onClick={() => this.props.history.push('/messages')}>
+                Messages
+              </button>
+              <CopyProfileLink/>
               <AddFriend/>
               <Biography />
               <ProfileLink />

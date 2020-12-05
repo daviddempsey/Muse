@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
-import FriendsPage from '../../components/Friends/FriendPage';
+import FriendsPage from '../../components/Friends/friendPage.js';
 import { withRouter } from 'react-router-dom';
 
 const FriendPage = () => {
