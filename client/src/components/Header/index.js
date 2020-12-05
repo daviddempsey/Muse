@@ -16,12 +16,12 @@ const Header = () => {
 
   const getUser = async () => {
     if (auth.currentUser) {
-      return '/profile/' + btoa(auth.currentUser.email);
+      return auth.currentUser.email;
     } else {
       auth.onAuthStateChanged(function (user) {
         if (user) {
           if (user.email === this.state.userEmail) {
-            return '/profile/' + btoa(user.email);
+            return user.email;
           }
         }
       });
@@ -44,7 +44,7 @@ const Header = () => {
           </li>
           <li className='empty' />
           <li>
-            <NavLink to='/profile' className='nav-item'>
+            <NavLink to={'/profile/' + btoa(link)} className='nav-item'>
               Profile
             </NavLink>
           </li>
