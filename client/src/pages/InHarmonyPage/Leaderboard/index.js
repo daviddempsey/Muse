@@ -7,6 +7,7 @@ import './index.css';
 import Graphic from './in_harmony_graphic.svg';
 
 class Leaderboard extends Component {
+    /*
     constructor(props) {
         super(props);
         this.email = props.email;
@@ -53,25 +54,24 @@ class Leaderboard extends Component {
                 this.getTopUsers();
             });
     }
-
+    
     componentWillMount() {
         this.getTopUsers();
     }
+    */ 
 
     render() {
         return (
             <div className="Leaderboard">
-                <div className="text">
-                    <h1>In Harmony</h1>
-                    <h2>Make a new friend!</h2>
+                <div className="harmonyHeader">
+                        <h1>In Harmony</h1>
+                        <h2>Make a new friend!</h2>
+                        <img src={Graphic} alt="two listeners connecting"/>
                 </div>
-                <div className="image">
-                    <img src={Graphic} alt="two listeners connecting"/>
-                </div>
-                {topUsers.map(user => <ComparedUser user={user.email} />)}
+                {/*topUsers.map(user => <ComparedUser user={user.email} />)*/}
             </div>
         );
     }
 }
 
-export default Contact;
+export default Leaderboard;

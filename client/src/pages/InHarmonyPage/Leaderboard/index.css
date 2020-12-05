@@ -2,23 +2,31 @@
 
 .Leaderboard {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    
+    justify-content: center;
+
     min-height: 100vh;
-    padding: 0rem 6rem;
+    padding: 6rem 6rem 6rem;
 }
 
-.Leaderboard .image {
-    flex: 50%;
+.Leaderboard .harmonyHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
-.Leaderboard .text h1 {
+.Leaderboard .harmonyHeader h1 {
     font-size: 4rem;
-    line-height: 4.74rem;
-    padding-bottom: 1rem;
+    line-height: 3.75rem;
 }
 
-.Leaderboard .text h2 {
+.Leaderboard .harmonyHeader h2 {
     line-height: 3.75rem;
-    padding-bottom: 1rem;
+}
+
+.Leaderboard .harmonyHeader img {
+    padding-top: 5rem;
 }

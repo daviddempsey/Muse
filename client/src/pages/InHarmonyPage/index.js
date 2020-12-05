@@ -8,7 +8,7 @@ const InHarmonyPage = () => {
   return (
     <div className="InHarmonyPage">
       <DefaultLayout>
-          <Leaderboard/>
+        <Leaderboard />
       </DefaultLayout>
     </div>
   );

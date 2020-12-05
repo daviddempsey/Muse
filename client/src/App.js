@@ -5,6 +5,7 @@ import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import LoadingPage from './pages/LoadingPage';
 import FriendsPage from './pages/FriendsPage';
+import InHarmonyPage from './pages/InHarmonyPage';
 import './styles/index.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route exact path='/editprofile' component={EditProfilePage} />
           <Route exact path='/logging' component={LoadingPage} />
           <Route exact path='/friends' component={FriendsPage} />
+          <Route exact parth='/harmony' component={InHarmonyPage} />
         </Switch>
       </Router>
     </div>
