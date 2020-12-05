@@ -11,10 +11,10 @@ import TopArtists from "./components/TopArtists";
 import TopTracks from "./components/TopTracks";
 import ProfileLink from "./components/ProfileLink";
 import SocialMedia from "./components/SocialMedia";
-import SpotifyStats from "./components/SpotifyStats";
+//import SpotifyStats from "./components/SpotifyStats";
 import EditProfile from "./components/EditProfile";
 import Popup from "./components/Popup";
-//import SpotifyPlaylists from "./components/SpotifyPlaylists";
+import SpotifyPlaylists from "./components/SpotifyPlaylists";
 
 import UserService from "../../services/user.service";
 import Cookies from "js-cookie";
@@ -90,14 +90,14 @@ class ProfilePage extends Component {
                   </div>
                 </div>
                 <div className="col-2">
+                  {/*}
                   <div className="stats">
                     <SpotifyStats />
                   </div>
-                  {/*
+                */}
                   <div className="playlists">
                     <SpotifyPlaylists />
                   </div>
-                  */}
                   {/*<div className="fromfriends"></div>*/}
                 </div>
               </div>
