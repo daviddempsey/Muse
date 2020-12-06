@@ -41,14 +41,14 @@
 
 .content .columns .col-1 {
   display: flex;
-  flex: 0.5;
+  max-width: 50%;
   flex-direction: column;
   margin-right: 10px;
 }
 
 .content .columns .col-2 {
   display: flex;
-  flex: 0.5;
+  max-width: 50%;
   flex-direction: column;
   margin-left: 10px;
 }
@@ -60,7 +60,7 @@
   background-color: var(--almost-white);
   border-radius: 15px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-  min-width: 776px;
+  min-width: 679px;
 }
 
 .personal .decal {

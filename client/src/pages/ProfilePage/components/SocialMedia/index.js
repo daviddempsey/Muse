@@ -95,7 +95,7 @@ const SocialMedia = () => {
       ) : null}
       {tiktokLink !== "" ? (
         <a
-          href={"https://www.tiktok.com/" + tiktokLink}
+          href={"https://www.tiktok.com/@" + tiktokLink}
           target="_blank"
           rel="noopener noreferrer"
         >

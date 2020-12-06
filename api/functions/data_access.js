@@ -266,11 +266,19 @@ async function createUserStatsTopTracks(db, email, topTracks) {
       image_urls.push(topTracks[i]["album"]["images"][j]["url"]);
     }
 
+    // Get artists
+    var artistsOfTrack = [];
+    for (var j in topTracks[i]["album"]["artists"]) {
+      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
+    }
+
     var entry = {
       rank: +i + +1,
       track_name: topTracks[i]["name"],
       track_id: topTracks[i]["id"],
       images: image_urls,
+      artists: artistsOfTrack,
+      album_name: topTracks[i]["album"]["name"],
     };
     formattedList["top_tracks"].push(entry);
   }

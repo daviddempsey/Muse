@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
 import fb from "../../../../base";
+import "./index.css";
 import "firebase/auth";
 const auth = fb.auth();
 
@@ -16,16 +17,18 @@ const SpotifyPlaylists = () => {
   // lister function for playlists
   const PlaylistLister = ({ playlists }) =>
     Object.keys(playlists).map((item, i) => (
-      <li key={i}>
+      <div className="container">
         <a
           href={
             "https://open.spotify.com/playlist/" + playlists[item].playlist_id
           }
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <span>{playlists[item].playlist_name}</span>
           <img alt="playlist" src={playlists[item].image} />
+          <h3>{playlists[item].playlist_name}</h3>
         </a>
-      </li>
+      </div>
     ));
 
   // check if component mounted
@@ -44,10 +47,11 @@ const SpotifyPlaylists = () => {
   }, []);
 
   return (
-    <div id="playlists">
-      <h2>Your Spotify Playlists</h2>
-      <br />
-      <PlaylistLister playlists={playlists} />
+    <div>
+      <h2 className="title">Your Spotify Playlists</h2>
+      <div className="playlistimgs">
+        <PlaylistLister playlists={playlists} />
+      </div>
     </div>
   );
 };

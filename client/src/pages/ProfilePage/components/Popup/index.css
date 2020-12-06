@@ -102,6 +102,7 @@
   font-family: "Hind";
   font-weight: 400;
   resize: none;
+  white-space: nowrap;
 }
 
 .modal .content .row-1 .col-2 .form .input::placeholder {

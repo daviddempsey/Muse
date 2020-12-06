@@ -24,10 +24,8 @@ const TopTracks = () => {
                   <h2>
                     {i + 1}. {topTracks[item].track_name}
                   </h2>
-                  <p className="body">album{/*topTracks[item].track_album*/}</p>
-                  <p className="body">
-                    artist{/*topTracks[item].track_artist*/}
-                  </p>
+                  <p className="body">{topTracks[item]["album_name"]}</p>
+                  <p className="body">{topTracks[item]["artists"]}</p>
                 </div>
               </div>
             </div>

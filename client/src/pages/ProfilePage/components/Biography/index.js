@@ -31,7 +31,7 @@ const Biography = () => {
     }
   }, []);
 
-  return <p className="body"> {bioText} </p>;
+  return <p className="body">{bioText}</p>;
 };
 
 export default Biography;
