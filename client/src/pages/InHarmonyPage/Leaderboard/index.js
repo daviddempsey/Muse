@@ -4,8 +4,9 @@ import React, { Component } from 'react';
 // import 'firebase/firestore';
 // import 'firebase/auth';
 import './index.css';
-import Graphic from '../../assets/in_harmony_graphic.svg';
 import ComparedUser from './ComparedUser';
+import HRBgGraphic from './Harmonize_Refresh_Background.svg';
+import HRBttnGraphic from './Harmonize_Button.svg';
 
 class Leaderboard extends Component {
     /*
@@ -66,11 +67,18 @@ class Leaderboard extends Component {
             <div className="Leaderboard">
                 <div className="harmonyHeader">
                     <h1>In Harmony</h1>
-                    <h2>Make a new friend!</h2>
-                    <img src={Graphic} alt="two listeners connecting"/>
+                    <h2>Click the note to make a new friend!</h2>
+                    <div className="harmonyRefresh">
+                        <img src={HRBgGraphic} alt="two people connecting through music"/>
+                        <button className="rbutton"> 
+                            <img src={HRBttnGraphic} alt="refresh compatibility list"/>
+                        </button>
+                    </div>
                 </div>
                 {/*topUsers.map(user => <ComparedUser user={user.email} />)*/}
-                <ComparedUser />
+                <div className="ComparedUsers">
+                    <ComparedUser />
+                </div>
             </div>
         );
     }
