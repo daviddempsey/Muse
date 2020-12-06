@@ -5,6 +5,8 @@ const EditProfile = () => {
   const togglePop = () => {
     document.getElementById("popup").style.display = "initial";
     document.getElementById("page").style.filter = "blur(2px) brightness(0.5)";
+    document.getElementById("page").style.pointerEvents = "none";
+    document.getElementById("page").style.userSelect = "none";
   };
 
   return (
