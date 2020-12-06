@@ -17,7 +17,7 @@ const SpotifyPlaylists = () => {
   // lister function for playlists
   const PlaylistLister = ({ playlists }) =>
     Object.keys(playlists).map((item, i) => (
-      <div className="container">
+      <div className="album">
         <a
           href={
             "https://open.spotify.com/playlist/" + playlists[item].playlist_id
