@@ -14,7 +14,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: var(--yellow);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   text-align: center;
 }
@@ -28,7 +28,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: var(--red);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   text-align: center;
 }
@@ -42,7 +42,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: var(--teal);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
   border-radius: 15px;
   text-align: center;
 }

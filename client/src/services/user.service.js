@@ -1,4 +1,5 @@
 import fb from "../base.js";
+import firebase from "firebase/app";
 import "firebase/firestore";
 
 const userCollection = fb.firestore().collection("user");
@@ -87,6 +88,21 @@ class UserService {
       console.log(error);
     }
   }
+  /* UPDATE USER FRIENDLIST (ADD FRIEND)*/
+  async addFriend(myEmail, newEmail) {
+    try {
+      // get the document to be changed
+      const userDoc = userCollection.doc(myEmail);
+      await userDoc.update({
+        // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk
+        // need to change from hardcoded email to passed in parameter later on
+        friends: firebase.firestore.FieldValue.arrayUnion(newEmail),
+      });
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
 
   /* USER GET FUNCTIONS */
   async getRefreshToken(email) {
@@ -135,7 +151,6 @@ class UserService {
       console.log(error);
     }
   }
-
   // get the user's friends list
   async getUserFriends(email) {
     try {
@@ -240,7 +255,6 @@ class UserService {
     try {
       const response = await profileCollection.doc(email);
       const spotifyData = await response.get();
-      console.log(spotifyData.data()["social_media"]["spotify"]);
       return spotifyData.data()["social_media"]["spotify"];
     } catch (error) {
       alert(error);

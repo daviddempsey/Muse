@@ -9,7 +9,7 @@ import TikTok from "../../assets/tiktok.png";
 import "./index.css";
 const auth = fb.auth();
 
-const SocialMedia = () => {
+const SocialMedia = ({ userEmail }) => {
   // uncomment userservice once we get it to work.
   const [spotifyLink, setSpotifyLink] = useState("");
   const [facebookLink, setFacebookLink] = useState("");
@@ -40,7 +40,6 @@ const SocialMedia = () => {
   // check if component mounted
   React.useEffect(() => {
     if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
       getSpotifyLink(userEmail);
       getFacebookLink(userEmail);
       getInstagramLink(userEmail);
@@ -57,7 +56,7 @@ const SocialMedia = () => {
         }
       });
     }
-  }, []);
+  }, [userEmail]);
 
   return (
     <div>

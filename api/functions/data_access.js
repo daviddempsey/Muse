@@ -105,7 +105,7 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
   // create data object to be stored
   const userProfileData = {
     biography: "",
-    profile_url: "",
+    profile_url: new Buffer.from(email).toString("base64"),
     profile_picture: profilePicture,
     select_playlist: [],
     social_media: userSocialMedia,

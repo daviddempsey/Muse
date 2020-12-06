@@ -165,6 +165,8 @@ class Popup extends Component {
   togglePop() {
     document.getElementById("popup").style.display = "none";
     document.getElementById("page").style.filter = "brightness(1)";
+    document.getElementById("page").style.pointerEvents = "auto";
+    document.getElementById("page").style.userSelect = "auto";
   }
 
   /* TODO: edit social media, edit profile picture, featured artist and track*/

@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
-import fb from "../../../../base.js";
 import "./index.css";
-const auth = fb.auth();
 
-const TopGenres = () => {
+const TopGenres = ({ userEmail }) => {
   const [topGenres, setTopGenres] = useState("");
 
   const GenreLister = ({ topGenres }) =>
@@ -40,8 +38,10 @@ const TopGenres = () => {
 
   // check if component mounted
   React.useEffect(() => {
+    getTopGenres(userEmail);
+
+    /*
     if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
       getTopGenres(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
@@ -50,7 +50,8 @@ const TopGenres = () => {
         }
       });
     }
-  }, []);
+    */
+  }, [userEmail]);
 
   return (
     <div>
