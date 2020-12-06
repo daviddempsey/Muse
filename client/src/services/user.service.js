@@ -293,6 +293,9 @@ class UserService {
         }
     }
 
+    /* IN HARMONY FETCH */
+    
+
     /* SPOTIFY REAL TIME DATA FETCH */
     /*async getSpotifyPlaylists(refreshToken) {
               // get the access token 
