@@ -225,7 +225,7 @@ app.get('/refresh_token', function(req, res) {
         url: 'https://accounts.spotify.com/api/token',
         headers: {
             Authorization: 'Basic ' +
-                new Buffer(client_id + ':' + client_secret).toString('base64'),
+              new Buffer.from(client_id + ':' + client_secret).toString('base64'),
         },
         form: {
             grant_type: 'refresh_token',
@@ -354,6 +354,128 @@ app.get("/api/in_harmony/:id", (req, res) => {
         }
     })();
 })
+
+// Get In-Harmony Data from Firestore 
+app.get("/api/in_harmony/:id", (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('in_harmony').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data();
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+
+// Go through every user in our database and compute compatibility score
+app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
+    (async () => {
+        try {
+            var query = fsdb.collection('user');
+            var response = [];
+
+            await query.get().then(querySnapshot => {
+                response = in_harmony.populateLeaderboard(fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+                /* Uncomment this when changing to GET
+                Promise.all([response]).then((values) => {
+                    response = values[0];
+                    return response;
+                });
+                return response;
+                */
+            })
+
+            return res.status(200).send();
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+// Indexes top stats of a user
+app.post('/api/user/stats/index/:id', (req, res) => {
+
+    (async () => {
+
+        try {
+            await fsdb.collection('stats').doc(req.params.id)
+                .create({
+                    top_genres: req.body.top_genres,
+                    top_artists: req.body.top_artists,
+                    top_tracks: req.body.top_tracks,
+                })
+            return res.status(200).send();
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+// Get top artists between two users
+app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, res) => {
+    (async() => {
+        try {
+            // Get top stats of current user
+            const document1 = fsdb.collection('stats').doc(req.params.currUser);
+            let profile1 = await document1.get();
+            let response1 = profile1.data();
+            
+            // Get top stats of other user
+            const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+            let profile2 = await document2.get();
+            let response2 = profile2.data();
+
+            // Find similarities
+            var topSimilar = in_harmony.findTopSimilarArtist( response1.top_artists, response2.top_artists );
+
+            // send product data to front end
+            return res.status(200).send(topSimilar);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+
+// Get top genres between two users
+app.get("/api/in_harmony/compare/similar/genres/:currUser/:otherUser", (req, res) => {
+    (async() => {
+        try {
+            // Get top stats of current user
+            const document1 = fsdb.collection('stats').doc(req.params.currUser);
+            let profile1 = await document1.get();
+            let response1 = profile1.data();
+            
+            // Get top stats of other user
+            const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+            let profile2 = await document2.get();
+            let response2 = profile2.data();
+
+            // Find similarities
+            var topSimilar = in_harmony.findTopSimilarGenres( response1.top_genres, response2.top_genres );
+
+            // send product data to front end
+            return res.status(200).send(topSimilar);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+
 
 // Update, PUT
 
