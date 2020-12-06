@@ -8,7 +8,7 @@ const TopArtists = ({ userEmail }) => {
   const ArtistLister = ({ topArtists }) =>
     Object.keys(topArtists).map((item, i) => (
       <a
-        href={"https://open.spotify.com/artist/" + topArtists[item].track_id}
+        href={"https://open.spotify.com/artist/" + topArtists[item].artist_id}
         target="_blank"
         rel="noopener noreferrer"
       >
