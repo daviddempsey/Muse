@@ -37,9 +37,9 @@ exports.createUser = async function createUser(
   spotifyID,
   profilePicture,
   acctUrl,
-  refreshToken
-) {
-  // create a data document to be stored
+  refreshToken) {
+
+  // create a data document to be stored 
   const userData = {
     name: displayName,
     spotify_id: spotifyID,
@@ -167,11 +167,12 @@ async function updateUserPlaylists(db, email, playlists) {
 async function createUserStatsTopArtists(db, email, topArtists) {
   // list to be added for top artists
   var formattedList = {
-    top_artists: [],
+    "top_artists": []
   };
 
-  // go through and add each artist
+  // go through and add each artist 
   for (var i in topArtists) {
+
     // Get image urls
     var image_urls = [];
     for (var j in topArtists[i]["images"]) {
@@ -179,11 +180,11 @@ async function createUserStatsTopArtists(db, email, topArtists) {
     }
 
     var entry = {
-      rank: +i + +1,
-      artist_name: topArtists[i]["name"],
-      artist_id: topArtists[i]["id"],
-      images: image_urls,
-    };
+      "rank": (+i + +1),
+      "artist_name": topArtists[i]["name"],
+      "artist_id": topArtists[i]["id"],
+      "images": image_urls
+    }
     formattedList["top_artists"].push(entry);
   }
 
@@ -204,13 +205,13 @@ async function createUserStatsTopArtists(db, email, topArtists) {
 async function createUserStatsTopGenres(db, email, topArtists) {
   // create a list for genres
   var formattedList = {
-    top_genres: [],
+    "top_genres": []
   };
 
   // Map to store all genres and their frequencies
   let genreRankings = new Map();
 
-  // loop through the artists list and add the genres to the list
+  // loop through the artists list and add the genres to the list 
   for (let i in topArtists) {
     for (let j in topArtists[i]["genres"]) {
       // Append genre to Map<genre_name, int> and update frequency
@@ -231,10 +232,16 @@ async function createUserStatsTopGenres(db, email, topArtists) {
   // Format data to be indexed into Firestore 'stats' as a new or updated document
   let index = 0;
   for (const [key, value] of genreRankings.entries()) {
+    // Limit the results to only 10
+    if (index === 10) {
+      break;
+    }
+
     var entry = {
-      rank: +index + +1,
-      genre_name: key,
-    };
+      "rank": (+index + +1),
+      "genre_name": key,
+      "frequency": genreRankings.get(key)
+    }
     formattedList["top_genres"].push(entry);
     index++;
   }
@@ -255,7 +262,7 @@ async function createUserStatsTopGenres(db, email, topArtists) {
 async function createUserStatsTopTracks(db, email, topTracks) {
   // list to be added
   var formattedList = {
-    top_tracks: [],
+    "top_tracks": []
   };
 
   // go through each track and fill in the entries
@@ -273,22 +280,20 @@ async function createUserStatsTopTracks(db, email, topTracks) {
     }
 
     var entry = {
-      rank: +i + +1,
-      track_name: topTracks[i]["name"],
-      track_id: topTracks[i]["id"],
-      images: image_urls,
-      artists: artistsOfTrack,
-      album_name: topTracks[i]["album"]["name"],
-    };
+      "rank": (+i + +1),
+      "track_name": topTracks[i]["name"],
+      "track_id": topTracks[i]["id"],
+      "images": image_urls,
+      "artists": artistsOfTrack,
+      "album_name": topTracks[i]["album"]["name"]
+    }
 
-    var entry = {
-      rank: +i + +1,
-      track_name: topTracks[i]["name"],
-      track_id: topTracks[i]["id"],
-      images: image_urls,
-      artists: artistsOfTrack,
-      album_name: topTracks[i]["album"]["name"],
-    };
+    // Get artists
+    var artistsOfTrack = [];
+    for (var j in topTracks[i]["album"]["artists"]) {
+      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
+    }
+
     formattedList["top_tracks"].push(entry);
   }
 
@@ -309,26 +314,25 @@ exports.createUserStats = async function createUserStats(
   db,
   email,
   access_token,
-  refresh_token
-) {
+  refresh_token) {
+
   // create an empty stats document for the user
   const statsData = {
-    song_stats: "",
-    albums: "",
-    artist_stats: "",
-    playlist_stats: "",
+    song_stats: '',
+    albums: '',
+    artist_stats: '',
+    playlist_stats: '',
     top_artists: [],
     top_tracks: [],
-    top_genres: [],
-  };
-  const res = await db.collection("stats").doc(email).set(statsData);
+    top_genres: []
+  }
+  const res = await db.collection('stats').doc(email).set(statsData);
 
   // find top artist
   var topArtistsCall = {
-    url:
-      "https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10",
-    headers: { Authorization: "Bearer " + access_token },
-    json: true,
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
   };
 
   request.get(topArtistsCall, function (error, response, topArtists) {
@@ -337,10 +341,9 @@ exports.createUserStats = async function createUserStats(
 
   // find top genre (Do we really want it long term 50 since we have medium_term 10 for all the other calls)
   var topGenresCall = {
-    url:
-      "https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10",
-    headers: { Authorization: "Bearer " + access_token },
-    json: true,
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
   };
   request.get(topGenresCall, function (error, response, topArtists) {
     createUserStatsTopGenres(db, email, topArtists.items);
@@ -348,10 +351,9 @@ exports.createUserStats = async function createUserStats(
 
   // find top tracks
   var topTracksCall = {
-    url:
-      "https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10",
-    headers: { Authorization: "Bearer " + access_token },
-    json: true,
+    url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
   };
   request.get(topTracksCall, function (error, response, topTracks) {
     createUserStatsTopTracks(db, email, topTracks.items);
