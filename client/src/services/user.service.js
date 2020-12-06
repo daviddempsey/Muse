@@ -293,6 +293,18 @@ class UserService {
         }
     }
 
+    /* IN HARMONY FETCH */
+    async getInHarmony(email) {
+        try {
+            const response = await fb.firestore().collection("in_harmony").doc(email);
+            const inHarmony = await response.get();
+            return inHarmony.data()['similar_users'];
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
+    }
+
     /* SPOTIFY REAL TIME DATA FETCH */
     /*async getSpotifyPlaylists(refreshToken) {
               // get the access token 
