@@ -10,6 +10,22 @@ const Header = () => {
   const SPACE = '\u00a0';
   const [link, setLink] = useState('');
 
+  const myProfile = async () => {
+    if (auth.currentUser) {
+      if (link === auth.currentUser.email) {
+        window.location.href = '/profile/' + btoa(link);
+      }
+    } else {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          if (link === user.email) {
+            window.location.href = '/profile/' + btoa(link);
+          }
+        }
+      });
+    }
+  }
+
   const getLink = async () => {
     setLink(await getUser());
   }
@@ -44,7 +60,7 @@ const Header = () => {
           </li>
           <li className='empty' />
           <li>
-            <NavLink to={'/profile/' + btoa(link)} className='nav-item'>
+            <NavLink to={'/profile/' + btoa(link)} onClick={()=>myProfile()}className='nav-item'>
               Profile
             </NavLink>
           </li>
