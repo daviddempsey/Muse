@@ -1,22 +1,33 @@
-/** 
+/**
  * Muse - Database access methods
- * 
+ *
  * This file is to store all the database access methods
  * This will include profile creating and reading, user creating and reading,
  * etc.
  */
 
-var request = require('request'); // "Request" library
+const { response } = require("express");
+var request = require("request"); // "Request" library
 
 /**
  * Creates a user based on the user's Spotify information into the database
- * that's passed in. 
- * 
+ * that's passed in.
+ *
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
  * @param {*} displayName name of the user
  * @param {*} spotifyID Spotify ID of the user
- * @param {*} refreshToken Spotify refresh token of the user 
+ * @param {*} refreshToken Spotify refresh token of the user
+ */
+/**
+ * Creates a user based on the user's Spotify information into the database
+ * that's passed in.
+ *
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} displayName name of the user
+ * @param {*} spotifyID Spotify ID of the user
+ * @param {*} refreshToken Spotify refresh token of the user
  */
 exports.createUser = async function createUser(
   admin,
@@ -33,80 +44,118 @@ exports.createUser = async function createUser(
     name: displayName,
     spotify_id: spotifyID,
     refresh_token: refreshToken,
-    location: [],
+    location: {},
     profile: userEmail,
     friends: [],
     messages: [],
     stats_id: userEmail,
     in_harmony: userEmail,
-  }
+  };
 
   // try creating user
   try {
     await admin.auth().updateUser(spotifyID, {
       displayName: displayName,
-      email: userEmail
-    })
+      email: userEmail,
+    });
   } catch (error) {
-    if (error.code === 'auth/user-not-found') {
+    if (error.code === "auth/user-not-found") {
       let response = await admin.auth().createUser({
         uid: spotifyID,
         displayName: displayName,
         refreshToken: refreshToken,
-        email: userEmail
+        email: userEmail,
       });
-      console.log('Successfully created new user with email: ', response.email);
+      console.log("Successfully created new user with email: ", response.email);
 
       // go into the user tab and create the user
-      await db.collection('user').doc(userEmail).set(userData);
+      await db.collection("user").doc(userEmail).set(userData);
 
       // create user profile
       await createUserProfile(db, userEmail, profilePicture, acctUrl);
 
       // create user in harmony document
       await createUserInHarmony(db, userEmail, refreshToken);
-
     }
   }
 
-  // create a custom auth token and if user already exists, query for custom token 
-  // surround a try catch block, and handle it with 
+  // create a custom auth token and if user already exists, query for custom token
+  // surround a try catch block, and handle it with
   const token = await admin.auth().createCustomToken(spotifyID);
-  console.log('Created custom token for UID', spotifyID, 'Token:', token);
+  console.log("Created custom token for UID", spotifyID, "Token:", token);
 
   return token;
-}
+};
 
 /**
-* Creates and prepopulates the user's profile
-* @param {*} db reference to the database to add to
-* @param {*} email email of the user
-*/
+ * Creates and prepopulates the user's profile
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ */
 async function createUserProfile(db, email, profilePicture, acctUrl) {
-
   // create empty social media object
   const userSocialMedia = {
-    facebook: '',
-    instagram: '',
-    twitter: '',
-    tiktok: '',
+    facebook: "",
+    instagram: "",
+    twitter: "",
+    tiktok: "",
     spotify: acctUrl,
-  }
+  };
 
   // create data object to be stored
   const userProfileData = {
-    biography: '',
-    profile_url: '',
+    biography: "",
+    profile_url: new Buffer.from(email).toString("base64"),
     profile_picture: profilePicture,
     select_playlist: [],
     social_media: userSocialMedia,
-  }
+  };
 
   // go into the profile tab and create the profile for the user
-  const res = await db.collection('profile').doc(email).set(userProfileData);
+  const res = await db.collection("profile").doc(email).set(userProfileData);
 
   // log to console the result
   return res;
+}
+
+/**
+ * Updates user playlists upon.
+ * @param {*} db
+ * @param {*} email
+ * @param {*} playlists
+ */
+async function updateUserPlaylists(db, email, playlists) {
+  // create data object to be stored
+  var formattedList = {
+    public_playlists: [],
+  };
+
+  for (var i in playlists) {
+    // Get image URL
+    var image_url = playlists[i]["images"][0]["url"];
+
+    // get playlist name
+    var playlist_name = playlists[i]["name"];
+
+    // playlist link
+    var playlist_id = playlists[i]["id"];
+
+    // entry
+    var entry = {
+      image: image_url,
+      playlist_name: playlist_name,
+      playlist_id: playlist_id,
+    };
+
+    // push it into formatted list
+    formattedList["public_playlists"].push(entry);
+  }
+
+  // add populated list to database
+  const document = db.collection("stats").doc(email);
+  await document.update({
+    public_playlists: formattedList["public_playlists"],
+  });
 }
 
 /**
@@ -140,33 +189,31 @@ async function createUserStatsTopArtists(db, email, topArtists) {
   }
 
   // add populated list into database
-  const document = db.collection('stats').doc(email);
+  const document = db.collection("stats").doc(email);
   await document.update({
-    top_artists: formattedList["top_artists"]
+    top_artists: formattedList["top_artists"],
   });
 }
 
 /**
- * Since Spotify is weird and shit, we have to grab top genres from top 
- * artists as they are the only object with a genre item. 
- * @param {*} db 
- * @param {*} email 
- * @param {*} topArtists 
+ * Since Spotify is weird and shit, we have to grab top genres from top
+ * artists as they are the only object with a genre item.
+ * @param {*} db
+ * @param {*} email
+ * @param {*} topArtists
  */
 async function createUserStatsTopGenres(db, email, topArtists) {
-
   // create a list for genres
   var formattedList = {
     "top_genres": []
   };
 
-  // Map to store all genres and their frequencies 
+  // Map to store all genres and their frequencies
   let genreRankings = new Map();
 
   // loop through the artists list and add the genres to the list 
   for (let i in topArtists) {
     for (let j in topArtists[i]["genres"]) {
-
       // Append genre to Map<genre_name, int> and update frequency
       let genre = topArtists[i]["genres"][j];
       if (genreRankings.has(genre)) {
@@ -177,10 +224,12 @@ async function createUserStatsTopGenres(db, email, topArtists) {
     }
   }
 
-  // Sort map 
-  genreRankings = new Map([...genreRankings.entries()].sort((a, b) => b[1] - a[1]));
+  // Sort map
+  genreRankings = new Map(
+    [...genreRankings.entries()].sort((a, b) => b[1] - a[1])
+  );
 
-  // Format data to be indexed into Firestore 'stats' as a new or updated document 
+  // Format data to be indexed into Firestore 'stats' as a new or updated document
   let index = 0;
   for (const [key, value] of genreRankings.entries()) {
     // Limit the results to only 10
@@ -189,17 +238,17 @@ async function createUserStatsTopGenres(db, email, topArtists) {
     }
 
     var entry = {
-      "rank": (+index + +1),
-      "genre_name": key
-    }
+      rank: +index + +1,
+      genre_name: key,
+    };
     formattedList["top_genres"].push(entry);
     index++;
   }
 
   // add it to the database
-  const document = db.collection('stats').doc(email);
+  const document = db.collection("stats").doc(email);
   await document.update({
-    top_genres: formattedList["top_genres"]
+    top_genres: formattedList["top_genres"],
   });
 }
 
@@ -210,7 +259,6 @@ async function createUserStatsTopGenres(db, email, topArtists) {
  * @param {JSON} topTracks top 10 tracks from API call
  */
 async function createUserStatsTopTracks(db, email, topTracks) {
-
   // list to be added
   var formattedList = {
     "top_tracks": []
@@ -218,7 +266,6 @@ async function createUserStatsTopTracks(db, email, topTracks) {
 
   // go through each track and fill in the entries
   for (var i in topTracks) {
-
     // Get image urls
     var image_urls = [];
     for (var j in topTracks[i]["album"]["images"]) {
@@ -239,16 +286,29 @@ async function createUserStatsTopTracks(db, email, topTracks) {
       "artists": artistsOfTrack,
       "album_name": topTracks[i]["album"]["name"]
     }
+
+    // Get artists
+    var artistsOfTrack = [];
+    for (var j in topTracks[i]["album"]["artists"]) {
+      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
+    }
+
     formattedList["top_tracks"].push(entry);
   }
+
+  // add information to document
+  const document = db.collection("stats").doc(email);
+  await document.update({
+    top_tracks: formattedList["top_tracks"],
+  });
 }
 
 /**
-* Creates and populated the user's stats for top 5 stats
-* @param {*} db reference to the database to add to
-* @param {*} email email of the user
-* @param {*} refresh_token Spotify refresh token of the user
-*/
+ * Creates and populated the user's stats for top 5 stats
+ * @param {*} db reference to the database to add to
+ * @param {*} email email of the user
+ * @param {*} refresh_token Spotify refresh token of the user
+ */
 exports.createUserStats = async function createUserStats(
   db,
   email,
@@ -298,28 +358,38 @@ exports.createUserStats = async function createUserStats(
     createUserStatsTopTracks(db, email, topTracks.items);
   });
 
-  console.log("Added", res);
+  var userPlaylistCall = {
+    url: "https://api.spotify.com/v1/me/playlists",
+    headers: { Authorization: "Bearer " + access_token },
+    json: true,
+  };
+  request.get(userPlaylistCall, function (error, response, playlists) {
+    updateUserPlaylists(db, email, playlists.items);
+  });
 
-}
+  console.log("Added", res);
+};
 
 /**
-* Creates the user's in harmony list from current 
-* @param {*} db 
-* @param {*} email 
-* @param {*} refresh_token 
-*/
+ * Creates the user's in harmony list from current
+ * @param {*} db
+ * @param {*} email
+ * @param {*} refresh_token
+ */
 async function createUserInHarmony(db, email, refresh_token) {
-
   // TODO: in harmony algorithm - Steven's task
 
   // Create the in harmony list (empty for now)
   const userInHarmonyData = {
-    similar_users: []
-  }
+    similar_users: [],
+  };
 
   // go into in harmony tab and create the profile for the user
-  const res = await db.collection('in_harmony').doc(email).set(userInHarmonyData);
+  const res = await db
+    .collection("in_harmony")
+    .doc(email)
+    .set(userInHarmonyData);
 
   // Log to console the result
-  console.log('Added', res);
+  console.log("Added", res);
 }

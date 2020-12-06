@@ -1,12 +1,12 @@
-@import '../../styles/index.css';
+@import "../../styles/index.css";
 
 .container {
-    min-height: 100%;
-    margin-bottom: -4rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.container:after {
-    content: "";
-    display: block;
-    height: 4rem;
+.content-wrap {
+  min-height: 100%;
+  flex-grow: 1;
 }

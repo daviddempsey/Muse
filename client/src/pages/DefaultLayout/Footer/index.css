@@ -1,0 +1,40 @@
+@import "../../../styles/index.css";
+
+.Footer {
+  height: 4rem;
+}
+
+.footer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--yellow);
+}
+
+.footer .empty {
+  flex-grow: 1;
+}
+
+.footer li h3 {
+  font-size: 18px;
+}
+
+.footer li h1 {
+  font-size: 32px;
+}
+
+.footer li:last-of-type {
+  display: flex;
+  align-items: center;
+}
+
+.footer li {
+  padding: 1rem 6rem;
+  color: var(--black);
+}
+
+.footer img {
+  height: 2rem;
+  width: 2rem;
+}

@@ -1,19 +1,44 @@
-import React, { Component } from 'react';
-import Cookies from 'js-cookie';
-import ProfilePage from '../ProfilePage/index';
+import React, { useEffect } from "react";
+import Cookies from "js-cookie";
+import fb from "../../base";
+import "firebase/auth";
+import "./index.css";
 
-class LoadingPage extends Component {
-    constructor(props) {
-        super(props);
-    }
+//const auth = fb.auth();
 
-    componentDidMount = () => {};
+const LoadingPage = ({ history }) => {
+  useEffect(() => {
+    handleSignIn();
+  });
 
-    render = () => {
-        return(
-            <div>
-                
-            </div>
-        );
-    };
-}
+  const handleSignIn = async () => {
+    // get token from cookie
+    const token = Cookies.get("token");
+
+    // attempt to sign in to the application
+    fb.auth()
+      .signInWithCustomToken(token)
+      .then((user) => {
+        // convert the user's email to 64bit encoded
+        var encodedEmail = btoa(user["user"]["email"]);
+        console.log(encodedEmail);
+
+        // redirect
+        history.push("/profile/" + encodedEmail);
+      })
+      .catch((error) => {
+        var errorMessage = error.message;
+
+        // log the error to the console
+        alert(errorMessage);
+      });
+  };
+
+  return (
+    <div className="loading">
+      <h1>Please wait while we sign you in!</h1>
+    </div>
+  );
+};
+
+export default LoadingPage;

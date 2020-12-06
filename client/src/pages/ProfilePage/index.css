@@ -1,1 +1,197 @@
-@import '../../styles/index.css';
+@import "../../styles/index.css";
+
+.filter {
+  filter: brightness(1);
+}
+
+.page {
+  background-color: var(--white);
+}
+
+/* Edit profile */
+.popup {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -350px;
+  margin-left: -500px;
+}
+
+/* General text styles */
+.title {
+  text-align: left;
+  color: var(--red);
+}
+
+.body {
+  color: var(--grey);
+}
+
+/* Margins */
+.content {
+  margin: 50px 100px 50px 100px;
+}
+
+/* Content */
+.content .columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.content .columns .col-1 {
+  display: flex;
+  flex: 0.5;
+  max-width: 50%;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.content .columns .col-2 {
+  display: flex;
+  flex: 0.5;
+  max-width: 50%;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+/* Personal info */
+.personal {
+  overflow: hidden;
+  margin-bottom: 30px;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.personal .decal {
+  flex: 1;
+  height: auto;
+  width: 101%;
+  margin-bottom: -30%;
+}
+
+.personal .rows {
+  display: flex;
+  flex-direction: column;
+  margin-top: -80px;
+  margin-left: 20px;
+}
+
+.personal .rows .row-1 {
+  text-align: left;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  padding-left: 10px;
+}
+
+.personal .rows .row-2 {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 15px;
+  padding-left: 10px;
+}
+
+.personal .rows .row-3 {
+  text-align: left;
+  padding-left: 10px;
+  padding-bottom: 30px;
+}
+
+/* Top tracks */
+.tracks {
+  padding: 30px;
+  margin-bottom: 30px;
+  text-align: left;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Top artists */
+.artists {
+  padding: 30px;
+  margin-bottom: 30px;
+  text-align: left;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Top genres */
+.genres {
+  padding: 30px;
+  margin-bottom: 30px;
+  text-align: left;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Playlists */
+.playlists {
+  padding: 30px;
+  margin-bottom: 30px;
+  text-align: left;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Add friend */
+.addfriend {
+  width: 45px;
+  height: 45px;
+  margin-top: 2px;
+  margin-left: 30px;
+  color: var(--red);
+  background-color: inherit;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.addfriend:focus {
+  outline: none;
+}
+
+.addfriend:active {
+  transform: translate(1px, 1px);
+}
+
+.addfriend .add {
+  width: auto;
+  height: auto;
+  max-height: 25px;
+  margin-top: 0.2rem;
+}
+
+/* Message */
+.dm {
+  width: 45px;
+  height: 45px;
+  margin-top: 2px;
+  margin-left: 30px;
+  color: var(--red);
+  background-color: inherit;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dm:focus {
+  outline: none;
+}
+
+.dm:active {
+  transform: translate(1px, 1px);
+}
+
+.dm .message {
+  width: auto;
+  height: auto;
+  max-height: 25px;
+  margin-top: 0.2rem;
+}
