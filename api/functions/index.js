@@ -64,14 +64,20 @@ app.get('/', (req, res) => {
 
 // Create, POST
 // Go through every user in our database and compute compatibility score
+
 app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
     (async () => {
         try {
             var query = fsdb.collection('user');
-            var response = [];
+            var reset = {
+                similar_users: []
+            };
+
+            // delete document first
+            await fsdb.collection("in_harmony").doc(req.params.currUserId).set(reset);
 
             await query.get().then(querySnapshot => {
-                response = in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+                in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
                 /* Uncomment this when changing to GET
                 Promise.all([response]).then((values) => {
                     response = values[0];
@@ -322,6 +328,13 @@ app.get('/api/user/stats/:section/:id', (req, res) => {
             return res.status(500).send(error);
         }
     })();
+});
+
+app.options('/api/in_harmony/:id', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.end();
 });
 
 // Get In-Harmony Data from Firestore 

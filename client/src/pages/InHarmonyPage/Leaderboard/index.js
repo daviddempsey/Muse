@@ -1,65 +1,84 @@
-import React, { useState } from 'react';
-import UserService from '../../../services/user.service';
+import React, { Component } from 'react';
+// import UserService from '../../../services/user.service';
 import fb from '../../../base';
 import 'firebase/auth';
 import './index.css';
-import ComparedUser from './ComparedUser';
+// import ComparedUser from './ComparedUser';
+import HarmonyLister from './HarmonyLister';
 import HRBgGraphic from './Harmonize_Refresh_Background.svg';
 import HRBttnGraphic from './Harmonize_Button.svg';
 const auth = fb.auth();
 
-/* class Leaderboard extends Component {
+class Leaderboard extends Component {
 
     constructor(props) {
         super(props);
-        this.email = props.email;
         this.state = {
+            listEmpty: false,
+            userEmail: '',
             topUsers: []
         };
-        this.setTopUsers = this.setTopUsers.bind(this);
+        this.getTopUsers = this.getTopUsers.bind(this);
+        this.compareUsers = this.compareUsers.bind(this);
+        this.authUser = this.authUser.bind(this);
+    }
+
+    authUser() {
+        return new Promise(function (resolve, reject) {
+            auth.onAuthStateChanged(function (user) {
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject("User not logged in");
+                }
+            });
+        });
+    }
+    
+    componentDidMount() {
+        this.authUser().then((user) => {
+            this.getTopUsers().then((userList) => {
+                console.log(userList);
+                this.setState({
+                    topUsers: userList
+                });
+            });
+        })
     }
 
     // get the top users from the backend
     getTopUsers = () => {
-        const url = "http://localhost:5001/muse-eec76/us-central1/app/compareUsers?"
+        const url = "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/kennyyu168@yahoo.com";
         const options = {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                email: email
-            })
         };
-        fetch(url, options)
-            .then(response => {
-                this.setTopUsers(response.data.topUsers);
-                console.log(response.status);
+        return fetch(url, options)
+            .then((response) => {
+                return response.json().then((data) => {
+                    return data.similar_users;
+                });
             });
     }
 
+    // compare users in the backend
     compareUsers = () => {
-        const url = "http://localhost:5001/muse-eec76/us-central1/app/compareUsers?"
+        const url = "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/kennyyu168@yahoo.com/100";
         const options = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json;charset=UTF-8'
-            },
-            body: JSON.stringify({
-                email: email
-            })
+            }
         };
         fetch(url, options)
             .then(response => {
-                console.log(response.status);
                 this.getTopUsers();
+                console.log(response.status);
             });
-    }
-    
-    componentWillMount() {
-        this.getTopUsers();
     }
 
     render() {
@@ -70,21 +89,21 @@ const auth = fb.auth();
                     <h2>Click the note to make a new friend!</h2>
                     <div className="harmonyRefresh">
                         <img src={HRBgGraphic} alt="two people connecting through music"/>
-                        <button className="rbutton"> 
+                        <button className="rbutton" onClick={this.compareUsers}> 
                             <img src={HRBttnGraphic} alt="refresh compatibility list"/>
                         </button>
                     </div>
                 </div>
-                {topUsers.map(user => <ComparedUser user={user.email} />)}
                 <div className="ComparedUsers">
-                    <ComparedUser />
+                    {this.state.listEmpty && <h2>Please press the Music Note to find compatible people!</h2>}
+                    {!this.state.listEmpty && <HarmonyLister harmonyList={this.state.topUsers} />}
                 </div>
             </div>
         );
     }
-} */
+} 
 
-const Leaderboard = () => {
+/*const Leaderboard = () => {
     // calls a child Compared user for each matched user
     const [inHarmonyList, setInHarmonyList] = useState([]);
 
@@ -137,12 +156,11 @@ const Leaderboard = () => {
                     </button>
                 </div>
             </div>
-            {/*topUsers.map(user => <ComparedUser user={user.email} />)*/}
             <div className="ComparedUsers">
                 <HarmonyLister harmonyList={inHarmonyList} />
             </div>
         </div>
     );
-}
+}*/
 
 export default Leaderboard;
