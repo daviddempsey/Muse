@@ -8,7 +8,7 @@ import Contact from './Contact';
 
 const LandingPage = () => {
   return (
-    <div className="LandingPage">
+    <div className='LandingPage'>
       <DefaultLayout>
         <Home />
         <About />
