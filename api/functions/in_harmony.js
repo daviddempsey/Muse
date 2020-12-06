@@ -278,35 +278,6 @@ async function indexCompatibilityScoresIntoTable(admin, fsdb, sourceUser, target
 
   // TODO: Hey David, should i add the date here so I have record of when this was last updated? 
 
-
-  /*// Case 1: the document exists but there are no fields inside - add field
-  if (entry !== undefined && Object.keys(entry).length === 0) {
-    var similarUsers = {};
-    similarUsers[targetUser] = compatiblityScores;
-    await fsdb.collection('in_harmony').doc(sourceUser)
-      .update({
-        similar_users: similarUsers
-      });
-  }
-
-  // Case 2: document exists but new user was calculated - add new user calculations
-  else if (entry === undefined || entry['similar_users'][targetUser] === 'undefined') {
-    // add to table and then push
-    var similarUsers = {};
-    similarUsers[targetUser] = compatiblityScores;
-    await fsdb.collection('in_harmony').doc(sourceUser)
-      .create({
-        similar_users: similarUsers
-      });
-  }
-
-  // Case 3: previously calculated user compatibility - update user compatibility scores
-  else {
-    entry['similar_users'][targetUser] = compatiblityScores;
-    await document.update({
-      similar_users: entry['similar_users']
-    });
-  }*/
   var similarUsers = [];
   var userEntry = {
     'email': targetUser,
@@ -319,9 +290,7 @@ async function indexCompatibilityScoresIntoTable(admin, fsdb, sourceUser, target
   await document.update({
     similar_users: admin.firestore.FieldValue.arrayUnion(userEntry)
   });
-
 }
-
 
 /* Location functions */
 

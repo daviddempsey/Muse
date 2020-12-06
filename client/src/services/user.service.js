@@ -295,16 +295,14 @@ class UserService {
 
     /* IN HARMONY FETCH */
     async getInHarmony(email) {
-        // the options to get in harmony
-        let config = {
-            method: 'GET',
-            headers: {'Content-Type' : 'application/json'}
-        };
-
-        // fetch from our backend
-        return fetch('https://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/' + email, config)
-        .then(response => response.json())
-        .catch(error => console.log(error));
+        try {
+            const response = await fb.firestore().collection("in_harmony").doc(email);
+            const inHarmony = await response.get();
+            return inHarmony.data()['similar_users'];
+        } catch (error) {
+            alert(error);
+            console.log(error);
+        }
     }
 
     /* SPOTIFY REAL TIME DATA FETCH */
