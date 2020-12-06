@@ -38,13 +38,14 @@ exports.createUser = async function createUser(
   profilePicture, 
   acctUrl,
   refreshToken) {
+  
 
   // create a data document to be stored 
   const userData = {
     name: displayName, 
     spotify_id: spotifyID,
     refresh_token: refreshToken, 
-    location: [],
+    location: {},
     profile: userEmail, 
     friends: [],
     messages: [],
@@ -184,8 +185,8 @@ async function createUserStatsTopArtists(db, email, topArtists) {
 
     var entry = {
       "rank": (+i + +1),
-      "track_name": topArtists[i]["name"],
-      "track_id": topArtists[i]["id"],
+      "artist_name": topArtists[i]["name"],
+      "artist_id": topArtists[i]["id"],
       "images": image_urls
     }
     formattedList["top_artists"].push(entry);
@@ -272,11 +273,19 @@ async function createUserStatsTopTracks(db, email, topTracks) {
       image_urls.push( topTracks[i]["album"]["images"][j]["url"] );
     }
 
+    // Get artists
+    var artistsOfTrack = [];
+    for (var j in topTracks[i]["album"]["artists"]) {
+      artistsOfTrack.push( topTracks[i]["album"]["artists"][j]["name"] );
+    }
+
     var entry = {
       "rank": (+i + +1),
       "track_name": topTracks[i]["name"],
       "track_id": topTracks[i]["id"],
-      "images": image_urls
+      "images": image_urls,
+      "artists": artistsOfTrack,
+      "album_name": topTracks[i]["album"]["name"]
     }
     formattedList["top_tracks"].push(entry);
   }

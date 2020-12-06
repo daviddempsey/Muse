@@ -6,6 +6,7 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var data_access = require('./data_access'); // the database access functions
+var in_harmony = require('./in_harmony'); // the in harmony functions
 
 var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
 var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
@@ -62,6 +63,32 @@ app.get('/', (req, res) => {
 });
 
 // Create, POST
+// Go through every user in our database and compute compatibility score
+app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
+    (async () => {
+        try {
+            var query = fsdb.collection('user');
+            var response = [];
+
+            await query.get().then(querySnapshot => {
+                response = in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+                /* Uncomment this when changing to GET
+                Promise.all([response]).then((values) => {
+                    response = values[0];
+                    return response;
+                });
+                return response;
+                */
+            })
+
+            return res.status(200).send();
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
 
 // Read, GET
 app.options('/login', function(req, res) {
@@ -296,6 +323,24 @@ app.get('/api/user/stats/:section/:id', (req, res) => {
         }
     })();
 });
+
+// Get In-Harmony Data from Firestore 
+app.get("/api/in_harmony/:id", (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('in_harmony').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data();
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
 
 // Update, PUT
 

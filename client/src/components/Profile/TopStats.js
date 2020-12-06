@@ -13,7 +13,7 @@ const TopStats = () => {
     Object.keys(topArtists).map((item, i) => (
       <li key={i}>
         <a href={'https://open.spotify.com/artist/' + topArtists[item].track_id}>
-          <span>{topArtists[item].track_name}</span>
+          <span>{topArtists[item].artist_name}</span>
           <img alt='pfp' src={topArtists[item]['images'][0]} />
         </a>
       </li>
