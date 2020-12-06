@@ -118,13 +118,7 @@ class ProfilePage extends Component {
             <p>{this.state.userEmail}</p>
             {!this.state.friend && !this.state.userEdit && <button id='addfriend' onClick={() => this.addFriend()}>Add Friend</button>}
             {this.state.friend && !this.state.userEdit && <button id='dm' onClick={() => this.props.history.push('/messages')}> dm me ;</button>}
-            {this.state.userEdit && (
-              <button
-                id='editprofile'
-                onClick={() => this.props.history.push('/editprofile')}>
-                Edit Profile
-              </button>
-            )}
+            {this.state.userEdit && (<button id='editprofile' onClick={() => this.props.history.push('/editprofile')}>Edit Profile</button>)}
             <ProfileLink userEmail={this.state.userEmail} />
             <SocialMedia userEmail={this.state.userEmail} />
             <TopStats userEmail={this.state.userEmail} />
