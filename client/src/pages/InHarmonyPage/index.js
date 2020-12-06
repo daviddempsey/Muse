@@ -1,14 +1,14 @@
 import React from 'react';
-// import './index.css';
+import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
-import Leaderboard from './Leaderboard'
+import Leaderboard from './Leaderboard';
 
 const InHarmonyPage = () => {
   return (
     <div className="InHarmonyPage">
       <DefaultLayout>
-          <Leaderboard/>
+        <Leaderboard />
       </DefaultLayout>
     </div>
   );

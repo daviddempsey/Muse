@@ -1,5 +1,7 @@
-import React from 'react';
-// import './index.css';
+import React, {useState} from 'react';
+import {Link} from "react-router-dom";
+import './index.css';
+import UserService from '../../../../services/user.service';
 
 const ComparedUser = ({ compEmail, compOverall }) => {
   /* store and set the bio for each match */
@@ -35,7 +37,7 @@ const ComparedUser = ({ compEmail, compOverall }) => {
       <div className='text'>
         <div className="name">
           <h2>
-            <Link to={'/profile/' + btoa(email)} style={{color: 'inherit', textDecoration: 'inherit'}}>{name}</Link>
+            <Link to={'/profile/' + btoa(compEmail)} style={{color: 'inherit', textDecoration: 'inherit'}}>{name}</Link>
           </h2>
         </div>
         <div className="bio">
