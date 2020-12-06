@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import './index.css';
+
+import DefaultLayout from '../DefaultLayout';
+import ProfilePicture from '../../components/Profile/ProfilePicture';
+import Biography from '../../components/Profile/Biography';
+import ProfileLink from '../../components/Profile/ProfileLink';
+import SocialMedia from '../../components/Profile/SocialMedia';
+import TopStats from '../../components/Profile/TopStats';
+import PublicPlaylists from '../../components/Profile/PublicPlaylists';
+
 import Cookies from 'js-cookie';
 import fb from '../../base';
 import 'firebase/auth';
-import './index.css';
-import DefaultLayout from '../DefaultLayout';
-import Biography from '../../components/Biography';
-import ProfileLink from '../../components/ProfileLink';
-import SocialMedia from '../../components/SocialMedia';
-import SpotifyStats from '../../components/SpotifyStats';
-import TopStats from '../../components/TopStats';
-import FeaturedPlaylists from '../../components/FeaturedPlaylists';
-
 const auth = fb.auth();
 
 class ProfilePage extends Component {
@@ -18,29 +20,37 @@ class ProfilePage extends Component {
     super(props);
 
     this.state = {
-      firebaseToken: Cookies.get('token')
+      firebaseToken: Cookies.get('token'),
     };
-    console.log("OH HELLO, TERMINAL", Cookies.get('token'));
   }
 
   componentDidMount = () => {};
 
   render = () => {
     return (
-      <div id='profile-page'>
-        <DefaultLayout>
-          <div id='profile-section'>
-            <Biography />
-            <ProfileLink />
-            <SocialMedia />
-            <SpotifyStats />
-            <TopStats />
-            <FeaturedPlaylists />
-          </div>
-        </DefaultLayout>
+      <div>
+        <div id='profile-page'>
+          <DefaultLayout>
+            <div id='profile-section'>
+              <ProfilePicture />
+              <button onClick={() => this.props.history.push('/editprofile')}>
+                Edit Profile
+              </button>
+              <Biography />
+              <ProfileLink />
+              <SocialMedia />
+              <TopStats />
+              <PublicPlaylists />
+            </div>
+          </DefaultLayout>
+        </div>
+        {/* <div id='cookie stuff'>
+          <p>{Cookies.get('token')}</p>
+          <p>{auth.currentUser.email}</p>
+        </div> */}
       </div>
     );
   };
 }
 
-export default ProfilePage;
+export default withRouter(ProfilePage);

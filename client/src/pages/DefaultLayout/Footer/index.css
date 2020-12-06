@@ -1,6 +1,11 @@
-@import '../../styles/index.css';
-.footer {
+@import '../../../styles/index.css';
+
+.Footer {
     height: 4rem;
+}
+
+.footer {
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;

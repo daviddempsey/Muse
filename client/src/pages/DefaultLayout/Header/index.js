@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import Logo from '../../assets/logo.svg';
+import Logo from '../../../assets/logo.svg';
 import './index.css';
 
 const Header = () => {
@@ -33,7 +33,7 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/messaging' className='nav-item'>
+            <NavLink to='/messages' className='nav-item'>
               Messaging
             </NavLink>
           </li>

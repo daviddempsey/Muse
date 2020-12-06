@@ -14,26 +14,30 @@ var redirect_uri = 'http://localhost:5001/muse-eec76/us-central1/app/callback'; 
 const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
 
-var serviceAccount = require("./permissions.json"); // service account
+var serviceAccount = require('./permissions.json'); // service account
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  projectId: "muse-eec76",
-  databaseURL: "https://muse-eec76.firebaseio.com"
+    credential: admin.credential.cert(serviceAccount),
+    projectId: 'muse-eec76',
+    databaseURL: 'https://muse-eec76.firebaseio.com',
 });
 
 const app = express();
 const fsdb = admin.firestore();
 
-// create cores 
+// create cores
 const cors = require('cors');
-  
+
 var stateKey = 'spotify_auth_state';
-  
-app.use(express.static(__dirname + './../public'))
-    .use(cors({
-      'allowedHeaders': ['Content-Type'],
-      'origin': '*',
-      'preflightContinue': true}))
+
+app
+    .use(express.static(__dirname + './../public'))
+    .use(
+        cors({
+            allowedHeaders: ['Content-Type'],
+            origin: '*',
+            preflightContinue: true,
+        })
+    )
     .use(cookieParser());
 
 /**
@@ -42,13 +46,14 @@ app.use(express.static(__dirname + './../public'))
  * @return {string} The generated string
  */
 var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var text = '';
+    var possible =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
+    for (var i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 };
 
 // Routes
@@ -59,125 +64,154 @@ app.get('/', (req, res) => {
 // Create, POST
 
 // Read, GET
-app.options('/login', function (req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.end();
+app.options('/login', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.end();
 });
 
 app.get('/login', function(req, res) {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
-  
+
     // your application requests authorization
     var scope = 'user-read-private user-read-email user-top-read';
-    res.redirect('https://accounts.spotify.com/authorize?' +
+    res.redirect(
+        'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
-        response_type: 'code',
-        client_id: client_id,
-        scope: scope,
-        redirect_uri: redirect_uri,
-        state: state
-    }));
+            response_type: 'code',
+            client_id: client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state,
+        })
+    );
 });
-  
-// callback once you reach finish logging in and you get the information 
+
+// callback once you reach finish logging in and you get the information
 app.get('/callback', function(req, res) {
-  
     // your application requests refresh and access tokens
     // after checking the state parameter
     var code = req.query.code || null;
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
-  
-    if (state === null || state !== storedState) {
-      res.redirect('/#' +
-        querystring.stringify({
-          error: 'state_mismatch'
-        }));
-    } else {
-      res.clearCookie(stateKey);
-      var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        form: {
-          code: code,
-          redirect_uri: redirect_uri,
-          grant_type: 'authorization_code'
-        },
-        headers: {
-          'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-        },
-        json: true
-      };
-  
-      request.post(authOptions, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-  
-          var access_token = body.access_token,
-              refresh_token = body.refresh_token;
-            
-          // signed in
-          var options = {
-            url: 'https://api.spotify.com/v1/me',
-            headers: { 'Authorization': 'Bearer ' + access_token },
-            json: true
-          };
-  
-          // use the access token to access the Spotify Web API
-          request.get(options, function(error, response, body) {
-            var displayName = body['display_name'];
-            var userEmail = body['email'];
-            var userId = body['id']; 
-            var imageUrl = body['images'][0]['url'];
-            var spotifyUrl = body['external_urls']['spotify'];
-  
-            // create the user and create their stats
-            data_access.createUserStats(fsdb, userEmail, access_token, refresh_token) // dunno if the order matters
-            var firebaseToken = data_access.createUser( admin, fsdb, userEmail, displayName, 
-              userId, imageUrl, spotifyUrl, refresh_token).then((value) => res.cookie("token", value)
-                  .redirect("http://localhost:3000/logging"), (e) => console.log(e));
 
-          });
-  
-        } else {
-          
-          // if the token that comes back is invalid 
-          res.redirect('/#' +
+    if (state === null || state !== storedState) {
+        res.redirect(
+            '/#' +
             querystring.stringify({
-              error: 'invalid_token'
-            }));
-        }
-      });
+                error: 'state_mismatch',
+            })
+        );
+    } else {
+        res.clearCookie(stateKey);
+        var authOptions = {
+            url: 'https://accounts.spotify.com/api/token',
+            form: {
+                code: code,
+                redirect_uri: redirect_uri,
+                grant_type: 'authorization_code',
+            },
+            headers: {
+                Authorization: 'Basic ' +
+                    new Buffer.from(client_id + ':' + client_secret).toString('base64'),
+            },
+            json: true,
+        };
+
+        request.post(authOptions, function(error, response, body) {
+            if (!error && response.statusCode === 200) {
+                var access_token = body.access_token,
+                    refresh_token = body.refresh_token;
+
+                // signed in
+                var options = {
+                    url: 'https://api.spotify.com/v1/me',
+                    headers: { Authorization: 'Bearer ' + access_token },
+                    json: true,
+                };
+
+                // use the access token to access the Spotify Web API
+                request.get(options, function(error, response, body) {
+                    var displayName = body['display_name'];
+                    var userEmail = body['email'];
+                    var userId = body['id'];
+                    var imageUrl = '';
+                    try {
+                        imageUrl = body['images'][0]['url'];
+                    } catch (error) {
+                        imageUrl = '';
+                    }
+
+                    var spotifyUrl = body['external_urls']['spotify'];
+
+                    // create the user and create their stats
+                    data_access.createUserStats(
+                        fsdb,
+                        userEmail,
+                        access_token,
+                        refresh_token
+                    ); // dunno if the order matters
+                    var firebaseToken = data_access
+                        .createUser(
+                            admin,
+                            fsdb,
+                            userEmail,
+                            displayName,
+                            userId,
+                            imageUrl,
+                            spotifyUrl,
+                            refresh_token
+                        )
+                        .then(
+                            (value) =>
+                            res
+                            .cookie('token', value)
+                            .redirect('http://localhost:3000/logging'),
+                            (e) => console.log(e)
+                        );
+                });
+            } else {
+                // if the token that comes back is invalid
+                res.redirect(
+                    '/#' +
+                    querystring.stringify({
+                        error: 'invalid_token',
+                    })
+                );
+            }
+        });
     }
 });
-  
+
 app.get('/refresh_token', function(req, res) {
-  
     // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
     var authOptions = {
-      url: 'https://accounts.spotify.com/api/token',
-      headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-      form: {
-        grant_type: 'refresh_token',
-        refresh_token: refresh_token
-      },
-      json: true
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+            Authorization: 'Basic ' +
+                new Buffer(client_id + ':' + client_secret).toString('base64'),
+        },
+        form: {
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token,
+        },
+        json: true,
     };
-  
+
     request.post(authOptions, function(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        var access_token = body.access_token;
-          res.send({
-            'access_token': access_token
-          });
-      }
+        if (!error && response.statusCode === 200) {
+            var access_token = body.access_token;
+            res.send({
+                access_token: access_token,
+            });
+        }
     });
 });
 
-app.get("/api/user/profile/:id", (req, res) => {
-
+app.get('/api/user/profile/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -194,7 +228,7 @@ app.get("/api/user/profile/:id", (req, res) => {
     })();
 });
 
-app.get("/api/user/profile/:section/:id" , (req, res) => {
+app.get('/api/user/profile/:section/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -209,9 +243,9 @@ app.get("/api/user/profile/:section/:id" , (req, res) => {
             return res.status(500).send(error);
         }
     })();
-})
+});
 
-app.get("/api/user/profile/social/:site/:id", (req, res) => {
+app.get('/api/user/profile/social/:site/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -229,7 +263,7 @@ app.get("/api/user/profile/social/:site/:id", (req, res) => {
     })();
 });
 
-app.get("/api/user/stats/:id", (req, res) => {
+app.get('/api/user/stats/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -244,9 +278,9 @@ app.get("/api/user/stats/:id", (req, res) => {
             return res.status(500).send(error);
         }
     })();
-})
+});
 
-app.get("/api/user/stats/:section/:id", (req, res) => {
+app.get('/api/user/stats/:section/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -261,7 +295,7 @@ app.get("/api/user/stats/:section/:id", (req, res) => {
             return res.status(500).send(error);
         }
     })();
-})
+});
 
 // Update, PUT
 
