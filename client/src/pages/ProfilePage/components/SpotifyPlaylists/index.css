@@ -26,5 +26,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--almost-white);
-  text-shadow: -1px -1px var(--red), 1px 1px var(--yellow);
+  text-shadow: -1px -1px var(--yellow), 1px -1px var(--yellow),
+    -1px 1px var(--teal), 1px 1px var(--teal);
+  max-width: 80%;
+  word-wrap: break-word;
 }
