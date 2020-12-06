@@ -238,9 +238,10 @@ async function createUserStatsTopGenres(db, email, topArtists) {
     }
 
     var entry = {
-      rank: +index + +1,
-      genre_name: key,
-    };
+      "rank": (+index + +1),
+      "genre_name": key,
+      "frequency": genreRankings.get(key)
+    }
     formattedList["top_genres"].push(entry);
     index++;
   }

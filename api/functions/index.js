@@ -6,11 +6,7 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var data_access = require('./data_access'); // the database access functions
-<<<<<<< HEAD
-var inHarmony = require('./inHarmony'); // inHarmony Algorithm
-=======
 var in_harmony = require('./in_harmony'); // the in harmony functions
->>>>>>> master
 
 var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
 var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
@@ -223,7 +219,7 @@ app.get('/refresh_token', function(req, res) {
         url: 'https://accounts.spotify.com/api/token',
         headers: {
             Authorization: 'Basic ' +
-                new Buffer(client_id + ':' + client_secret).toString('base64'),
+              new Buffer.from(client_id + ':' + client_secret).toString('base64'),
         },
         form: {
             grant_type: 'refresh_token',
@@ -373,7 +369,7 @@ app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
             var response = [];
 
             await query.get().then(querySnapshot => {
-                response = inHarmony.populateLeaderboard(fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+                response = in_harmony.populateLeaderboard(fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
                 /* Uncomment this when changing to GET
                 Promise.all([response]).then((values) => {
                     response = values[0];
@@ -428,7 +424,7 @@ app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, re
             let response2 = profile2.data();
 
             // Find similarities
-            var topSimilar = inHarmony.findTopSimilarArtist( response1.top_artists, response2.top_artists );
+            var topSimilar = in_harmony.findTopSimilarArtist( response1.top_artists, response2.top_artists );
 
             // send product data to front end
             return res.status(200).send(topSimilar);
@@ -438,6 +434,34 @@ app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, re
         }
     })();
 })
+
+
+// Get top genres between two users
+app.get("/api/in_harmony/compare/similar/genres/:currUser/:otherUser", (req, res) => {
+    (async() => {
+        try {
+            // Get top stats of current user
+            const document1 = fsdb.collection('stats').doc(req.params.currUser);
+            let profile1 = await document1.get();
+            let response1 = profile1.data();
+            
+            // Get top stats of other user
+            const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+            let profile2 = await document2.get();
+            let response2 = profile2.data();
+
+            // Find similarities
+            var topSimilar = in_harmony.findTopSimilarGenres( response1.top_genres, response2.top_genres );
+
+            // send product data to front end
+            return res.status(200).send(topSimilar);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
 
 
 // Update, PUT
