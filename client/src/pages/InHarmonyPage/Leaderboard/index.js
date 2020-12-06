@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-// import UserService from '../../../services/user.service';
+import React, { Component, useState } from 'react';
+import UserService from '../../../services/user.service';
 import fb from '../../../base';
 import 'firebase/auth';
 import './index.css';
-// import ComparedUser from './ComparedUser';
+import ComparedUser from './ComparedUser';
 import HarmonyLister from './HarmonyLister';
 import HRBgGraphic from './Harmonize_Refresh_Background.svg';
 import HRBttnGraphic from './Harmonize_Button.svg';
 const auth = fb.auth();
 
-class Leaderboard extends Component {
+/*class Leaderboard extends Component {
 
     constructor(props) {
         super(props);
@@ -101,9 +101,9 @@ class Leaderboard extends Component {
             </div>
         );
     }
-} 
+} */
 
-/*const Leaderboard = () => {
+const Leaderboard = () => {
     // calls a child Compared user for each matched user
     const [inHarmonyList, setInHarmonyList] = useState([]);
 
@@ -161,6 +161,6 @@ class Leaderboard extends Component {
             </div>
         </div>
     );
-}*/
+}
 
 export default Leaderboard;
