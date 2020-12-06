@@ -152,7 +152,7 @@ class EditProfilePage extends Component {
       this.setTwitter(userEmail);
       this.setTikTok(userEmail);
       event.preventDefault();
-      this.props.history.push('/profile');
+      this.props.history.push('/profile/' + btoa(userEmail));
     } else {
       auth.onAuthStateChanged(async function (user) {
         if (user) {
@@ -164,7 +164,7 @@ class EditProfilePage extends Component {
           that.setTwitter(userEmail);
           that.setTikTok(userEmail);
           event.preventDefault();
-          that.props.history.push('/profile');
+          that.props.history.push('/profile/' + btoa(user.email));
         }
       });
     }
