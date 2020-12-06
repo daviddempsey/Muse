@@ -1,0 +1,35 @@
+@import '../../../styles/index.css';
+
+.ComparedUser {
+    background: var(--almost-white);
+    /* border: 1px solid var(--grey); don't know if we need this */
+    width: 75rem;
+    height: 10rem;
+    margin: .75rem auto;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    border-radius: 2rem;
+    /*-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
+    /*-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
+}
+
+.ComparedUser img {
+    float: left;
+    border-radius: 50%;
+    height: 80%;
+    width: 80px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.ComparedUser .name {
+    padding-top: 1rem;
+    text-indent: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ComparedUser .bio {
+    text-indent: 1rem;
+}

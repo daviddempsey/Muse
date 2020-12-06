@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 // import 'firebase/firestore';
 // import 'firebase/auth';
 import './index.css';
-import Graphic from './in_harmony_graphic.svg';
+import Graphic from '../../assets/in_harmony_graphic.svg';
+import ComparedUser from './ComparedUser';
 
 class Leaderboard extends Component {
     /*
@@ -64,11 +65,12 @@ class Leaderboard extends Component {
         return (
             <div className="Leaderboard">
                 <div className="harmonyHeader">
-                        <h1>In Harmony</h1>
-                        <h2>Make a new friend!</h2>
-                        <img src={Graphic} alt="two listeners connecting"/>
+                    <h1>In Harmony</h1>
+                    <h2>Make a new friend!</h2>
+                    <img src={Graphic} alt="two listeners connecting"/>
                 </div>
                 {/*topUsers.map(user => <ComparedUser user={user.email} />)*/}
+                <ComparedUser />
             </div>
         );
     }

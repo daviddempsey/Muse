@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css';
 
 import DefaultLayout from '../DefaultLayout';
-import Leaderboard from './Leaderboard';
+import Leaderboard from '../../components/Leaderboard';
 
 const InHarmonyPage = () => {
   return (
