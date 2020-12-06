@@ -8,15 +8,13 @@ const auth = fb.auth();
   Current functionality: basic text element with a save button to 
   handle updating firestore database in the future*/
 
-const AddFriend = () => {
+const AddFriend = ({myEmail, friendEmail}) => {
   // uncomment userservice once we get it to work
   // check if component mounted
 
-  const handleClick = () => {
+  const handleClick = (myEmail, friendEmail) => {
     //userEmail = fb.auth().currentUser.email;
     console.log("inside click")
-    let myEmail = fb.auth().currentUser.email;
-    let friendEmail = "johngreen@vlogbrothers.com"
     UserService.addFriend(myEmail, friendEmail);
   }
 
