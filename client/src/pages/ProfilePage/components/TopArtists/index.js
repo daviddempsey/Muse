@@ -14,9 +14,7 @@ const TopArtists = () => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        {i < 6 ? (
-          <img src={topArtists[item]["images"][0]} alt="artist" />
-        ) : null}
+        {i < 6 && <img src={topArtists[item]["images"][0]} alt="artist" />}
       </a>
     ));
 

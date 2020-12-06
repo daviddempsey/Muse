@@ -9,9 +9,29 @@ const TopGenres = () => {
 
   const GenreLister = ({ topGenres }) =>
     Object.keys(topGenres).map((item, i) => (
-      <li key={i}>
-        <span>{topGenres[item].genre_name}</span>
-      </li>
+      <div>
+        {(i + 1) % 3 === 2 && i < 5 && (
+          <div className="element">
+            <h3>
+              <h3 className="number">{i + 1}.</h3> {topGenres[item].genre_name}
+            </h3>
+          </div>
+        )}
+        {(i + 1) % 3 === 1 && i < 5 && (
+          <div className="element2">
+            <h3>
+              <h3 className="number">{i + 1}.</h3> {topGenres[item].genre_name}
+            </h3>
+          </div>
+        )}
+        {(i + 1) % 3 === 0 && i < 5 && (
+          <div className="element3">
+            <h3>
+              <h3 className="number">{i + 1}.</h3> {topGenres[item].genre_name}
+            </h3>
+          </div>
+        )}
+      </div>
     ));
 
   const getTopGenres = async (email) => {
@@ -33,9 +53,9 @@ const TopGenres = () => {
   }, []);
 
   return (
-    <div id="topstats">
-      <div id="topgenres">
-        <h1>Top Genres</h1>
+    <div>
+      <h2 className="title">Top Genres</h2>
+      <div className="list">
         <GenreLister topGenres={topGenres} />
       </div>
     </div>

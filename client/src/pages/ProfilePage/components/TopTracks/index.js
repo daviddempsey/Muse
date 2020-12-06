@@ -10,7 +10,7 @@ const TopTracks = () => {
   const TrackLister = ({ topTracks }) =>
     Object.keys(topTracks).map((item, i) => (
       <div>
-        {i < 5 ? (
+        {i < 5 && (
           <a
             href={"https://open.spotify.com/track/" + topTracks[item].track_id}
             target="_blank"
@@ -38,7 +38,7 @@ const TopTracks = () => {
               </div>
             </div>
           </a>
-        ) : null}
+        )}
       </div>
     ));
 
