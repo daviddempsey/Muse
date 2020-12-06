@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import UserService from '../../services/user.service';
-import fb from '../../base';
-import 'firebase/auth';
+import React, { useState } from "react";
+import UserService from "../../../../services/user.service";
+import fb from "../../../../base.js";
+import "firebase/auth";
+import "./index.css";
 const auth = fb.auth();
 
 const ProfilePicture = () => {
-  const [profilePicture, setProfilePicture] = useState('');
-
+  const [profilePicture, setProfilePicture] = useState("");
   const getProfilePicture = async (email) => {
     setProfilePicture(await UserService.getProfilePicture(email));
   };
@@ -24,11 +24,7 @@ const ProfilePicture = () => {
     }
   }, []);
 
-  return (
-    <div>
-      <img alt='pfp' src={profilePicture} />
-    </div>
-  );
+  return <img src={profilePicture} className="pfp" alt="pfp" />;
 };
 
 export default ProfilePicture;

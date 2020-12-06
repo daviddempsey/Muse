@@ -1,0 +1,10 @@
+@import "../../../../styles/index.css";
+
+.pfp {
+  width: 200px;
+  height: 200px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--black);
+  border-radius: 50%;
+}

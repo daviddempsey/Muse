@@ -1,0 +1,8 @@
+@import "../../../../styles/index.css";
+
+.body {
+  color: var(--grey);
+  margin-right: 20px;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
