@@ -3,6 +3,6 @@
 .body {
   color: var(--grey);
   margin-right: 20px;
-  word-wrap: break-word;
+  word-break: break-word;
   white-space: pre-wrap;
 }

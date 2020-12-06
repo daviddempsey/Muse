@@ -60,7 +60,6 @@
   background-color: var(--almost-white);
   border-radius: 15px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-  min-width: 679px;
 }
 
 .personal .decal {
@@ -121,15 +120,6 @@
 .playlists {
   padding: 30px;
   margin-bottom: 30px;
-  text-align: left;
-  background-color: var(--almost-white);
-  border-radius: 15px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Spotify stats */
-.stats {
-  padding: 30px;
   text-align: left;
   background-color: var(--almost-white);
   border-radius: 15px;

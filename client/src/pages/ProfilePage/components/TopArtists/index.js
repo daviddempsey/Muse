@@ -15,7 +15,7 @@ const TopArtists = () => {
         rel="noopener noreferrer"
       >
         {i < 6 ? (
-          <img src={topArtists[item]["images"][2]} alt="artist" />
+          <img src={topArtists[item]["images"][0]} alt="artist" />
         ) : null}
       </a>
     ));

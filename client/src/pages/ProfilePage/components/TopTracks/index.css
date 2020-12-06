@@ -5,10 +5,10 @@
   color: var(--red);
 }
 
-.body {
+.tracks .body {
   color: var(--grey);
-  display: flex;
-  flex-direction: row;
+  display: inline;
+  margin: 0;
 }
 
 a {

@@ -18,7 +18,7 @@ const TopTracks = () => {
           >
             <div className="trackelement">
               <div className="columns">
-                <img src={topTracks[item]["images"][2]} alt="album" />
+                <img src={topTracks[item]["images"][0]} alt="album" />
 
                 <div className="trackcontent">
                   <h2>
@@ -28,9 +28,9 @@ const TopTracks = () => {
                   <p className="body">
                     {topTracks[item]["artists"].map((artist, i) =>
                       topTracks[item]["artists"][i + 1] ? (
-                        <p>{artist}, </p>
+                        <p className="body">{artist}, </p>
                       ) : (
-                        <p>{artist}</p>
+                        <p className="body">{artist}</p>
                       )
                     )}
                   </p>
