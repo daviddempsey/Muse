@@ -29,38 +29,43 @@ class ProfilePage extends Component {
     this.state = {
       userEmail: decodedEmail,
       userEdit: false,
-      loggedInEmail: fb.auth().currentUser.email,
+      checkingUser: true
     };
 
+    // console.log(this.state.userEmail);
+
     this.userEditCompare = this.userEditCompare.bind(this);
-    this.friendsCompare = this.friendsCompare.bind(this);
+    this.authUser = this.authUser.bind(this);
   }
 
+  authUser() {
+    return new Promise(function (resolve, reject) {
+       fb.auth().onAuthStateChanged(function(user) {
+          if (user) {
+             resolve(user);
+          } else {
+             reject('User not logged in');
+          }             
+       });
+    });
+ }
+
   componentDidMount = () => {
-    let edit = this.userEditCompare(); 
-    this.setState({userEdit: edit});
-    console.log(edit);
+    this.authUser().then(() => {
+      this.userEditCompare().then((userMatch) => {
+        this.setState({
+          userEdit: userMatch,
+          checkingUser: false
+        });
+      }); 
+    });
   };
 
   async userEditCompare() {
-    // get state 
-    let pageEmail = this.state.userEmail;
-    if (fb.auth().currentUser) {
-      let currEmail = fb.auth().currentUser.email;
-      if (currEmail.localeCompare(pageEmail) === 0) {
-        console.log(currEmail);
-        return true;
-      } 
-    } else {
-      return await fb.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          if (user.email.localeCompare(pageEmail)) {
-            console.log(user.email);
-            return true;
-          }
-        }
-      });
-    }
+    let currEmail = fb.auth().currentUser.email;
+    if (currEmail === this.state.userEmail) {
+      return true;
+    } 
     return false;
   }
 
@@ -78,73 +83,24 @@ class ProfilePage extends Component {
   // also idk if i passed props correctly for addfriend in line 110
   // everything else should work once we figure out logic 
   render = () => {
-    if (this.state.userEdit === false) {
-      console.log(this.state.userEdit);
-      if(this.friendsCompare()){
-        // if user is a friend 
-        return (
-          <div>
-            <div id='profile-page-notme-friend'>
-              <DefaultLayout>
-                <div id='profile-section'>
-                  <ProfilePicture userEmail={this.state.userEmail}/>
-                  <p>{this.state.userEmail}</p>
-                  <button onClick={() => this.props.history.push('/messages')}>messages</button>
-                  <CopyProfileLink/>
-                  <Biography userEmail={this.state.userEmail}/>
-                  <ProfileLink userEmail={this.state.userEmail}/>
-                  <SocialMedia userEmail={this.state.userEmail}/>
-                  <TopStats userEmail={this.state.userEmail}/>
-                  <PublicPlaylists userEmail={this.state.userEmail}/>
-                </div>
-              </DefaultLayout>
+    if (this.state.checkingUser) return null;
+    return (
+        <div id='profile-page'>
+          <DefaultLayout>
+            <div id='profile-section'>
+              <ProfilePicture userEmail={this.state.userEmail}/>
+              <Biography userEmail={this.state.userEmail}/>
+              <p>{this.state.userEmail}</p>
+              {this.state.userEdit && <button onClick={() => this.props.history.push('/editprofile')}>Edit Profile</button>}
+              <ProfileLink userEmail={this.state.userEmail}/>
+              <SocialMedia userEmail={this.state.userEmail}/>
+              <TopStats userEmail={this.state.userEmail}/>
+              <PublicPlaylists userEmail={this.state.userEmail}/>
             </div>
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            <div id='profile-page-notme-notfriend'>
-              <DefaultLayout>
-                <div id='profile-section'>
-                  <ProfilePicture userEmail={this.state.userEmail}/>
-                  <p>{this.state.userEmail}</p>
-                  <CopyProfileLink/>
-                  <AddFriend myEmail={this.state.loggedInEmail} friendEmail={this.state.userEmail}/>
-                  <Biography userEmail={this.state.userEmail}/>
-                  <ProfileLink userEmail={this.state.userEmail}/>
-                  <SocialMedia userEmail={this.state.userEmail}/>
-                  <TopStats userEmail={this.state.userEmail}/>
-                  <PublicPlaylists userEmail={this.state.userEmail}/>
-                </div>
-              </DefaultLayout>
-            </div>
-          </div>
-        );
-      }
-    } else {
-      return (
-        <div>
-          <div id='profile-page-me'>
-            <DefaultLayout>
-              <div id='profile-section'>
-                <ProfilePicture userEmail={this.state.userEmail}/>
-                <button onClick={() => this.props.history.push('/editprofile')}>Edit Profile</button>
-                <p>{this.state.userEmail}</p>
-                <CopyProfileLink/>
-                <Biography userEmail={this.state.userEmail}/>
-                <ProfileLink userEmail={this.state.userEmail}/>
-                <SocialMedia userEmail={this.state.userEmail}/>
-                <TopStats userEmail={this.state.userEmail}/>
-                <PublicPlaylists userEmail={this.state.userEmail}/>
-              </div>
-            </DefaultLayout>
-          </div>
+          </DefaultLayout>
         </div>
-      );
-    }
-    
-  };
-}
+    );
+  }    
+};
 
 export default withRouter(ProfilePage);

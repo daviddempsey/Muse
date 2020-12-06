@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '../../../assets/logo.svg';
 import './index.css';
-import fb from '../../base';
+import fb from '../../../base';
 import 'firebase/auth';
 const auth = fb.auth();
 
