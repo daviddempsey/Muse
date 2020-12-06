@@ -257,7 +257,6 @@ class UserService {
         try {
             const response = await profileCollection.doc(email);
             const spotifyData = await response.get();
-            console.log(spotifyData.data()["social_media"]["spotify"]);
             return spotifyData.data()["social_media"]["spotify"];
         } catch (error) {
             alert(error);

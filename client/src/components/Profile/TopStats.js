@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import UserService from '../../services/user.service';
-import fb from '../../base';
-import 'firebase/auth';
-const auth = fb.auth();
 
-const TopStats = () => {
+const TopStats = ({userEmail}) => {
   const [topArtists, setTopArtists] = useState('');
   const [topTracks, setTopTracks] = useState('');
   const [topGenres, setTopGenres] = useState('');
@@ -51,21 +48,10 @@ const TopStats = () => {
 
   // check if component mounted
   React.useEffect(() => {
-    if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
-      getTopArtists(userEmail);
-      getTopTracks(userEmail);
-      getTopGenres(userEmail);
-    } else {
-      auth.onAuthStateChanged(function (user) {
-        if (user) {
-          getTopArtists(user.email);
-          getTopTracks(user.email);
-          getTopGenres(user.email);
-        }
-      });
-    }
-  }, []);
+    getTopArtists(userEmail);
+    getTopTracks(userEmail);
+    getTopGenres(userEmail);
+  }, [userEmail]);
 
   return (
     <div id='topstats'>

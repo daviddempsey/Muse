@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './index.css';
+import fb from '../../base';
+import 'firebase/auth';
 
 import DefaultLayout from '../DefaultLayout';
 import ProfilePicture from '../../components/Profile/ProfilePicture';
@@ -11,52 +13,95 @@ import TopStats from '../../components/Profile/TopStats';
 import PublicPlaylists from '../../components/Profile/PublicPlaylists';
 import CopyProfileLink from '../../components/Profile/CopyProfileLink';
 
-import Cookies from 'js-cookie';
-import fb from '../../base';
-import 'firebase/auth';
-import AddFriend from '../../components/Profile/AddFriend';
-const auth = fb.auth();
-
 class ProfilePage extends Component {
+
   constructor(props) {
     super(props);
 
+    // get email
+    let email = this.props.match.params.user_email;
+    console.log(email);
+    let decodedEmail = atob(email);
+    console.log(decodedEmail);
+
     this.state = {
-      firebaseToken: Cookies.get('token'),
+      userEmail: decodedEmail,
+      userEdit: false,
     };
+
+    this.userEditCompare = this.userEditCompare.bind(this);
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    let edit = this.userEditCompare(); 
+    this.setState({userEdit: edit});
+    console.log(edit);
+  };
+
+  async userEditCompare() {
+    // get state 
+    let pageEmail = this.state.userEmail;
+    if (fb.auth().currentUser) {
+      let currEmail = fb.auth().currentUser.email;
+      if (currEmail.localeCompare(pageEmail) === 0) {
+        console.log(currEmail);
+        return true;
+      } 
+    } else {
+      return await fb.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          if (user.email.localeCompare(pageEmail)) {
+            console.log(user.email);
+            return true;
+          }
+        }
+      });
+    }
+    return false;
+  }
+
 
   render = () => {
-    return (
-      <div>
-        <div id='profile-page'>
-          <DefaultLayout>
-            <div id='profile-section'>
-              <ProfilePicture />
-              <button onClick={() => this.props.history.push('/editprofile')}>
-                Edit Profile
-              </button>
-              <button onClick={() => this.props.history.push('/messages')}>
-                Messages
-              </button>
-              <CopyProfileLink/>
-              <AddFriend/>
-              <Biography />
-              <ProfileLink />
-              <SocialMedia />
-              <TopStats />
-              <PublicPlaylists />
-            </div>
-          </DefaultLayout>
+    if (this.state.userEdit === false) {
+      console.log(this.state.userEdit);
+      return (
+        <div>
+          <div id='profile-page'>
+            <DefaultLayout>
+              <div id='profile-section'>
+                <ProfilePicture userEmail={this.state.userEmail}/>
+                <p>{this.state.userEmail}</p>
+                <Biography userEmail={this.state.userEmail}/>
+                <ProfileLink userEmail={this.state.userEmail}/>
+                <SocialMedia userEmail={this.state.userEmail}/>
+                <TopStats userEmail={this.state.userEmail}/>
+                <PublicPlaylists userEmail={this.state.userEmail}/>
+              </div>
+            </DefaultLayout>
+          </div>
         </div>
-        {/* <div id='cookie stuff'>
-          <p>{Cookies.get('token')}</p>
-          <p>{auth.currentUser.email}</p>
-        </div> */}
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <div id='profile-page'>
+            <DefaultLayout>
+              <div id='profile-section'>
+                <ProfilePicture userEmail={this.state.userEmail}/>
+                <button onClick={() => this.props.history.push('/editprofile')}>Edit Profile</button>
+                <p>{this.state.userEmail}</p>
+                <Biography userEmail={this.state.userEmail}/>
+                <ProfileLink userEmail={this.state.userEmail}/>
+                <SocialMedia userEmail={this.state.userEmail}/>
+                <TopStats userEmail={this.state.userEmail}/>
+                <PublicPlaylists userEmail={this.state.userEmail}/>
+              </div>
+            </DefaultLayout>
+          </div>
+        </div>
+      );
+    }
+    
   };
 }
 

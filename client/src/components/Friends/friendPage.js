@@ -104,7 +104,7 @@ const Friend = ({ email }) => {
             <h2>
                 <div className="name">
                     {/* Replace this with the actual profile page */}
-                    <Link to={profile} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                    <Link to={'/profile/'+ btoa(email)} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                         {name}
                     </Link>
                 </div>

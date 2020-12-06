@@ -4,7 +4,7 @@ import fb from '../../base';
 import 'firebase/auth';
 const auth = fb.auth();
 
-const ProfilePicture = () => {
+const ProfilePicture = ({userEmail}) => {
   const [profilePicture, setProfilePicture] = useState('');
 
   const getProfilePicture = async (email) => {
@@ -12,17 +12,8 @@ const ProfilePicture = () => {
   };
 
   React.useEffect(() => {
-    if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
-      getProfilePicture(userEmail);
-    } else {
-      auth.onAuthStateChanged(function (user) {
-        if (user) {
-          getProfilePicture(user.email);
-        }
-      });
-    }
-  }, []);
+    getProfilePicture(userEmail);
+  }, [userEmail]);
 
   return (
     <div>
