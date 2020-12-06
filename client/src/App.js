@@ -17,7 +17,7 @@ function App() {
           <Route exact path='/profile' component={ProfilePage} />
           <Route exact path='/editprofile' component={EditProfilePage} />
           <Route exact path='/logging' component={LoadingPage} />
-          <Route exact path='/messaging' component={() => <ChatroomPage receiverEmail="test@gmail.com"/>} />
+          <Route exact path='/messages/:receiver_id' component={ChatroomPage} />
           <Route exact path='/friends' component={FriendsPage} />
         </Switch>
       </Router>
