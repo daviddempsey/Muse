@@ -2,12 +2,13 @@ const fetch = require('node-fetch');
 
 /**
  * Computes compatibility of all users within range
+ * @param {Firebase} admin admin to do storing
  * @param {Firestore} fsdb Reference to the Firestore database
  * @param {String} currUserId Email of the user used to access info from fsdb
  * @param {Number} distanceLimit Maximum radius users must be within when computing score
  * @param {Firestore} querySnapshot Firestore snapshot used to collect all docs within table
  */
-exports.populateLeaderboard = async function (fsdb, currUserId, distanceLimit, querySnapshot) {
+exports.populateLeaderboard = async function (admin, fsdb, currUserId, distanceLimit, querySnapshot) {
     var response = [];
 
     let currUserLocation = await getLocation(fsdb, currUserId);
@@ -26,7 +27,7 @@ exports.populateLeaderboard = async function (fsdb, currUserId, distanceLimit, q
         // Calculate the compatibility score between two users
         if (doc.id != currUserId && distance <= distanceLimit) {
             let otherUserEmail = await doc.data().in_harmony;
-            response.push(await computeCompatibility(fsdb, currUserId, otherUserEmail));
+            response.push(await computeCompatibility(admin, fsdb, currUserId, otherUserEmail));
         }
     }
     return response;
@@ -45,7 +46,7 @@ exports.populateLeaderboard = async function (fsdb, currUserId, distanceLimit, q
  * @param {String} currUserEmail ID to obtain info from Firestore
  * @param {String} otherUserEmail ID to obtain info from Firestore
  */
-async function computeCompatibility(fsdb, currUserEmail, otherUserEmail) {
+async function computeCompatibility(admin, fsdb, currUserEmail, otherUserEmail) {
 
   // Get top data by making a Firestore call for current user
   let document = fsdb.collection('stats').doc(currUserEmail);
@@ -70,7 +71,7 @@ async function computeCompatibility(fsdb, currUserEmail, otherUserEmail) {
     compatiblityScores[otherUserEmail]["artist"] + compatiblityScores[otherUserEmail]["genres"]) / 3
 
   // Put compatibility score inside the in_harmony table on Firestore 
-  indexCompatibilityScoresIntoTable(fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
+  indexCompatibilityScoresIntoTable(admin, fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
 
   // do we update the other user's in_harmony document as well? 
   //  indexCompatibilityScoresIntoIndex(fsdb, otherUserEmail, currUserEmail, compatiblityScores);
@@ -270,7 +271,7 @@ async function getNamesFromTopStats(doc, type) {
  * @param {String} targetUser the document belonging to sourceUser will be updated with targetUser info
  * @param {Object} compatiblityScores contains the breakdown of the compatibility scores
  */
-async function indexCompatibilityScoresIntoTable(fsdb, sourceUser, targetUser, compatiblityScores) {
+async function indexCompatibilityScoresIntoTable(admin, fsdb, sourceUser, targetUser, compatibilityScores) {
   let document = fsdb.collection('in_harmony').doc(sourceUser);
   let data = await document.get();
   let entry = data.data();
@@ -278,7 +279,7 @@ async function indexCompatibilityScoresIntoTable(fsdb, sourceUser, targetUser, c
   // TODO: Hey David, should i add the date here so I have record of when this was last updated? 
 
 
-  // Case 1: the document exists but there are no fields inside - add field
+  /*// Case 1: the document exists but there are no fields inside - add field
   if (entry !== undefined && Object.keys(entry).length === 0) {
     var similarUsers = {};
     similarUsers[targetUser] = compatiblityScores;
@@ -291,11 +292,6 @@ async function indexCompatibilityScoresIntoTable(fsdb, sourceUser, targetUser, c
   // Case 2: document exists but new user was calculated - add new user calculations
   else if (entry === undefined || entry['similar_users'][targetUser] === 'undefined') {
     // add to table and then push
-    /* old version
-    var similarUsers = [{
-      "user_id": targetUser,
-      "compatibility_scores": compatiblityScores
-    }]; */
     var similarUsers = {};
     similarUsers[targetUser] = compatiblityScores;
     await fsdb.collection('in_harmony').doc(sourceUser)
@@ -310,7 +306,19 @@ async function indexCompatibilityScoresIntoTable(fsdb, sourceUser, targetUser, c
     await document.update({
       similar_users: entry['similar_users']
     });
+  }*/
+  var similarUsers = [];
+  var userEntry = {
+    'email': targetUser,
+    'artist_score': compatibilityScores['artist'],
+    'genre_score': compatibilityScores['genres'],
+    'audio_feature_score': compatibilityScores['audio_features'],
+    'compatibility_score': compatibilityScores['score'],
   }
+  similarUsers.push(userEntry);
+  await document.update({
+    similar_users: admin.firestore.FieldValue.arrayUnion(userEntry)
+  });
 
 }
 
