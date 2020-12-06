@@ -7,13 +7,13 @@ import firebase from 'firebase/app';
 import UserService from '../../services/user.service';
 
 import DefaultLayout from '../DefaultLayout';
-import ProfilePicture from '../../components/Profile/ProfilePicture';
-import Biography from '../../components/Profile/Biography';
-import ProfileLink from '../../components/Profile/ProfileLink';
-import SocialMedia from '../../components/Profile/SocialMedia';
-import TopStats from '../../components/Profile/TopStats';
-import PublicPlaylists from '../../components/Profile/PublicPlaylists';
-import CopyProfileLink from '../../components/Profile/CopyProfileLink';
+import ProfilePicture from '../ProfilePage/Profile/ProfilePicture'
+import Biography from '../ProfilePage/Profile/Biography';
+import ProfileLink from '../ProfilePage/Profile/ProfileLink';
+import SocialMedia from '../ProfilePage/Profile/SocialMedia';
+import TopStats from '../ProfilePage/Profile/TopStats';
+import PublicPlaylists from '../ProfilePage/Profile/PublicPlaylists';
+import CopyProfileLink from '../ProfilePage/Profile/CopyProfileLink';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -21,9 +21,7 @@ class ProfilePage extends Component {
 
     // get email
     let email = this.props.match.params.user_email;
-    console.log(email);
     let decodedEmail = atob(email);
-    console.log(decodedEmail);
 
     this.state = {
       userEmail: decodedEmail,
@@ -32,7 +30,6 @@ class ProfilePage extends Component {
       checkingUser: true,
     };
 
-    // console.log(this.state.userEmail);
 
     this.userEditCompare = this.userEditCompare.bind(this);
     this.friendsCompare = this.friendsCompare.bind(this);
@@ -116,6 +113,7 @@ class ProfilePage extends Component {
             <ProfilePicture userEmail={this.state.userEmail} />
             <Biography userEmail={this.state.userEmail} />
             <p>{this.state.userEmail}</p>
+            <CopyProfileLink/>
             {!this.state.friend && !this.state.userEdit && <button id='addfriend' onClick={() => this.addFriend()}>Add Friend</button>}
             {this.state.friend && !this.state.userEdit && <button id='dm' onClick={() => this.props.history.push('/messages')}> dm me ;</button>}
             {this.state.userEdit && (<button id='editprofile' onClick={() => this.props.history.push('/editprofile')}>Edit Profile</button>)}
