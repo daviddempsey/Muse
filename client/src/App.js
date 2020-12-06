@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <Route exact path="/profile" component={ProfilePage} />
+          <Route path="/profile/:user_email" component={ProfilePage} />
           <Route exact path="/logging" component={LoadingPage} />
           <Route exact path="/friends" component={FriendsPage} />
         </Switch>

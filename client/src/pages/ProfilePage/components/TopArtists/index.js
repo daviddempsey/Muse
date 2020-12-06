@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
-import fb from "../../../../base.js";
 import "./index.css";
-const auth = fb.auth();
 
-const TopArtists = () => {
+const TopArtists = ({ userEmail }) => {
   const [topArtists, setTopArtists] = useState("");
 
   const ArtistLister = ({ topArtists }) =>
@@ -24,8 +22,10 @@ const TopArtists = () => {
 
   // check if component mounted
   React.useEffect(() => {
+    getTopArtists(userEmail);
+
+    /*
     if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
       getTopArtists(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
@@ -34,7 +34,8 @@ const TopArtists = () => {
         }
       });
     }
-  }, []);
+    */
+  }, [userEmail]);
 
   return (
     <div>

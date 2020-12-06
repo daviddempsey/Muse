@@ -7,7 +7,7 @@ const auth = fb.auth();
 
 /* functional component that creates a friends list
  * It calls a child Friends component for each friend */
-const FriendsPage = () => {
+const FriendPage = () => {
   const [friendsList, setFriendsList] = useState([]);
 
   /* calls on a Friend component for each friend in the user's friendsList */
@@ -28,9 +28,11 @@ const FriendsPage = () => {
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
       getFriendsList(userEmail);
+      getFriendsList(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
         if (user) {
+          getFriendsList(user.email);
           getFriendsList(user.email);
         }
       });
@@ -97,12 +99,12 @@ const Friend = ({ email }) => {
   /* renders each friend with their name, bio, and compatibility to the current user*/
   return (
     <div className="friend">
-      <img alt="pfp" src={pic} />
+      <img alt="pro pic not found" src={pic} />
       <h2>
         <div className="name">
           {/* Replace this with the actual profile page */}
           <Link
-            to={profile}
+            to={"/profile/" + btoa(email)}
             style={{ color: "inherit", textDecoration: "inherit" }}
           >
             {name}
@@ -121,4 +123,4 @@ const Friend = ({ email }) => {
   );
 };
 
-export default FriendsPage;
+export default FriendPage;

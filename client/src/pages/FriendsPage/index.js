@@ -2,9 +2,10 @@ import React from "react";
 import "./index.css";
 
 import DefaultLayout from "../DefaultLayout";
-import FriendsPage from "./FriendsPage";
+import FriendsPage from "./FriendsPage.js";
+import { withRouter } from "react-router-dom";
 
-export default function FriendPage() {
+const FriendPage = () => {
   return (
     <DefaultLayout>
       <div id="friend-page">
@@ -14,4 +15,6 @@ export default function FriendPage() {
       </div>
     </DefaultLayout>
   );
-}
+};
+
+export default withRouter(FriendPage);

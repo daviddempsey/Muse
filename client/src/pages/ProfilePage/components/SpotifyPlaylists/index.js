@@ -5,7 +5,7 @@ import "./index.css";
 import "firebase/auth";
 const auth = fb.auth();
 
-const SpotifyPlaylists = () => {
+const SpotifyPlaylists = ({ userEmail }) => {
   // use state to get the playlists
   const [playlists, setPlaylists] = useState("");
 
@@ -35,7 +35,6 @@ const SpotifyPlaylists = () => {
   React.useEffect(() => {
     // get the user's refresh token
     if (auth.currentUser) {
-      let userEmail = fb.auth().currentUser.email;
       getPlaylists(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
@@ -44,7 +43,7 @@ const SpotifyPlaylists = () => {
         }
       });
     }
-  }, []);
+  }, [userEmail]);
 
   return (
     <div>

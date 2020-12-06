@@ -137,3 +137,61 @@
   border-radius: 15px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }
+
+/* Add friend */
+.addfriend {
+  width: 45px;
+  height: 45px;
+  margin-top: 2px;
+  margin-left: 30px;
+  color: var(--red);
+  background-color: inherit;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.addfriend:focus {
+  outline: none;
+}
+
+.addfriend:active {
+  transform: translate(1px, 1px);
+}
+
+.addfriend .add {
+  width: auto;
+  height: auto;
+  max-height: 25px;
+  margin-top: 0.2rem;
+}
+
+/* Message */
+.dm {
+  width: 45px;
+  height: 45px;
+  margin-top: 2px;
+  margin-left: 30px;
+  color: var(--red);
+  background-color: inherit;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dm:focus {
+  outline: none;
+}
+
+.dm:active {
+  transform: translate(1px, 1px);
+}
+
+.dm .message {
+  width: auto;
+  height: auto;
+  max-height: 25px;
+  margin-top: 0.2rem;
+}

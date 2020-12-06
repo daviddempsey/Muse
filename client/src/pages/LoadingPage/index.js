@@ -19,8 +19,12 @@ const LoadingPage = ({ history }) => {
     fb.auth()
       .signInWithCustomToken(token)
       .then((user) => {
+        // convert the user's email to 64bit encoded
+        var encodedEmail = btoa(user["user"]["email"]);
+        console.log(encodedEmail);
+
         // redirect
-        history.push("/profile");
+        history.push("/profile/" + encodedEmail);
       })
       .catch((error) => {
         var errorMessage = error.message;
