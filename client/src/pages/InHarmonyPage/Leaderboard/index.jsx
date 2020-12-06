@@ -15,6 +15,7 @@ class Leaderboard extends Component {
         this.setTopUsers = this.setTopUsers.bind(this);
     }
 
+    // get the top users from the backend
     getTopUsers = () => {
         const url = "http://localhost:5001/muse-eec76/us-central1/app/compareUsers?"
         const options = {
