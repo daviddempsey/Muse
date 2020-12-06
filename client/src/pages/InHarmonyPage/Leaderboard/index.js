@@ -101,6 +101,17 @@ const Leaderboard = () => {
         setInHarmonyList(await UserService.getInHarmony(email));
     }
 
+    // get create the in harmony list from the database
+    const refreshInHarmony = async (email) => {
+        // do a post call to do all the stuff
+        const options = {
+            method:'POST',
+            headers: { 'Content-Type': 'application/json'}
+        }
+        return fetch('https://localhost:5001/muse-eec76/us-central1/app/api/in_harmony' + email, options)
+        .then(response => response.json());
+    }
+
     React.useEffect(() => {
         if (auth.currentUser) {
             let userEmail = fb.auth().currentUser.email;
@@ -121,7 +132,7 @@ const Leaderboard = () => {
                 <h2>Click the note to make a new friend!</h2>
                 <div className="harmonyRefresh">
                     <img src={HRBgGraphic} alt="two people connecting through music"/>
-                    <button className="rbutton"> 
+                    <button className="rbutton" onClick={refreshInHarmony}> 
                         <img src={HRBttnGraphic} alt="refresh compatibility list"/>
                     </button>
                 </div>
