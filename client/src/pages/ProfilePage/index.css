@@ -41,6 +41,7 @@
 
 .content .columns .col-1 {
   display: flex;
+  flex: 0.5;
   max-width: 50%;
   flex-direction: column;
   margin-right: 10px;
@@ -48,6 +49,7 @@
 
 .content .columns .col-2 {
   display: flex;
+  flex: 0.5;
   max-width: 50%;
   flex-direction: column;
   margin-left: 10px;
