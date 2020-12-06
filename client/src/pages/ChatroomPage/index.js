@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import './App.css';
+import React, { useEffect, useRef, useState } from 'react';
+// import './index.css';
 import ChatMessage from './ChatMessage';
 
 import firebase from 'firebase/app';
@@ -9,16 +9,32 @@ import 'firebase/auth';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-const auth = fb.auth();
+// const auth = fb.auth();
 const firestore = fb.firestore();
 
 const ChatroomPage = (props) => {
-  const receiverEmail = props.receiverEmail;
-  const { email } = auth.currentUser;
+  const receiverID = props.match.params.receiver_id;
+  const receiverEmail = atob(receiverID);
+  // const { email } = auth.currentUser;
+  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState("");
+  // const [authenticated, setAuthenticated] = useState(false);
 
   const dummy = useRef();
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.where('email', '==', email).where('receiverEmail', '==', receiverEmail);
+
+  const authUser = () => {
+    return new Promise(function (resolve, reject) {
+       fb.auth().onAuthStateChanged(function(user) {
+          if (user) {
+             resolve(user);
+          } else {
+             reject('User not logged in');
+          }             
+       });
+    });
+  }
 
   const compare = (msg1, msg2) => {
     if (msg1.createdAt && msg2.createdAt) {
@@ -39,7 +55,7 @@ const ChatroomPage = (props) => {
   const sendMessage = async(e) => {
     e.preventDefault();
 
-    const { photoURL } = auth.currentUser;
+    const { photoURL } = user;
 
     await messagesRef.add({
       text: formValue,
@@ -63,6 +79,14 @@ const ChatroomPage = (props) => {
     dummy.current.scrollIntoView({ behavior: 'smooth' });
   }
 
+  useEffect(() => {
+    authUser().then((user) => {
+      setEmail(user.email);
+      setUser(user);
+    })
+  },[])
+
+  if (!user) return null;
   return (
     <>
       <main>

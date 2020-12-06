@@ -2,7 +2,7 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import fb from '../../../base';
-import '../App.css';
+// import '../index.css';
 
 const auth = fb.auth();
 
