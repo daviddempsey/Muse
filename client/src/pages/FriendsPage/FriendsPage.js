@@ -28,11 +28,9 @@ const FriendsPage = () => {
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
       getFriendsList(userEmail);
-      getFriendsList(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
         if (user) {
-          getFriendsList(user.email);
           getFriendsList(user.email);
         }
       });
