@@ -233,7 +233,7 @@ function intersection(currList, otherList) {
  */
 async function getIdsFromTopStats(doc) {
   var ids = [];
-  for (let i = 1; i < doc.length; i++) {
+  for (let i in doc) {
     ids.push(doc[i].track_id);
   }
   return ids;
@@ -247,11 +247,11 @@ async function getIdsFromTopStats(doc) {
 async function getNamesFromTopStats(doc, type) {
   var names = [];
   if (type === "artists") {
-    for (let i = 1; i < doc.length; i++) {
+    for (let i in doc) {
       names.push(doc[i].artist_name);
     }
   } else {
-    for (let i = 1; i < doc.length; i++) {
+    for (let i in doc) {
       names.push(doc[i].genre_name);
     }
   }
@@ -338,7 +338,7 @@ async function getLocation(fsdb, user) {
 function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
 
   // Base case: if they don't have a location, don't apply distance filter
-  if ((lat1 === 0 && lon1 === 0) || (lat2 === 0 && lon2 === 0)) {
+  if ((lat1 === undefined && lon1 === undefined) || (lat2 === undefined && lon2 === undefined )) {
     return 0;
   }
 
@@ -359,6 +359,47 @@ function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
 
 
 /**
+ * Find the similar artist between two lists in O(nlogn)
+ * @param {Array} list1 top artist of current user
+ * @param {Array} list2 top artist of other user
+ */
+exports.findTopSimilarArtist = function (list1, list2) {
+  
+  // Inverse the enumerated list1
+  var inverseList1 = {};
+  for (let i in list1) {
+    inverseList1[list1[i]["artist_name"]] = i;
+  }
+
+  // Match invertedList1 with list2  
+  var result = {}
+  for (let i in list2) {
+    let element = list2[i]["artist_name"];
+    if (inverseList1[element] !== undefined) {
+      result[i] = inverseList1[element];
+    }
+  }
+
+  var similarities = [];
+  for (let i in result) {
+    let difference = Math.abs(result[i] - i);
+
+    // within every entry, you need to put the artist_id (find in database)
+    let entry = {
+      "difference": difference,
+      "name": list2[i]["artist_name"],
+      "id": list2[i]["artist_id"]
+    };
+    similarities.push(entry);
+  }
+
+  // Sorts list based on difference then name 
+  similarities.sort((a, b) => (a.difference > b.difference) ? 1 : (a.difference === b.difference) ? ((a.name > b.name) ? 1 : -1) : -1);
+
+  return similarities;
+}
+
+/**
  * This API controller is used to call Spotify APIs. Most of these
  * functions are not actually used in this file, but will be left 
  * here for reference. 
@@ -373,7 +414,7 @@ const APIController = (function () {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
+        'Authorization': 'Basic ' + (new Buffer.from(clientId + ':' + clientSecret).toString('base64'))
       },
       body: 'grant_type=client_credentials'
     });

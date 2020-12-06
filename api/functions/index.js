@@ -334,6 +334,33 @@ app.post('/api/user/stats/index/:id', (req, res) => {
     })();
 });
 
+// Get top artists between two users
+app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, res) => {
+    (async() => {
+        try {
+            // Get top stats of current user
+            const document1 = fsdb.collection('stats').doc(req.params.currUser);
+            let profile1 = await document1.get();
+            let response1 = profile1.data();
+            
+            // Get top stats of other user
+            const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+            let profile2 = await document2.get();
+            let response2 = profile2.data();
+
+            // Find similarities
+            var topSimilar = inHarmony.findTopSimilarArtist( response1.top_artists, response2.top_artists );
+
+            // send product data to front end
+            return res.status(200).send(topSimilar);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+
 // Update, PUT
 
 // Delete, DELETE

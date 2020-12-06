@@ -19,62 +19,54 @@ var request = require('request'); // "Request" library
  * @param {*} refreshToken Spotify refresh token of the user 
  */
 exports.createUser = async function createUser(
-  admin, 
-  db, 
-  userEmail, 
-  displayName, 
-  spotifyID, 
-  profilePicture, 
+  admin,
+  db,
+  userEmail,
+  displayName,
+  spotifyID,
+  profilePicture,
   acctUrl,
   refreshToken) {
 
-  var newUser = false;
-
   // create a data document to be stored 
   const userData = {
-    name: displayName, 
+    name: displayName,
     spotify_id: spotifyID,
-    refresh_token: refreshToken, 
+    refresh_token: refreshToken,
     location: [],
-    profile: userEmail, 
+    profile: userEmail,
     friends: [],
     messages: [],
     stats_id: userEmail,
     in_harmony: userEmail,
   }
 
-  // creates a firebase user
-  // add then OR do a try catch block 
-  admin.auth().updateUser(
-    spotifyID, 
-    { 
+  // try creating user
+  try {
+    await admin.auth().updateUser(spotifyID, {
       displayName: displayName,
       email: userEmail
-    }).catch((error) => {
-    // if user does not exist, we create one
+    })
+  } catch (error) {
     if (error.code === 'auth/user-not-found') {
-      admin.auth().createUser({
+      let response = await admin.auth().createUser({
         uid: spotifyID,
         displayName: displayName,
-        refreshToken: refreshToken, 
+        refreshToken: refreshToken,
         email: userEmail
-      }).then((userRecord) => {
-        console.log('Successfully created new user with email: ', userRecord.email);
-        newUser = true;
       });
+      console.log('Successfully created new user with email: ', response.email);
+
+      // go into the user tab and create the user
+      await db.collection('user').doc(userEmail).set(userData);
+
+      // create user profile
+      await createUserProfile(db, userEmail, profilePicture, acctUrl);
+
+      // create user in harmony document
+      await createUserInHarmony(db, userEmail, refreshToken);
+
     }
-  });
-
-  if (newUser === true) {
-    // go into the user tab and create the user
-    const res = await db.collection('user').doc(userEmail).set(userData);
-
-    // add await and error checking 
-    // create user profile
-    createUserProfile(db, userEmail, profilePicture, acctUrl);
-
-    // create user in harmony document
-    createUserInHarmony(db, userEmail, refreshToken);
   }
 
   // create a custom auth token and if user already exists, query for custom token 
@@ -114,7 +106,7 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
   const res = await db.collection('profile').doc(email).set(userProfileData);
 
   // log to console the result
-  return res;  
+  return res;
 }
 
 /**
@@ -126,24 +118,26 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
 async function createUserStatsTopArtists(db, email, topArtists) {
   // list to be added for top artists
   var formattedList = {
-    "top_artists": [
-      {
-        "rank": 0,
-        "artist_name": "",
-        "artist_id": ""
-      }
-    ]
-  }; 
+    "top_artists": []
+  };
 
   // go through and add each artist 
-  for( var i in topArtists ) {
+  for (var i in topArtists) {
+
+    // Get image urls
+    var image_urls = [];
+    for (var j in topArtists[i]["images"]) {
+      image_urls.push(topArtists[i]["images"][j]["url"]);
+    }
+
     var entry = {
       "rank": (+i + +1),
       "artist_name": topArtists[i]["name"],
-      "artist_id": topArtists[i]["id"]
+      "artist_id": topArtists[i]["id"],
+      "images": image_urls
     }
     formattedList["top_artists"].push(entry);
-  } 
+  }
 
   // add populated list into database
   const document = db.collection('stats').doc(email);
@@ -163,27 +157,22 @@ async function createUserStatsTopGenres(db, email, topArtists) {
 
   // create a list for genres
   var formattedList = {
-    "top_genres": [
-      {
-        "rank": 0,
-        "genre_name": ""
-      }
-    ]
-  }; 
+    "top_genres": []
+  };
 
   // Map to store all genres and their frequencies 
   let genreRankings = new Map();
-  
+
   // loop through the artists list and add the genres to the list 
   for (let i in topArtists) {
     for (let j in topArtists[i]["genres"]) {
 
       // Append genre to Map<genre_name, int> and update frequency
       let genre = topArtists[i]["genres"][j];
-      if( genreRankings.has(genre) ) {
-        genreRankings.set( genre, +genreRankings.get(genre) + +1 );
+      if (genreRankings.has(genre)) {
+        genreRankings.set(genre, +genreRankings.get(genre) + +1);
       } else {
-        genreRankings.set( genre, 1 );
+        genreRankings.set(genre, 1);
       }
     }
   }
@@ -193,7 +182,12 @@ async function createUserStatsTopGenres(db, email, topArtists) {
 
   // Format data to be indexed into Firestore 'stats' as a new or updated document 
   let index = 0;
-  for( const [key, value] of genreRankings.entries() ){
+  for (const [key, value] of genreRankings.entries()) {
+    // Limit the results to only 10
+    if (index === 10) {
+      break;
+    }
+
     var entry = {
       "rank": (+index + +1),
       "genre_name": key
@@ -219,32 +213,35 @@ async function createUserStatsTopTracks(db, email, topTracks) {
 
   // list to be added
   var formattedList = {
-    "top_tracks": [
-      {
-        "rank": 0,
-        "track_name": "",
-        "track_id": ""
-      }
-    ]
-  }; 
+    "top_tracks": []
+  };
 
   // go through each track and fill in the entries
-  for( var i in topTracks ) {
+  for (var i in topTracks) {
+
+    // Get image urls
+    var image_urls = [];
+    for (var j in topTracks[i]["album"]["images"]) {
+      image_urls.push(topTracks[i]["album"]["images"][j]["url"]);
+    }
+
+    // Get artists
+    var artistsOfTrack = [];
+    for (var j in topTracks[i]["album"]["artists"]) {
+      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
+    }
+
     var entry = {
       "rank": (+i + +1),
       "track_name": topTracks[i]["name"],
-      "track_id": topTracks[i]["id"]
+      "track_id": topTracks[i]["id"],
+      "images": image_urls,
+      "artists": artistsOfTrack,
+      "album_name": topTracks[i]["album"]["name"]
     }
     formattedList["top_tracks"].push(entry);
-  } 
-
-  // add information to document
-  const document = db.collection('stats').doc(email);
-  await document.update({
-    top_tracks: formattedList["top_tracks"]
-  });
+  }
 }
-
 
 /**
 * Creates and populated the user's stats for top 5 stats
@@ -253,55 +250,55 @@ async function createUserStatsTopTracks(db, email, topTracks) {
 * @param {*} refresh_token Spotify refresh token of the user
 */
 exports.createUserStats = async function createUserStats(
-  db, 
-  email, 
-  access_token, 
+  db,
+  email,
+  access_token,
   refresh_token) {
 
-    // create an empty stats document for the user
-    const statsData = {
-      song_stats: '',
-      albums: '',
-      artist_stats: '',
-      playlist_stats: '',
-      top_artists: [],
-      top_tracks: [],
-      top_genres: []
-    }
-    const res = await db.collection('stats').doc(email).set(statsData); 
+  // create an empty stats document for the user
+  const statsData = {
+    song_stats: '',
+    albums: '',
+    artist_stats: '',
+    playlist_stats: '',
+    top_artists: [],
+    top_tracks: [],
+    top_genres: []
+  }
+  const res = await db.collection('stats').doc(email).set(statsData);
 
-    // find top artist
-    var topArtistsCall = {
-      url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10', 
-      headers: { 'Authorization': 'Bearer ' + access_token },
-      json: true
-    };
-  
-    request.get(topArtistsCall, function(error, response, topArtists) {
-      createUserStatsTopArtists(db, email, topArtists.items);
-    });
+  // find top artist
+  var topArtistsCall = {
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
 
-    // find top genre (Do we really want it long term 50 since we have medium_term 10 for all the other calls)
-    var topGenresCall = {
-      url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10', 
-      headers: { 'Authorization': 'Bearer ' + access_token },
-      json: true
-    };
-    request.get(topGenresCall, function(error, response, topArtists) {
-      createUserStatsTopGenres(db, email, topArtists.items);
-    });
-  
-    // find top tracks
-    var topTracksCall = {
-      url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10', 
-      headers: { 'Authorization': 'Bearer ' + access_token },
-      json: true
-    };
-    request.get(topTracksCall, function(error, response, topTracks) {
-      createUserStatsTopTracks(db, email, topTracks.items);
-    });
+  request.get(topArtistsCall, function (error, response, topArtists) {
+    createUserStatsTopArtists(db, email, topArtists.items);
+  });
 
-    console.log("Added", res);
+  // find top genre (Do we really want it long term 50 since we have medium_term 10 for all the other calls)
+  var topGenresCall = {
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+  request.get(topGenresCall, function (error, response, topArtists) {
+    createUserStatsTopGenres(db, email, topArtists.items);
+  });
+
+  // find top tracks
+  var topTracksCall = {
+    url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+  request.get(topTracksCall, function (error, response, topTracks) {
+    createUserStatsTopTracks(db, email, topTracks.items);
+  });
+
+  console.log("Added", res);
 
 }
 
