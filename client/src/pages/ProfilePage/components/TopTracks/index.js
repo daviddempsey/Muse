@@ -25,7 +25,15 @@ const TopTracks = () => {
                     {i + 1}. {topTracks[item].track_name}
                   </h2>
                   <p className="body">{topTracks[item]["album_name"]}</p>
-                  <p className="body">{topTracks[item]["artists"]}</p>
+                  <p className="body">
+                    {topTracks[item]["artists"].map((artist, i) =>
+                      topTracks[item]["artists"][i + 1] ? (
+                        <p>{artist}, </p>
+                      ) : (
+                        <p>{artist}</p>
+                      )
+                    )}
+                  </p>
                 </div>
               </div>
             </div>
