@@ -74,11 +74,9 @@ async function computeCompatibility(admin, fsdb, currUserEmail, otherUserEmail) 
   // do we update the other user's in_harmony document as well? 
   //  indexCompatibilityScoresIntoIndex(fsdb, otherUserEmail, currUserEmail, compatiblityScores);
 
-
   return JSON.stringify(compatiblityScores);
 
 }
-
 
 /**
  * Computes the compatibility score based on the top songs listed
@@ -259,7 +257,6 @@ async function getNamesFromTopStats(doc, type) {
   return names;
 
 }
-
 
 /**
  * Indexes Compatibility info into the 'in_harmony' table on Firestore
