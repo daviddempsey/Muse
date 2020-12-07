@@ -13,11 +13,12 @@
   flex: 33%;
   position: relative;
   padding: 10px;
+  max-width: 13vw;
 }
 
 .artistimgs img {
   height: 100%;
-  max-width: 100%;
+  width: 100%;
   object-fit: cover;
   border-radius: 50%;
 }

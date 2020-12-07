@@ -186,11 +186,9 @@ class Popup extends Component {
           <form id="edit-profile-form" onSubmit={this.handleSubmit}>
             <div className="row-1">
               <div className="col-1">
-                <img
-                  src={this.state.profilePicture}
-                  className="pfp"
-                  alt="pfp"
-                />
+                <div className="imgcontainer">
+                  <img src={this.state.profilePicture} alt="pfp" />
+                </div>
                 <button
                   className="btn"
                   type="button"
