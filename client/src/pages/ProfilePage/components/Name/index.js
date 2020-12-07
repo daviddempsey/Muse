@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserService from "../../../../services/user.service";
 import fb from "../../../../base";
 import "firebase/auth";
+import "./index.css";
 const auth = fb.auth();
 
 const Name = ({ userEmail }) => {

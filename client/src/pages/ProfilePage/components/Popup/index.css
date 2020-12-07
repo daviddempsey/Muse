@@ -47,9 +47,16 @@
   flex-direction: column;
 }
 
+.modal .content .row-1 .col-1 .imgcontainer {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
 .modal .content .row-1 .col-1 img {
-  width: 200px;
-  height: 200px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
   border-style: solid;
   border-width: 2px;
   border-color: var(--black);
@@ -60,6 +67,7 @@
   border: none;
   background-color: inherit;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .modal .content .row-1 .col-1 .btn:focus {
@@ -72,6 +80,33 @@
 
 .modal .content .row-1 .col-1 .btn h3 {
   color: var(--red);
+}
+
+.modal .content .row-1 .col-1 .form {
+  flex: 1;
+  text-align: left;
+  margin-top: 0.5rem;
+  margin-bottom: 30px;
+  display: none;
+}
+
+.modal .content .row-1 .col-1 .form .input {
+  flex: 0.25;
+  height: 18px;
+  width: 160px;
+  border: none;
+  outline: none;
+  margin-left: 1%;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  font-family: "Hind";
+  font-weight: 400;
+  resize: none;
+  white-space: pre;
 }
 
 .modal .content .row-1 .col-2 {

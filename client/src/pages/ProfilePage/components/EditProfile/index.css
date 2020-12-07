@@ -3,18 +3,18 @@
 .edit {
   width: auto;
   height: auto;
-  max-height: 40px;
+  max-height: 45px;
+  min-width: 160px;
   color: var(--red);
+  padding-bottom: 20%;
   background-color: inherit;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 2.2rem;
   border-color: var(--red);
   border-width: 0.3rem;
   border-radius: 2rem;
-  margin-left: 30px;
+  margin-left: 20px;
   margin-top: 2px;
   cursor: pointer;
+  vertical-align: middle;
 }
 
 .edit:focus {
@@ -23,4 +23,9 @@
 
 .edit:active {
   transform: translate(1px, 1px);
+}
+
+.edit h3 {
+  margin-left: 10px;
+  margin-right: 10px;
 }

@@ -35,6 +35,7 @@ class Popup extends Component {
     this.handleInstagramChange = this.handleInstagramChange.bind(this);
     this.handleTikTokChange = this.handleTikTokChange.bind(this);
     this.handleTwitterChange = this.handleTwitterChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   //checks if component mounted
@@ -159,7 +160,55 @@ class Popup extends Component {
     this.setTwitter(userEmail);
     this.setTikTok(userEmail);
     event.preventDefault();
-    this.props.history.push("/profile");
+  }
+
+  async handleClick(event) {
+    this.handleSubmit(event);
+    this.togglePop();
+
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      this.getProfilePicture(userEmail);
+      this.getBiography(userEmail);
+      this.getFacebook(userEmail);
+      this.getInstagram(userEmail);
+      this.getTwitter(userEmail);
+      this.getTikTok(userEmail);
+      if (
+        (await UserService.getProfilePicture(userEmail)) ===
+          this.state.profilePicture ||
+        (await UserService.getBiography(userEmail)) === this.state.biography ||
+        (await UserService.getFacebook(userEmail)) === this.state.facebook ||
+        (await UserService.getInstagram(userEmail)) === this.state.instagram ||
+        (await UserService.getTwitter(userEmail)) === this.state.twitter ||
+        (await UserService.getTikTok(userEmail)) === this.state.tiktok
+      ) {
+        window.location.reload();
+      }
+    } else {
+      auth.onAuthStateChanged(async function (user) {
+        let userEmail = user.email;
+        this.getProfilePicture(userEmail);
+        this.getBiography(userEmail);
+        this.getFacebook(userEmail);
+        this.getInstagram(userEmail);
+        this.getTwitter(userEmail);
+        this.getTikTok(userEmail);
+        if (
+          (await UserService.getProfilePicture(userEmail)) ===
+            this.state.profilePicture ||
+          (await UserService.getBiography(userEmail)) ===
+            this.state.biography ||
+          (await UserService.getFacebook(userEmail)) === this.state.facebook ||
+          (await UserService.getInstagram(userEmail)) ===
+            this.state.instagram ||
+          (await UserService.getTwitter(userEmail)) === this.state.twitter ||
+          (await UserService.getTikTok(userEmail)) === this.state.tiktok
+        ) {
+          window.location.reload();
+        }
+      });
+    }
   }
 
   togglePop() {
@@ -167,6 +216,11 @@ class Popup extends Component {
     document.getElementById("page").style.filter = "brightness(1)";
     document.getElementById("page").style.pointerEvents = "auto";
     document.getElementById("page").style.userSelect = "auto";
+  }
+
+  toggleChange() {
+    document.getElementById("change").style.display = "none";
+    document.getElementById("pfp-form").style.display = "initial";
   }
 
   /* TODO: edit social media, edit profile picture, featured artist and track*/
@@ -179,17 +233,29 @@ class Popup extends Component {
           &times;
         </button>
         <div className="content">
-          <form id="edit-profile-form" onSubmit={this.handleSubmit}>
+          <form id="edit-profile-form" onSubmit={this.handleClick}>
             <div className="row-1">
               <div className="col-1">
-                <img
-                  src={this.state.profilePicture}
-                  className="pfp"
-                  alt="pfp"
-                />
-                <button className="btn">
-                  <h3>Change</h3>
+                <div className="imgcontainer">
+                  <img src={this.state.profilePicture} alt="pfp" />
+                </div>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={this.toggleChange}
+                >
+                  <h3 id="change">Change</h3>
                 </button>
+                <div className="form" id="pfp-form">
+                  <textarea
+                    className="input"
+                    type="text"
+                    name="pfp"
+                    placeholder="Enter link..."
+                    value={this.state.profilePicture}
+                    onChange={this.handlePFPChange}
+                  ></textarea>
+                </div>
               </div>
               <div className="col-2">
                 <h1 className="title"> Edit Bio </h1>
@@ -252,7 +318,7 @@ class Popup extends Component {
             </div>
             <div className="row-3">
               <button className="btn" type="submit" onClick={this.togglePop}>
-                <h3> Save </h3>
+                <h3>Save</h3>
               </button>
               <button className="btn" type="button" onClick={this.togglePop}>
                 <h3>Cancel</h3>

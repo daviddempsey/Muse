@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserService from "../../services/user.service";
 import { Link } from "react-router-dom";
 import fb from "../../base";
+import "./index.css";
 import "firebase/auth";
 const auth = fb.auth();
 
@@ -28,11 +29,9 @@ const FriendPage = () => {
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
       getFriendsList(userEmail);
-      getFriendsList(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
         if (user) {
-          getFriendsList(user.email);
           getFriendsList(user.email);
         }
       });
@@ -56,7 +55,7 @@ const Friend = ({ email }) => {
   const [bio, setBio] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState("");
-  const [profile, setProfile] = useState("");
+  //const [profile, setProfile] = useState("");
   // Need to implement compatibility first
   // const [compatibility, setCompatibility] = useState(0);
 
@@ -77,7 +76,7 @@ const Friend = ({ email }) => {
 
   /* get the profile of each friend from the database */
   const getProfile = async (email) => {
-    setProfile(await UserService.getProfileLink(email));
+    //setProfile(await UserService.getProfileLink(email));
   };
 
   // Need to implement compatibility first
