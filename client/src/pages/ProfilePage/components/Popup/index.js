@@ -35,6 +35,7 @@ class Popup extends Component {
     this.handleInstagramChange = this.handleInstagramChange.bind(this);
     this.handleTikTokChange = this.handleTikTokChange.bind(this);
     this.handleTwitterChange = this.handleTwitterChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   //checks if component mounted
@@ -158,7 +159,56 @@ class Popup extends Component {
     this.setInstagram(userEmail);
     this.setTwitter(userEmail);
     this.setTikTok(userEmail);
-    this.props.history.push("/profile/" + btoa(userEmail));
+    event.preventDefault();
+  }
+
+  async handleClick(event) {
+    this.handleSubmit(event);
+    this.togglePop();
+
+    if (auth.currentUser) {
+      let userEmail = fb.auth().currentUser.email;
+      this.getProfilePicture(userEmail);
+      this.getBiography(userEmail);
+      this.getFacebook(userEmail);
+      this.getInstagram(userEmail);
+      this.getTwitter(userEmail);
+      this.getTikTok(userEmail);
+      if (
+        (await UserService.getProfilePicture(userEmail)) ===
+          this.state.profilePicture ||
+        (await UserService.getBiography(userEmail)) === this.state.biography ||
+        (await UserService.getFacebook(userEmail)) === this.state.facebook ||
+        (await UserService.getInstagram(userEmail)) === this.state.instagram ||
+        (await UserService.getTwitter(userEmail)) === this.state.twitter ||
+        (await UserService.getTikTok(userEmail)) === this.state.tiktok
+      ) {
+        window.location.reload();
+      }
+    } else {
+      auth.onAuthStateChanged(async function (user) {
+        let userEmail = user.email;
+        this.getProfilePicture(userEmail);
+        this.getBiography(userEmail);
+        this.getFacebook(userEmail);
+        this.getInstagram(userEmail);
+        this.getTwitter(userEmail);
+        this.getTikTok(userEmail);
+        if (
+          (await UserService.getProfilePicture(userEmail)) ===
+            this.state.profilePicture ||
+          (await UserService.getBiography(userEmail)) ===
+            this.state.biography ||
+          (await UserService.getFacebook(userEmail)) === this.state.facebook ||
+          (await UserService.getInstagram(userEmail)) ===
+            this.state.instagram ||
+          (await UserService.getTwitter(userEmail)) === this.state.twitter ||
+          (await UserService.getTikTok(userEmail)) === this.state.tiktok
+        ) {
+          window.location.reload();
+        }
+      });
+    }
   }
 
   togglePop() {
@@ -183,7 +233,7 @@ class Popup extends Component {
           &times;
         </button>
         <div className="content">
-          <form id="edit-profile-form" onSubmit={this.handleSubmit}>
+          <form id="edit-profile-form" onSubmit={this.handleClick}>
             <div className="row-1">
               <div className="col-1">
                 <div className="imgcontainer">
