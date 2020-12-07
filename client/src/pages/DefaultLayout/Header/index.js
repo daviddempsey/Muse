@@ -4,7 +4,6 @@ import Logo from "../../../assets/logo.svg";
 import "./index.css";
 import fb from "../../../base";
 import "firebase/auth";
-
 const auth = fb.auth();
 
 const Header = () => {
