@@ -158,7 +158,7 @@ class Popup extends Component {
     this.setInstagram(userEmail);
     this.setTwitter(userEmail);
     this.setTikTok(userEmail);
-    this.props.history.push("/profile");
+    this.props.history.push("/profile/" + btoa(userEmail));
   }
 
   togglePop() {
