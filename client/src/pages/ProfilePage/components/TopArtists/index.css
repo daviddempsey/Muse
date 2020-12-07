@@ -10,12 +10,15 @@
 }
 
 .artistimgs .image {
+  flex: 33%;
+  position: relative;
   padding: 10px;
 }
 
 .artistimgs img {
-  max-height: 100%;
+  min-height: 100%;
   max-width: 100%;
+  object-fit: cover;
   border-radius: 50%;
 }
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import UserService from "../../services/user.service";
 import { Link } from "react-router-dom";
 import fb from "../../base";
+import "./index.css";
 import "firebase/auth";
 const auth = fb.auth();
 
@@ -28,11 +29,9 @@ const FriendPage = () => {
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
       getFriendsList(userEmail);
-      getFriendsList(userEmail);
     } else {
       auth.onAuthStateChanged(function (user) {
         if (user) {
-          getFriendsList(user.email);
           getFriendsList(user.email);
         }
       });

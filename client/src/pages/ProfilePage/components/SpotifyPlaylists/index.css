@@ -10,6 +10,7 @@
 }
 
 .playlistimgs .album {
+  flex: 33%;
   position: relative;
   padding: 10px;
 }
@@ -17,6 +18,7 @@
 .playlistimgs img {
   min-height: 100%;
   max-width: 100%;
+  object-fit: cover;
 }
 
 .playlistimgs h3 {
