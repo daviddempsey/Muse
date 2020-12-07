@@ -4,6 +4,7 @@
   width: auto;
   height: auto;
   max-height: 45px;
+  min-width: 160px;
   color: var(--red);
   padding-bottom: 20%;
   background-color: inherit;
