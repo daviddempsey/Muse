@@ -34,6 +34,10 @@
 
 .ComparedUser .text .bio {
     word-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     padding-top: 1rem;
 }
 

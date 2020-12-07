@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    margin: 3rem 6rem;
+    margin: 4rem 6rem;
 }
 
 .Leaderboard .harmonyHeader {
@@ -68,7 +68,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 75rem;
+    max-width: 75rem;
 
     padding-top: 2.75rem;
 }

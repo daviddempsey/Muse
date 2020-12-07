@@ -108,7 +108,6 @@ class Leaderboard extends Component {
     render() {
         return (
             <div className="Leaderboard">
-                
                 <div className="harmonyHeader">
                     <h1>In Harmony</h1>
                     <h2>Click the note to make a new friend!</h2>
@@ -121,7 +120,7 @@ class Leaderboard extends Component {
                 </div>
                 <div className="ComparedUsers">
                     {this.state.listEmpty && <h2>Please press the Music Note to find compatible people!</h2>}
-                    {!this.state.listEmpty && <HarmonyLister harmonyList={this.state.topUsers} />}
+                    {!this.state.listEmpty && <ul> <HarmonyLister harmonyList={this.state.topUsers}/> </ul>}
                 </div>
             </div>
         );
