@@ -114,7 +114,7 @@ class Leaderboard extends Component {
                     <h2>Click the note to make a new friend!</h2>
                     <div className="harmonyRefresh">
                         <img src={HRBgGraphic} alt="two people connecting through music"/>
-                        {this.state.loading ? <ScaleLoader className="harmonyLoader" size={150} color={'#ff6666'} loading={this.state.loading}/> : <button className="rbutton" onClick={this.compareUsers}> 
+                        {this.state.loading ? <ScaleLoader className="harmonyLoader" size={250} color={'#ff6666'} loading={this.state.loading}/> : <button className="rbutton" onClick={this.compareUsers}> 
                             <img src={HRBttnGraphic} alt="refresh compatibility list"/>
                         </button>}
                     </div>
