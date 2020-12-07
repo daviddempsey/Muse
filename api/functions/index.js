@@ -78,13 +78,6 @@ app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
 
             await query.get().then(querySnapshot => {
                 in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
-                /* Uncomment this when changing to GET
-                Promise.all([response]).then((values) => {
-                    response = values[0];
-                    return response;
-                });
-                return response;
-                */
             })
 
             return res.status(200).send();
@@ -355,73 +348,6 @@ app.get("/api/in_harmony/:id", (req, res) => {
     })();
 })
 
-// Get In-Harmony Data from Firestore 
-app.get("/api/in_harmony/:id", (req, res) => {
-    (async() => {
-        try {
-            // try getting the information from the database
-            const document = fsdb.collection('in_harmony').doc(req.params.id);
-            let profile = await document.get();
-            let response = profile.data();
-
-            // send product data to front end
-            return res.status(200).send(response);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-
-// Go through every user in our database and compute compatibility score
-app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
-    (async () => {
-        try {
-            var query = fsdb.collection('user');
-            var response = [];
-
-            await query.get().then(querySnapshot => {
-                response = in_harmony.populateLeaderboard(fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
-                /* Uncomment this when changing to GET
-                Promise.all([response]).then((values) => {
-                    response = values[0];
-                    return response;
-                });
-                return response;
-                */
-            })
-
-            return res.status(200).send();
-
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-})
-
-// Indexes top stats of a user
-app.post('/api/user/stats/index/:id', (req, res) => {
-
-    (async () => {
-
-        try {
-            await fsdb.collection('stats').doc(req.params.id)
-                .create({
-                    top_genres: req.body.top_genres,
-                    top_artists: req.body.top_artists,
-                    top_tracks: req.body.top_tracks,
-                })
-            return res.status(200).send();
-
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error);
-        }
-    })();
-});
-
 // Get top artists between two users
 app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, res) => {
     (async() => {
@@ -475,6 +401,22 @@ app.get("/api/in_harmony/compare/similar/genres/:currUser/:otherUser", (req, res
     })();
 })
 
+// Get comparison between two users
+app.get("/api/in_harmony/compareFriends/:currUserEmail/:friendUserEmail", (req, res) => {
+    (async() => {
+        try {
+            // get the compatibility of 2 friends
+            var comparison = await in_harmony.computeFriendCompatibility(fsdb, req.params.currUserEmail, req.params.friendUserEmail);
+
+            // send compatibility data to front end
+            return res.status(200).send(comparison[req.params.friendUserEmail]);
+        } catch (error) {
+            // if error is caught, send 500 and return error message
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
 
 
 // Update, PUT
