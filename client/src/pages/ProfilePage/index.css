@@ -12,9 +12,8 @@
 .popup {
   display: none;
   position: absolute;
-  top: 50%;
+  top: 10%;
   left: 50%;
-  margin-top: -100vh;
   margin-left: -500px;
 }
 
