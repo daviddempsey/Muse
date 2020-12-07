@@ -18,8 +18,6 @@ exports.populateLeaderboard = async function (admin, fsdb, currUserId, distanceL
     for (let doc of docs) {
         let otherUserId = doc.data().in_harmony;
         let otherUserLocation = await getLocation(fsdb, otherUserId);
-        console.log(currUserLocation.latitude);
-        console.log(currUserLocation.longitude);
         let distance = getDistanceFromLatLon(
             currUserLocation.latitude, currUserLocation.longitude,
             otherUserLocation.latitude, otherUserLocation.longitude);
@@ -336,6 +334,95 @@ function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
   return d;
 }
 
+/**
+ * Find the similar artist between two lists in O(nlogn)
+ * @param {Array} list1 top artist of current user
+ * @param {Array} list2 top artist of other user
+ */
+exports.findTopSimilarArtist = function (list1, list2) {
+  
+  // Inverse the enumerated list1
+  var inverseList1 = {};
+  for (let i in list1) {
+    inverseList1[list1[i]["artist_name"]] = i;
+  }
+
+  // Match invertedList1 with list2  
+  var result = {}
+  for (let i in list2) {
+    let element = list2[i]["artist_name"];
+    if (inverseList1[element] !== undefined) {
+      result[i] = inverseList1[element];
+    }
+  }
+
+  var similarities = [];
+  for (let i in result) {
+    let difference = Math.abs(result[i] - i);
+
+    // within every entry, you need to put the artist_id (find in database)
+    let entry = {
+      "difference": difference,
+      "name": list2[i]["artist_name"],
+      "id": list2[i]["artist_id"]
+    };
+    similarities.push(entry);
+  }
+
+  // Sorts list based on difference then name 
+  similarities.sort((a, b) => (a.difference > b.difference) ? 1 : (a.difference === b.difference) ? ((a.name > b.name) ? 1 : -1) : -1);
+
+  return similarities;
+}
+
+
+/**
+ * Find the similar genre between two lists in O(nlogn)
+ * also known as genre breakdown 
+ * @param {Array} list1 top genre of current user
+ * @param {Array} list2 top genre of other user
+ */
+exports.findTopSimilarGenres = function (list1, list2) {
+  
+  // Inverse the enumerated list1
+  var inverseList1 = {};
+  for (let i in list1) {
+    inverseList1[list1[i]["genre_name"]] = i;
+  }
+
+  // Match invertedList1 with list2  
+  var result = {}
+  for (let i in list2) {
+    let element = list2[i]["genre_name"];
+    if (inverseList1[element] !== undefined) {
+      result[i] = inverseList1[element];
+    }
+  }
+  
+  var similarities = [];
+  var totalGenreFrequency = 0;
+  for (let i in result) {
+    // within every entry, you need to put the genre_id (find in database)
+    let entry = {
+      "name": list2[i]["genre_name"],
+      "frequency_sum": list2[i]["frequency"] + list1[result[i]]["frequency"]
+    };
+
+    totalGenreFrequency += entry.frequency_sum;
+    similarities.push(entry);
+  }
+
+  // Sorts list based on difference then name 
+  similarities.sort((a, b) => (a.frequency_sum < b.frequency_sum ) ? 1 : (a.frequency_sum === b.frequency_sum) ? ((a.name < b.name) ? 1 : -1) : -1);
+  
+  // Find the overall percentage of each simimlar genre 
+  for (let i in similarities) {
+    similarities[i]["score"] = similarities[i]["frequency_sum"] / totalGenreFrequency;
+  }
+  
+  return similarities;
+}
+
 
 /**
  * This API controller is used to call Spotify APIs. Most of these
@@ -352,7 +439,7 @@ const APIController = (function () {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
+        'Authorization': 'Basic ' + new Buffer.from(clientId + ':' + clientSecret).toString('base64'),
       },
       body: 'grant_type=client_credentials'
     });
