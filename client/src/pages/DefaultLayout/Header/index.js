@@ -9,45 +9,44 @@ const auth = fb.auth();
 const Header = () => {
   const SPACE = "\u00a0";
   const [link, setLink] = useState("");
+  const [user, setUser] = useState(null);
 
-  const myProfile = async () => {
-    if (auth.currentUser) {
-      if (link === auth.currentUser.email) {
-        window.location.href = "/profile/" + btoa(link);
+  const authUser = () => {
+    return new Promise(function (resolve, reject) {
+      auth.onAuthStateChanged(function (user) {
+        if (user) {
+          resolve(user);
+        } else {
+          reject("User not logged in");
+        }
+      });
+    });
+  };
+
+  const myProfile = () => {
+    if (user) {
+      if (link === btoa(user.email)) {
+        window.location.href = "/profile/" + btoa(user.email);
       }
-    } else {
-      auth.onAuthStateChanged(function (user) {
-        if (user) {
-          if (link === user.email) {
-            window.location.href = "/profile/" + btoa(link);
-          }
-        }
-      });
     }
   };
 
-  const getLink = async () => {
-    setLink(await getUser());
-  };
+  // const getLink = (user) => {
+  //   setLink(getUser(user));
+  // };
 
-  const getUser = async () => {
-    if (auth.currentUser) {
-      return auth.currentUser.email;
-    } else {
-      auth.onAuthStateChanged(function (user) {
-        if (user) {
-          if (user.email === this.state.userEmail) {
-            return user.email;
-          }
-        }
-      });
-    }
-  };
+  // const getUser = (user) => {
+  //   return user.email;
+  // };
 
   React.useEffect(() => {
-    getLink();
+    authUser().then((user) => {
+      setUser(user);
+      setLink(btoa(user.email));
+    });
   });
 
+  if (!user) return null;
   return (
     <div className="Header">
       <h3>
@@ -61,7 +60,7 @@ const Header = () => {
           <li className="empty" />
           <li>
             <NavLink
-              to={"/profile/" + btoa(link)}
+              to={"/profile/" + link}
               onClick={() => myProfile()}
               className="nav-item"
             >
