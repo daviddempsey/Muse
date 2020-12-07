@@ -8,4 +8,5 @@
     --grey: #646165;
     --almost-white: #fafaff;
     --white: #fcfcfc;
+    --shadow:  0 0 0.25rem rgba(0, 0, 0, 0.5);
 }
