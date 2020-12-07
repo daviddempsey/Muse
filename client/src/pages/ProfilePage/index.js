@@ -158,7 +158,6 @@ class ProfilePage extends Component {
   }
 
   /* HARMONIZE FETCH CALLS */
-
   compareTwoUsers = async (myEmail, otherUserEmail) => {
     const url =
       "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compareFriends/" +

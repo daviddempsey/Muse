@@ -13,9 +13,9 @@
   flex: 33%;
   position: relative;
   max-width: 11vw;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-top: 1vw;
+  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
 .artistimgs img {
@@ -28,6 +28,7 @@
 .artistimgs .rows {
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 .artistimgs .row-1 {
