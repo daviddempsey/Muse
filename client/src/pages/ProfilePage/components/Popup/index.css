@@ -67,6 +67,7 @@
   border: none;
   background-color: inherit;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .modal .content .row-1 .col-1 .btn:focus {

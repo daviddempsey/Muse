@@ -12,12 +12,15 @@
 .playlistimgs .album {
   flex: 33%;
   position: relative;
-  padding: 10px;
+  max-width: 12vw;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .playlistimgs img {
-  min-height: 100%;
-  max-width: 100%;
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 
@@ -42,4 +45,5 @@
 .playlistimgs .row-1 {
   display: flex;
   flex-direction: row;
+  max-height: 12vw;
 }
