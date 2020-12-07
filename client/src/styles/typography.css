@@ -1,38 +1,45 @@
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 html {
-    font-size: 16px;
+  font-size: 1rem;
 }
 
+/* header */
 h1 {
-    font-size: 48px;
-    font-family: 'Montserrat';
-    font-weight: 900;
+  font-size: 3rem;
+  font-family: "Montserrat";
+  font-weight: 900;
 }
 
+/* sub headings */
 h2 {
-    font-size: 32px;
-    font-family: 'Montserrat';
-    font-weight: 700;
+  font-size: 2rem;
+  font-family: "Montserrat";
+  font-weight: 700;
 }
 
+/* links/buttons */
 h3 {
-    font-size: 24px;
-    font-family: 'Hind';
-    font-weight: 600;
+  font-size: 1.5rem;
+  font-family: "Hind";
+  font-weight: 600;
 }
 
+/* paragrahs */
 p {
-    font-size: 18px;
-    font-family: 'Hind';
-    font-weight: 400;
+  font-size: 1.125rem;
+  font-family: "Hind";
+  font-weight: 400;
 }

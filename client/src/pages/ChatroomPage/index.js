@@ -6,6 +6,7 @@ import firebase from 'firebase/app';
 import fb from '../../base';
 import 'firebase/firestore';
 import 'firebase/auth';
+import UserService from '../../services/user.service';
 
 import BttnGraphic from './submit_button.svg';
 
@@ -20,6 +21,7 @@ const ChatroomPage = (props) => {
   // const { email } = auth.currentUser;
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   // const [authenticated, setAuthenticated] = useState(false);
 
   const dummy = useRef();
@@ -28,15 +30,20 @@ const ChatroomPage = (props) => {
 
   const authUser = () => {
     return new Promise(function (resolve, reject) {
-       fb.auth().onAuthStateChanged(function(user) {
-          if (user) {
-             resolve(user);
-          } else {
-             reject('User not logged in');
-          }             
-       });
+      fb.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          resolve(user);
+        } else {
+          reject('User not logged in');
+        }
+      });
     });
   }
+  
+  /* get the name of each friend from the database */
+  const getName = async (email) => {
+    setName(await UserService.getName(email));
+  };
 
   const compare = (msg1, msg2) => {
     if (msg1.createdAt && msg2.createdAt) {
@@ -50,11 +57,11 @@ const ChatroomPage = (props) => {
     else return -1;
   }
 
-  let [messages] = useCollectionData(query, {idField: 'id'});
+  let [messages] = useCollectionData(query, { idField: 'id' });
 
   const [formValue, setFormValue] = useState('');
 
-  const sendMessage = async(e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
 
     const { photoURL } = user;
@@ -86,13 +93,14 @@ const ChatroomPage = (props) => {
       setEmail(user.email);
       setUser(user);
     })
-  },[])
+    getName(receiverEmail);
+  }, [])
 
   if (!user) return null;
   return (
-    <div className="App">
-      <header> 
-        <h2> Name </h2>
+    <div className="Chatroom">
+      <header>
+        <h2>{name}</h2>
       </header>
       <main>
         {messages && messages.sort(compare).map(msg => <ChatMessage key={msg.id} message={msg} status={msg.status} />)}

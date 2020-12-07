@@ -1,0 +1,7 @@
+@import "../../../../styles/index.css";
+
+.title {
+  text-align: left;
+  color: var(--red);
+  margin-right: 10px;
+}

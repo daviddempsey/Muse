@@ -1,15 +1,11 @@
-body {
-    background-color: #282c34;
-}
-  
-.App {
+.Chatroom {
     text-align: center;
     max-width: 728px;
     margin: 0 auto;
 }
 
 
-.App header {
+.Chatroom header {
     background-color: #3D8AFF;
     height: 10vh;
     min-height: 50px;
@@ -27,7 +23,7 @@ body {
 }
 
 /*
-.App section {
+.Chatroom section {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +32,7 @@ body {
 }
 */
 
-main {
+.Chatroom main {
     padding: 10px;
     height: 80vh;
     margin: 10vh 0 10vh;
@@ -46,19 +42,19 @@ main {
     background-color: white;
 }
   
-main::-webkit-scrollbar {
+.Chatroom main::-webkit-scrollbar {
     width: 0.25rem;
 }
   
-main::-webkit-scrollbar-track {
+.Chatroom main::-webkit-scrollbar-track {
     background: #1e1e24;
 }
   
-main::-webkit-scrollbar-thumb {
+.Chatroom main::-webkit-scrollbar-thumb {
     background: #6649b8;
 }
   
-form {
+.Chatroom form {
     height: 10vh;
     position: fixed;
     bottom: 0;
@@ -69,13 +65,13 @@ form {
     font-size: 1.5rem;
 }
   
-form button {
+.Chatroom form button {
     width: 20%;
     background-color: rgb(56, 56, 143);
 }
   
   
-input {
+.Chatroom input {
     line-height: 1.5;
     width: 100%;
     font-size: 1.5rem;
@@ -86,7 +82,7 @@ input {
     padding: 0 10px;
 }
   
-button {
+.Chatroom button {
     background-color: #282c34; /* Green */
     border: none;
     color: white;
@@ -98,18 +94,18 @@ button {
     font-size: 1.25rem;
 }
   
-button:disabled {
+.Chatroom button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.BttnImg {
+.Chatroom .BttnImg {
     width: 100%;
     height: 100%;
 }
   
   
-.sign-in {
+.Chatroom .sign-in {
     color: #282c34;
     background: white;
     max-width: 400px;
@@ -119,12 +115,12 @@ button:disabled {
   
   
   
-ul, li {
+.Chatroom ul, li {
     text-align: left;
     list-style: none;
 }
   
-p {
+.Chatroom p {
     max-width: 500px;
     margin-bottom: 12px;
     line-height: 24px;
@@ -135,28 +131,29 @@ p {
     text-align: center;
 }
   
-.message {
+.Chatroom .message {
     display: flex;
     align-items: center;
 }
   
   
-.sent {
+.Chatroom .sent {
     flex-direction: row-reverse;
 }
   
-.sent p {
+.Chatroom .sent p {
     color: white;
     background: #0b93f6;
     align-self: flex-end;
 }
-.received p {
+
+.Chatroom .received p {
     background: #e5e5ea;
     color: black;
 }
 
 
-img {
+.Chatroom img {
     width: 40px;
     height: 40px;
     border-radius: 50%;

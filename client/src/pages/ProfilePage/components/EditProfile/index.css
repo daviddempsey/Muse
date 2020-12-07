@@ -1,0 +1,31 @@
+@import "../../../../styles/index.css";
+
+.edit {
+  width: auto;
+  height: auto;
+  max-height: 45px;
+  min-width: 160px;
+  color: var(--red);
+  padding-bottom: 20%;
+  background-color: inherit;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 2rem;
+  margin-left: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.edit:focus {
+  outline: none;
+}
+
+.edit:active {
+  transform: translate(1px, 1px);
+}
+
+.edit h3 {
+  margin-left: 10px;
+  margin-right: 10px;
+}

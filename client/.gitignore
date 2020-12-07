@@ -15,6 +15,8 @@
 # misc
 .eslintcache
 .DS_Store
+src/.DS_Store
+components/.DS_Store
 .env.local
 .env.development.local
 .env.test.local
@@ -25,3 +27,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .eslintcache
+
+package-lock.json

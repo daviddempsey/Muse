@@ -6,6 +6,7 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var data_access = require('./data_access'); // the database access functions
+var in_harmony = require('./in_harmony'); // the in harmony functions
 
 var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
 var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
@@ -62,6 +63,31 @@ app.get('/', (req, res) => {
 });
 
 // Create, POST
+// Go through every user in our database and compute compatibility score
+
+app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
+    (async () => {
+        try {
+            var query = fsdb.collection('user');
+            var reset = {
+                similar_users: []
+            };
+
+            // delete document first
+            await fsdb.collection("in_harmony").doc(req.params.currUserId).set(reset);
+
+            var querySnapshot = await query.get();
+                    
+            await in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+
+            return res.status(200).send();
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
 
 // Read, GET
 app.options('/login', function(req, res) {
@@ -192,7 +218,7 @@ app.get('/refresh_token', function(req, res) {
         url: 'https://accounts.spotify.com/api/token',
         headers: {
             Authorization: 'Basic ' +
-                new Buffer(client_id + ':' + client_secret).toString('base64'),
+              new Buffer.from(client_id + ':' + client_secret).toString('base64'),
         },
         form: {
             grant_type: 'refresh_token',
@@ -296,6 +322,102 @@ app.get('/api/user/stats/:section/:id', (req, res) => {
         }
     })();
 });
+
+app.options('/api/in_harmony/:id', function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.end();
+});
+
+// Get In-Harmony Data from Firestore 
+app.get("/api/in_harmony/:id", (req, res) => {
+    (async() => {
+        try {
+            // try getting the information from the database
+            const document = fsdb.collection('in_harmony').doc(req.params.id);
+            let profile = await document.get();
+            let response = profile.data();
+
+            // send product data to front end
+            return res.status(200).send(response);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+// Get top artists between two users
+app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, res) => {
+    (async() => {
+        try {
+            // Get top stats of current user
+            const document1 = fsdb.collection('stats').doc(req.params.currUser);
+            let profile1 = await document1.get();
+            let response1 = profile1.data();
+            
+            // Get top stats of other user
+            const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+            let profile2 = await document2.get();
+            let response2 = profile2.data();
+
+            // Find similarities
+            var topSimilar = in_harmony.findTopSimilarArtist( response1.top_artists, response2.top_artists );
+
+            // send product data to front end
+            return res.status(200).send(topSimilar);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+
+// Get top genres between two users
+app.get("/api/in_harmony/compare/similar/genres/:currUser/:otherUser", (req, res) => {
+    (async() => {
+        try {
+            // Get top stats of current user
+            const document1 = fsdb.collection('stats').doc(req.params.currUser);
+            let profile1 = await document1.get();
+            let response1 = profile1.data();
+            
+            // Get top stats of other user
+            const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+            let profile2 = await document2.get();
+            let response2 = profile2.data();
+
+            // Find similarities
+            var topSimilar = in_harmony.findTopSimilarGenres( response1.top_genres, response2.top_genres );
+
+            // send product data to front end
+            return res.status(200).send(topSimilar);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+})
+
+// Get comparison between two users
+app.get("/api/in_harmony/compareFriends/:currUserEmail/:friendUserEmail", (req, res) => {
+    (async() => {
+        try {
+            // get the compatibility of 2 friends
+            var comparison = await in_harmony.computeFriendCompatibility(fsdb, req.params.currUserEmail, req.params.friendUserEmail);
+
+            // send compatibility data to front end
+            return res.status(200).send(comparison[req.params.friendUserEmail]);
+        } catch (error) {
+            // if error is caught, send 500 and return error message
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
+
 
 // Update, PUT
 
