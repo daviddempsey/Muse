@@ -76,9 +76,9 @@ app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
             // delete document first
             await fsdb.collection("in_harmony").doc(req.params.currUserId).set(reset);
 
-            await query.get().then(querySnapshot => {
-                in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
-            })
+            var querySnapshot = await query.get();
+                    
+            await in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
 
             return res.status(200).send();
 

@@ -45,7 +45,7 @@ const ComparedUser = ({ compEmail, compOverall }) => {
         </div>
         <br />
         <div className="score">
-          <h1>{compOverall}</h1>
+          <h1>{compOverall}%</h1>
         </div>
       </div>
     </div>

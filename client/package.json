@@ -20,6 +20,7 @@
         "react-promise-tracker": "^2.1.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^4.0.1",
+        "react-spinners": "^0.9.0",
         "request": "^2.88.2",
         "typescript": "^3.2.1"
     },

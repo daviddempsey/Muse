@@ -1,22 +1,22 @@
-import React, { Component, useState } from 'react';
-import UserService from '../../../services/user.service';
+import React, { Component } from 'react';
 import fb from '../../../base';
 import 'firebase/auth';
 import './index.css';
-import ComparedUser from './ComparedUser';
 import HarmonyLister from './HarmonyLister';
 import HRBgGraphic from './Harmonize_Refresh_Background.svg';
 import HRBttnGraphic from './Harmonize_Button.svg';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 const auth = fb.auth();
 
-/*class Leaderboard extends Component {
+class Leaderboard extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            listEmpty: false,
+            listEmpty: true,
             userEmail: '',
-            topUsers: []
+            topUsers: [],
+            loading: true
         };
         this.getTopUsers = this.getTopUsers.bind(this);
         this.compareUsers = this.compareUsers.bind(this);
@@ -36,19 +36,37 @@ const auth = fb.auth();
     }
     
     componentDidMount() {
+        // get user session 
         this.authUser().then((user) => {
+            this.setState({
+                userEmail: user.email
+            })
+
+            // get the top users
             this.getTopUsers().then((userList) => {
-                console.log(userList);
-                this.setState({
-                    topUsers: userList
-                });
+
+                // if the user list's length is 0, then empty list is true
+                if (userList.length === 0) {
+                    this.setState({
+                        topUsers: userList,
+                        loading: false,
+                        listEmpty: true
+                    });
+                // else the user list is not empty and listEmpty is now false
+                } else {
+                    this.setState({
+                        topUsers: userList,
+                        loading: false,
+                        listEmpty: false
+                    });
+                }
             });
         })
     }
 
     // get the top users from the backend
-    getTopUsers = () => {
-        const url = "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/kennyyu168@yahoo.com";
+    getTopUsers = async () => {
+        const url = "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/" + this.state.userEmail;
         const options = {
             method: 'GET',
             headers: {
@@ -56,7 +74,7 @@ const auth = fb.auth();
                 'Content-Type': 'application/json'
             },
         };
-        return fetch(url, options)
+        return await fetch(url, options)
             .then((response) => {
                 return response.json().then((data) => {
                     return data.similar_users;
@@ -65,33 +83,40 @@ const auth = fb.auth();
     }
 
     // compare users in the backend
-    compareUsers = () => {
-        const url = "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/kennyyu168@yahoo.com/100";
+    compareUsers = async () => {
+        // start loading
+        this.setState({loading: true});
+
+        // then fetch the new users
+        const url = "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/"+ this.state.userEmail + "/100";
         const options = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=UTF-8'
+                'Content-Type': 'application/json'
             }
         };
-        fetch(url, options)
+        await fetch(url, options)
             .then(response => {
-                this.getTopUsers();
                 console.log(response.status);
             });
+
+        // reload the list
+        this.componentDidMount();
     }
 
     render() {
         return (
             <div className="Leaderboard">
+                
                 <div className="harmonyHeader">
                     <h1>In Harmony</h1>
                     <h2>Click the note to make a new friend!</h2>
                     <div className="harmonyRefresh">
                         <img src={HRBgGraphic} alt="two people connecting through music"/>
-                        <button className="rbutton" onClick={this.compareUsers}> 
+                        {this.state.loading ? <ScaleLoader className="harmonyLoader" size={150} color={'#ff6666'} loading={this.state.loading}/> : <button className="rbutton" onClick={this.compareUsers}> 
                             <img src={HRBttnGraphic} alt="refresh compatibility list"/>
-                        </button>
+                        </button>}
                     </div>
                 </div>
                 <div className="ComparedUsers">
@@ -101,66 +126,6 @@ const auth = fb.auth();
             </div>
         );
     }
-} */
-
-const Leaderboard = () => {
-    // calls a child Compared user for each matched user
-    const [inHarmonyList, setInHarmonyList] = useState([]);
-
-    // calls on a Friend component for each friend in the user's friendsList
-    const HarmonyLister = ({harmonyList}) => 
-        Object.keys(harmonyList).map((item, i) => (
-            <ul key={i}>
-                <ComparedUser compEmail={harmonyList[item].email} compOverall={harmonyList[item].compatibility_score} />
-            </ul>
-        ));
-
-    // get the in harmony list from the database
-    const getInHarmonyList = async (email) => {
-        setInHarmonyList(await UserService.getInHarmony(email));
-    }
-
-    // get create the in harmony list from the database
-    const refreshInHarmony = async (email) => {
-        // do a post call to do all the stuff
-        const options = {
-            method:'POST',
-            headers: { 'Content-Type': 'application/json'}
-        }
-        return fetch('https://localhost:5001/muse-eec76/us-central1/app/api/in_harmony' + email, options)
-        .then(response => response.json());
-    }
-
-    React.useEffect(() => {
-        if (auth.currentUser) {
-            let userEmail = fb.auth().currentUser.email;
-            getInHarmonyList(userEmail);
-        } else {
-            auth.onAuthStateChanged(function (user) {
-                if (user) {
-                    getInHarmonyList(user.email);
-                }
-            });
-        }
-    }, []);
-
-    return (
-        <div className="Leaderboard">
-            <div className="harmonyHeader">
-                <h1>In Harmony</h1>
-                <h2>Click the note to make a new friend!</h2>
-                <div className="harmonyRefresh">
-                    <img src={HRBgGraphic} alt="two people connecting through music"/>
-                    <button className="rbutton" onClick={refreshInHarmony}> 
-                        <img src={HRBttnGraphic} alt="refresh compatibility list"/>
-                    </button>
-                </div>
-            </div>
-            <div className="ComparedUsers">
-                <HarmonyLister harmonyList={inHarmonyList} />
-            </div>
-        </div>
-    );
-}
+} 
 
 export default Leaderboard;
