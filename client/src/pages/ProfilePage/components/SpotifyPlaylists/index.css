@@ -30,8 +30,9 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--almost-white);
-  text-shadow: -1px -1px var(--black), -1px 1px var(--black),
-    1px -1px var(--black), 1px 1px var(--black);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--black);
+  -webkit-font-smoothing: antialiased;
   max-width: 80%;
   text-align: center;
   word-wrap: break-word;
