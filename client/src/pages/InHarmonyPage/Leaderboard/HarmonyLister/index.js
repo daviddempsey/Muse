@@ -1,3 +1,4 @@
+import React from 'react';
 import ComparedUser from '../ComparedUser';
 
 const HarmonyLister = ({harmonyList}) => 
