@@ -10,29 +10,33 @@ code {
 }
 
 html {
-    font-size: 16px;
+    font-size: 1rem; 
 }
 
+/* header */
 h1 {
-    font-size: 48px;
+    font-size: 3rem;
     font-family: 'Montserrat';
     font-weight: 900;
 }
 
+/* sub headings */
 h2 {
-    font-size: 32px;
+    font-size: 3rem;
     font-family: 'Montserrat';
     font-weight: 700;
 }
 
+/* links/buttons */
 h3 {
-    font-size: 24px;
+    font-size: 1.125rem;
     font-family: 'Hind';
     font-weight: 600;
 }
 
+/* paragrahs */
 p {
-    font-size: 18px;
+    font-size: 1.125rem;
     font-family: 'Hind';
     font-weight: 400;
 }
