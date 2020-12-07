@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import './index.css';
+import './index.css';
 import ChatMessage from './ChatMessage';
 
 import firebase from 'firebase/app';
 import fb from '../../base';
 import 'firebase/firestore';
 import 'firebase/auth';
+
+import BttnGraphic from './submit_button.svg';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -88,7 +90,10 @@ const ChatroomPage = (props) => {
 
   if (!user) return null;
   return (
-    <>
+    <div className="App">
+      <header> 
+        <h2> Name </h2>
+      </header>
       <main>
         {messages && messages.sort(compare).map(msg => <ChatMessage key={msg.id} message={msg} status={msg.status} />)}
         <span ref={dummy}></span>
@@ -96,9 +101,11 @@ const ChatroomPage = (props) => {
 
       <form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit" disabled={!formValue}>Submit</button>
+        <button type="submit" disabled={!formValue}>
+          <img className="BttnImg" src={BttnGraphic} />
+        </button>
       </form>
-    </>
+    </div>
   )
 }
 
