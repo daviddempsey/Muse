@@ -6,12 +6,25 @@
 }
 
 .artistimgs {
-  margin-top: 10px;
+  display: flex;
+}
+
+.artistimgs .image {
+  padding: 10px;
 }
 
 .artistimgs img {
-  padding: 10px;
-  width: 160px;
-  height: 160px;
+  max-height: 100%;
+  max-width: 100%;
   border-radius: 50%;
+}
+
+.artistimgs .rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.artistimgs .row-1 {
+  display: flex;
+  flex-direction: row;
 }

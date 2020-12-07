@@ -7,6 +7,8 @@ const EditProfile = () => {
     document.getElementById("page").style.filter = "blur(2px) brightness(0.5)";
     document.getElementById("page").style.pointerEvents = "none";
     document.getElementById("page").style.userSelect = "none";
+    document.getElementById("change").style.display = "initial";
+    document.getElementById("pfp-form").style.display = "none";
   };
 
   return (

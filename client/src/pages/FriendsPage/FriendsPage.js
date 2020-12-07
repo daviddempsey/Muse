@@ -56,7 +56,7 @@ const Friend = ({ email }) => {
   const [bio, setBio] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState("");
-  const [profile, setProfile] = useState("");
+  //const [profile, setProfile] = useState("");
   // Need to implement compatibility first
   // const [compatibility, setCompatibility] = useState(0);
 
@@ -77,7 +77,7 @@ const Friend = ({ email }) => {
 
   /* get the profile of each friend from the database */
   const getProfile = async (email) => {
-    setProfile(await UserService.getProfileLink(email));
+    //setProfile(await UserService.getProfileLink(email));
   };
 
   // Need to implement compatibility first

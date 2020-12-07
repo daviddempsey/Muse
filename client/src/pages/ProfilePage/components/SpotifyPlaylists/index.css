@@ -7,7 +7,6 @@
 
 .playlistimgs {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .playlistimgs .album {
@@ -16,8 +15,8 @@
 }
 
 .playlistimgs img {
-  height: 250px;
-  width: 250px;
+  min-height: 100%;
+  max-width: 100%;
 }
 
 .playlistimgs h3 {
@@ -31,4 +30,14 @@
   max-width: 80%;
   text-align: center;
   word-wrap: break-word;
+}
+
+.playlistimgs .rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlistimgs .row-1 {
+  display: flex;
+  flex-direction: row;
 }

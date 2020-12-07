@@ -4,7 +4,7 @@
   width: 45px;
   height: 45px;
   margin-top: 2px;
-  margin-left: 30px;
+  margin-left: 20px;
   color: var(--red);
   background-color: inherit;
   border-color: var(--red);
@@ -25,5 +25,5 @@
   width: auto;
   height: auto;
   max-height: 25px;
-  margin-top: 0.2rem;
+  margin-top: 20%;
 }

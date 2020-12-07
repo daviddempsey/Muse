@@ -169,6 +169,11 @@ class Popup extends Component {
     document.getElementById("page").style.userSelect = "auto";
   }
 
+  toggleChange() {
+    document.getElementById("change").style.display = "none";
+    document.getElementById("pfp-form").style.display = "initial";
+  }
+
   /* TODO: edit social media, edit profile picture, featured artist and track*/
 
   /* render text box*/
@@ -187,9 +192,23 @@ class Popup extends Component {
                   className="pfp"
                   alt="pfp"
                 />
-                <button className="btn">
-                  <h3>Change</h3>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={this.toggleChange}
+                >
+                  <h3 id="change">Change</h3>
                 </button>
+                <div className="form" id="pfp-form">
+                  <textarea
+                    className="input"
+                    type="text"
+                    name="pfp"
+                    placeholder="Enter link..."
+                    value={this.state.profilePicture}
+                    onChange={this.handlePFPChange}
+                  ></textarea>
+                </div>
               </div>
               <div className="col-2">
                 <h1 className="title"> Edit Bio </h1>
@@ -252,7 +271,7 @@ class Popup extends Component {
             </div>
             <div className="row-3">
               <button className="btn" type="submit" onClick={this.togglePop}>
-                <h3> Save </h3>
+                <h3>Save</h3>
               </button>
               <button className="btn" type="button" onClick={this.togglePop}>
                 <h3>Cancel</h3>
