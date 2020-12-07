@@ -164,7 +164,7 @@ class Popup extends Component {
 
   async handleClick(event) {
     this.handleSubmit(event);
-    this.togglePop();
+    //this.togglePop();
 
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
