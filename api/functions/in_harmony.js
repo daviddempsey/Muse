@@ -74,11 +74,50 @@ async function computeCompatibility(admin, fsdb, currUserEmail, otherUserEmail) 
   // do we update the other user's in_harmony document as well? 
   //  indexCompatibilityScoresIntoIndex(fsdb, otherUserEmail, currUserEmail, compatiblityScores);
 
-
   return JSON.stringify(compatiblityScores);
 
 }
 
+/**
+ * Compute the compatibility score between two users (including breakdown of each category)
+ * Format Example:
+ *     "test1@test.com": {
+ *      "audio_features": 0.8694175,
+ *      "artist": 0.05999221968262216,
+ *      "genres": 0.11401209424476016,
+ *      "score": 0.3478072713091274
+ *     }
+ * @param {Firestore} fsdb Reference to the Firestore database
+ * @param {String} currUserEmail ID to obtain info from Firestore
+ * @param {String} otherUserEmail ID to obtain info from Firestore
+ */
+exports.computeFriendCompatibility = async function (fsdb, currUserEmail, otherUserEmail) {
+
+  // Get top data by making a Firestore call for current user
+  let document = fsdb.collection('stats').doc(currUserEmail);
+  let data = await document.get();
+  const currUserTopStats = data.data();
+
+  // Get top data by making a Firestore call for other user
+  document = fsdb.collection('stats').doc(otherUserEmail);
+  data = await document.get();
+  const otherUserTopStats = data.data();
+
+  // Get respective scores
+  var compatiblityScores = {};
+  compatiblityScores[otherUserEmail] = {
+    "audio_features": await computeAudioFeatureScore(currUserTopStats.top_tracks, otherUserTopStats.top_tracks),
+    "artist": await rbo(currUserTopStats.top_artists, otherUserTopStats.top_artists, "artists"),
+    "genres": await rbo(currUserTopStats.top_genres, otherUserTopStats.top_genres, "genres"),
+    "score": 0
+  }
+  // Get average for total compatibility percentage
+  compatiblityScores[otherUserEmail]["score"] = (compatiblityScores[otherUserEmail]["audio_features"] +
+    compatiblityScores[otherUserEmail]["artist"] + compatiblityScores[otherUserEmail]["genres"]) / 3;
+
+  return compatiblityScores;
+
+}
 
 /**
  * Computes the compatibility score based on the top songs listed
@@ -259,7 +298,6 @@ async function getNamesFromTopStats(doc, type) {
   return names;
 
 }
-
 
 /**
  * Indexes Compatibility info into the 'in_harmony' table on Firestore

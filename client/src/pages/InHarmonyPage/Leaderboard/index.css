@@ -1,0 +1,74 @@
+@import '../../../styles/index.css';
+
+.Leaderboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 3rem 6rem;
+}
+
+.Leaderboard .harmonyHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.Leaderboard .harmonyHeader h1 {
+    font-size: 4rem;
+    line-height: 3.75rem;
+}
+
+.Leaderboard .harmonyHeader h2 {
+    line-height: 3.75rem;
+}
+
+.Leaderboard .harmonyHeader .harmonyRefresh {
+    padding-top: 3.75rem;
+    position: relative;
+}
+
+.Leaderboard .harmonyHeader .harmonyRefresh .rbutton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border-width: 0rem;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.Leaderboard .harmonyHeader .harmonyRefresh .css-0 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border-width: 0rem;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.Leaderboard .harmonyHeader .harmonyRefresh .rbutton:active{
+    outline: none;
+    transform: translate(-50%, -52%);
+    box-shadow: 0 5px var(--grey);
+}
+
+.Leaderboard .harmonyHeader .harmonyRefresh .rbutton:focus{
+    outline: none;
+}
+
+.Leaderboard .ComparedUsers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75rem;
+
+    padding-top: 2.75rem;
+}
