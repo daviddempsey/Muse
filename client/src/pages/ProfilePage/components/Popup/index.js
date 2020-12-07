@@ -158,7 +158,6 @@ class Popup extends Component {
     this.setInstagram(userEmail);
     this.setTwitter(userEmail);
     this.setTikTok(userEmail);
-    event.preventDefault();
     this.props.history.push("/profile");
   }
 

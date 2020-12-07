@@ -5,7 +5,9 @@ import "./index.css";
 import DefaultLayout from "../DefaultLayout";
 import Decal from "./assets/decal.png";
 import Add from "./assets/friend.svg";
+import Remove from "./assets/remove.svg";
 import DM from "./assets/dm.svg";
+import Harmonize from "./assets/harmonize.svg";
 import ProfilePicture from "./components/ProfilePicture";
 import Biography from "./components/Biography";
 import TopArtists from "./components/TopArtists";
@@ -71,24 +73,72 @@ class ProfilePage extends Component {
     });
   };
 
-  async addFriend() {
-    let myEmail = fb.auth().currentUser.email;
-    let friendEmail = atob(this.props.match.params.user_email);
-    UserService.addFriend(myEmail, friendEmail);
-
-    let friendsDoc = fb.firestore().collection("user").doc(myEmail);
-    let friendsList = (await friendsDoc.get()).data()["friends"];
-    if (friendsList.includes(friendEmail)) {
-      window.location.reload();
-    }
-  }
-
   async userEditCompare() {
     let currEmail = fb.auth().currentUser.email;
     if (currEmail === this.state.userEmail) {
       return true;
     }
     return false;
+  }
+
+  async addFriend() {
+    let myEmail = fb.auth().currentUser.email;
+    let friendEmail = atob(this.props.match.params.user_email);
+    UserService.addFriend(myEmail, friendEmail);
+
+    fb.firestore()
+      .collection("user")
+      .doc(myEmail)
+      .get()
+      .then((res) => {
+        if (res) {
+          let friendsList = res.data()["friends"];
+          if (friendsList.includes(friendEmail)) {
+            this.friendsCompare().then((friendsMatch) => {
+              this.setState({
+                friend: friendsMatch,
+              });
+            });
+          } else {
+            this.componentDidMount();
+            this.friendsCompare().then((friendsMatch) => {
+              this.setState({
+                friend: friendsMatch,
+              });
+            });
+          }
+        }
+      });
+  }
+
+  async removeFriend() {
+    let myEmail = fb.auth().currentUser.email;
+    let friendEmail = atob(this.props.match.params.user_email);
+    UserService.removeFriend(myEmail, friendEmail);
+
+    fb.firestore()
+      .collection("user")
+      .doc(myEmail)
+      .get()
+      .then((res) => {
+        if (res) {
+          let friendsList = res.data()["friends"];
+          if (!friendsList.includes(friendEmail)) {
+            this.friendsCompare().then((friendsMatch) => {
+              this.setState({
+                friend: friendsMatch,
+              });
+            });
+          } else {
+            this.componentDidMount();
+            this.friendsCompare().then((friendsMatch) => {
+              this.setState({
+                friend: friendsMatch,
+              });
+            });
+          }
+        }
+      });
   }
 
   async friendsCompare() {
@@ -105,6 +155,77 @@ class ProfilePage extends Component {
       return true;
     }
     return false;
+  }
+
+  /* HARMONIZE FETCH CALLS */
+
+  compareTwoUsers = async (myEmail, otherUserEmail) => {
+    const url =
+      "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compareFriends/" +
+      myEmail +
+      "/" +
+      otherUserEmail;
+    const options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    console.log(data);
+    return data["score"];
+  };
+
+  // Perform comparison between two users
+  artistBreakdown = async (myEmail, otherUserEmail) => {
+    const url =
+      "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compare/similar/artists/" +
+      myEmail +
+      "/" +
+      otherUserEmail;
+    const options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    console.log("artist: " + data);
+    return data;
+  };
+
+  // Perform comparison between two users
+  genreBreakdown = async (myEmail, otherUserEmail) => {
+    const url =
+      "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compare/similar/genres/" +
+      myEmail +
+      "/" +
+      otherUserEmail;
+    const options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    console.log("genre: " + data);
+    return data;
+  };
+
+  // to call multiple events
+  async onClick(myEmail, otherUserEmail) {
+    console.log("myEmail: " + myEmail);
+    console.log("otherUserEmail: " + otherUserEmail);
+    let score = (await this.compareTwoUsers(myEmail, otherUserEmail)) * 100;
+    alert(score);
+    this.artistBreakdown(myEmail, otherUserEmail);
+    this.genreBreakdown(myEmail, otherUserEmail);
   }
 
   // TODO: RENDER IN HARMONY BUTTON
@@ -129,6 +250,25 @@ class ProfilePage extends Component {
                       <EditProfile userEmail={this.state.userEmail} />
                     )}
                     <ProfileLink userEmail={this.state.userEmail} />
+                    {!this.state.userEdit && (
+                      <button
+                        className="harmonize"
+                        id="harmonize"
+                        onClick={() =>
+                          this.onClick(
+                            fb.auth().currentUser.email,
+                            this.state.userEmail
+                          )
+                        }
+                      >
+                        <img
+                          src={Harmonize}
+                          className="headphones"
+                          alt="headphones"
+                        />
+                        <h3>Harmonize</h3>
+                      </button>
+                    )}
                     {!this.state.friend && !this.state.userEdit && (
                       <button
                         className="addfriend"
@@ -139,13 +279,26 @@ class ProfilePage extends Component {
                       </button>
                     )}
                     {this.state.friend && !this.state.userEdit && (
-                      <button
-                        className="dm"
-                        id="dm"
-                        onClick={() => this.props.history.push("/messages")}
-                      >
-                        <img src={DM} className="message" alt="dm" />
-                      </button>
+                      <div>
+                        <button
+                          className="dm"
+                          id="dm"
+                          onClick={() =>
+                            this.props.history.push(
+                              "/messages/" + btoa(this.state.userEmail)
+                            )
+                          }
+                        >
+                          <img src={DM} className="message" alt="dm" />
+                        </button>
+                        <button
+                          className="removefriend"
+                          id="removefriend"
+                          onClick={() => this.removeFriend()}
+                        >
+                          <img src={Remove} className="remove" alt="remove" />
+                        </button>
+                      </div>
                     )}
                   </div>
                   <div className="row-2">

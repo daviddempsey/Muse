@@ -23,3 +23,8 @@
 .edit:active {
   transform: translate(1px, 1px);
 }
+
+.edit h3 {
+  margin-left: 10px;
+  margin-right: 10px;
+}

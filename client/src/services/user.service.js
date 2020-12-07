@@ -104,6 +104,22 @@ class UserService {
     }
   }
 
+  async removeFriend(myEmail, newEmail) {
+    console.log("inside");
+    try {
+      // get the document to be changed
+      const userDoc = userCollection.doc(myEmail);
+      await userDoc.update({
+        // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk
+        // need to change from hardcoded email to passed in parameter later on
+        friends: firebase.firestore.FieldValue.arrayRemove(newEmail),
+      });
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
+
   /* USER GET FUNCTIONS */
   async getRefreshToken(email) {
     try {
