@@ -16,7 +16,7 @@
 }
 
 .artistimgs img {
-  min-height: 100%;
+  height: 100%;
   max-width: 100%;
   object-fit: cover;
   border-radius: 50%;
@@ -30,4 +30,5 @@
 .artistimgs .row-1 {
   display: flex;
   flex-direction: row;
+  max-height: 13vw;
 }
