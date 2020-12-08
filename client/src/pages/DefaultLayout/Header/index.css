@@ -1,5 +1,9 @@
 @import "../../../styles/index.css";
 
+.Header {
+  max-height: 4.5rem;
+}
+
 .Header h3 {
   font-size: 18px;
 }
@@ -18,7 +22,7 @@
 }
 
 .navbar li h1 {
-  font-size: 32px;
+  font-size: 2rem;
 }
 
 .navbar li:first-of-type {
@@ -37,7 +41,7 @@
 }
 
 .navbar li .nav-item:hover {
-  border-bottom: 2px solid var(--black);
+  border-bottom: 0.125rem solid var(--black);
 }
 
 .navbar li {
