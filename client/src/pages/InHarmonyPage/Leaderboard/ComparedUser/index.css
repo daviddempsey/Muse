@@ -5,15 +5,12 @@
   justify-content: center;
   align-items: center;
   background: var(--almost-white);
-  /* border: 1px solid var(--grey); don't know if we need this */
   width: 100%;
   height: 10rem;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5);
   border-radius: 2rem;
-  /*-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
-  /*-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
   padding: 1rem 2rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
 }
 
 .ComparedUser img {
@@ -25,7 +22,7 @@
   align-items: center;
 }
 
-.ComparedUser .text {
+.ComparedUser .Text {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -33,7 +30,7 @@
   width: 50rem;
 }
 
-.ComparedUser .text .bio {
+.ComparedUser .Text .Bio {
     word-wrap: break-word;
     overflow: hidden;
     display: -webkit-box;
@@ -42,6 +39,6 @@
     padding-top: 1rem;
 }
 
-.ComparedUser .score h1 {
+.ComparedUser .Score{
   font-size: 4rem;
 }

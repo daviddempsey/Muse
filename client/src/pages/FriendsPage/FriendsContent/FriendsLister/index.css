@@ -1,0 +1,6 @@
+@import "../../../../styles/index.css";
+
+li {
+    display: flex;
+    flex: 1;
+}

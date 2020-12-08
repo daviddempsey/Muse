@@ -1,0 +1,22 @@
+@import "../../../styles/index.css";
+
+.FriendsContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 4rem 6rem;
+}
+
+.FriendsContent h1 {
+    font-size: 4rem;
+    line-height: 3.75rem;
+    text-align: center;
+}
+
+.FriendsContent .FriendsList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2.75rem;
+}
