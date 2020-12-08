@@ -81,7 +81,7 @@ class Leaderboard extends Component {
     };
     return await fetch(url, options).then((response) => {
       return response.json().then((data) => {
-        return data.similar_users.sort();
+        return data.similar_users;
       });
     });
   };
