@@ -20,6 +20,7 @@ class Leaderboard extends Component {
     this.getTopUsers = this.getTopUsers.bind(this);
     this.compareUsers = this.compareUsers.bind(this);
     this.authUser = this.authUser.bind(this);
+    this.setUserList = this.setUserList.bind(this);
   }
 
   authUser() {
@@ -34,31 +35,35 @@ class Leaderboard extends Component {
     });
   }
 
+  setUserList() {
+    this.getTopUsers().then((userList) => {
+      userList.sort((a,b) => (a.compatibility_score < b.compatibility_score) ? 1 : ((b.compatibility_score < a.compatibility_score) ? -1 : 0));
+      // if the user list's length is 0, then empty list is true
+      if (userList.length === 0) {
+        this.setState({
+          topUsers: userList,
+          loading: false,
+          listEmpty: true,
+        });
+        // else the user list is not empty and listEmpty is now false
+      } else {
+        this.setState({
+          topUsers: userList,
+          loading: false,
+          listEmpty: false,
+        });
+      }
+    });
+  }
+
   componentDidMount() {
     // get user session
     this.authUser().then((user) => {
       this.setState({
         userEmail: user.email,
       });
-
       // get the top users
-      this.getTopUsers().then((userList) => {
-        // if the user list's length is 0, then empty list is true
-        if (userList.length === 0) {
-          this.setState({
-            topUsers: userList,
-            loading: false,
-            listEmpty: true,
-          });
-          // else the user list is not empty and listEmpty is now false
-        } else {
-          this.setState({
-            topUsers: userList,
-            loading: false,
-            listEmpty: false,
-          });
-        }
-      });
+      this.setUserList();
     });
   }
 
@@ -102,8 +107,7 @@ class Leaderboard extends Component {
       console.log(response.status);
     });
 
-    // reload the list
-    this.componentDidMount();
+    this.setUserList();
   };
 
   render() {
@@ -133,7 +137,9 @@ class Leaderboard extends Component {
             <h2>Please press the Music Note to find compatible people!</h2>
           )}
           {!this.state.listEmpty && (
-            <HarmonyLister harmonyList={this.state.topUsers} />
+            <ul> 
+              <HarmonyLister harmonyList={this.state.topUsers} /> 
+            </ul>
           )}
         </div>
       </div>
