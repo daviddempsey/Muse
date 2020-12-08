@@ -8,9 +8,11 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import UserService from '../../services/user.service';
 
-import BttnGraphic from './submit_button.svg';
+import SendButton from './submit_button.svg';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import DefaultLayout from '../DefaultLayout';
+import Header from '../DefaultLayout/Header';
 
 // const auth = fb.auth();
 const firestore = fb.firestore();
@@ -98,21 +100,27 @@ const ChatroomPage = (props) => {
 
   if (!user) return null;
   return (
-    <div className="Chatroom">
-      <header>
-        <h2>{name}</h2>
-      </header>
-      <main>
-        {messages && messages.sort(compare).map(msg => <ChatMessage key={msg.id} message={msg} status={msg.status} />)}
-        <span ref={dummy}></span>
-      </main>
-
-      <form onSubmit={sendMessage}>
-        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit" disabled={!formValue}>
-          <img className="BttnImg" src={BttnGraphic} />
-        </button>
-      </form>
+    <div className="ChatroomPage">
+      <Header/>
+      <div className="messaging-list">
+        owo
+      </div>
+      <div className="Chatroom">
+        <header>
+          <h2>{name}</h2>
+        </header>
+        
+        <main>
+          {messages && messages.sort(compare).map(msg => <ChatMessage key={msg.id} message={msg} status={msg.status} />)}
+          <span ref={dummy}></span>
+        </main>
+        <form onSubmit={sendMessage}>
+          <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+          <button type="submit" disabled={!formValue}>
+            <img src={SendButton} alt="Send" />
+          </button>
+        </form> 
+      </div>
     </div>
   )
 }
