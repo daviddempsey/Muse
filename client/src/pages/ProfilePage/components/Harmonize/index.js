@@ -137,7 +137,6 @@ const Harmonize = ({ userEmail, otherEmail }) => {
             In Harmony Compatibility Score:{" "}
             {(compareData["score"] * 100).toFixed(2)}%
           </p>
-          <br />
           <p>
             Similar Artist Score: {(compareData["artist"] * 100).toFixed(2)}%
           </p>
@@ -148,7 +147,6 @@ const Harmonize = ({ userEmail, otherEmail }) => {
             Similar Audio Features Score:{" "}
             {(compareData["audio_features"] * 100).toFixed(2)}%
           </p>
-          <br />
           <p style={{ display: "inline" }}>Shared Top Artists: </p>
           {artistData[0] ? (
             <ArtistLister SimilarArtists={artistData} />
@@ -158,12 +156,14 @@ const Harmonize = ({ userEmail, otherEmail }) => {
               <br />
             </p>
           )}
-          <br />
           <p style={{ display: "inline" }}>Shared Top Genres: </p>
           {genreData[0] ? (
             <GenreLister SimilarGenres={genreData} />
           ) : (
-            <p style={{ display: "inline" }}>None</p>
+            <p style={{ display: "inline" }}>
+              None
+              <br />
+            </p>
           )}
         </div>
       )}
