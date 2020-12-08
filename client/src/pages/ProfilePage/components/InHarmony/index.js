@@ -24,6 +24,7 @@ const InHarmony = ({ userEmail, otherEmail }) => {
             <li key={i}>
                 <h3>{SimilarGenres[item].name}</h3>
                 <h5>Score: {SimilarGenres[item].score * 100}</h5>
+                <h5>Freq: {SimilarGenres[item].frequency_sum}</h5>
             </li>
         </div>
     ));
