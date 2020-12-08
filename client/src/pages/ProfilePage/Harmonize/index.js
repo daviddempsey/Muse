@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./index.css";
-import HarmonizeIcon from "../../assets/harmonize.svg";
+import HarmonizeIcon from "../assets/harmonize.svg";
 
 const Harmonize = ({ userEmail, otherEmail }) => {
   const [compareData, setCompareData] = useState(0);
