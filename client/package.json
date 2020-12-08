@@ -50,5 +50,8 @@
     "main": "index.js",
     "author": "",
     "license": "ISC",
-    "proxy": "http://localhost:5001/muse-eec76/us-central1/app/"
+    "proxy": "http://localhost:5001/muse-eec76/us-central1/app/",
+    "devDependencies": {
+        "prettier": "2.2.1"
+    }
 }
