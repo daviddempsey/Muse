@@ -3,3 +3,4 @@ firebase-debug.log
 ui-debug.log
 .eslintrc.json
 login.js
+service_account_keys.js
