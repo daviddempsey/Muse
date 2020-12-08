@@ -65,13 +65,11 @@
 }
 
 .Leaderboard .ComparedUsers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 75rem;
-
-    padding-top: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  min-width: 80%;
+  padding-top: 1rem;
 }
 
 .Leaderboard .ComparedUsers ul{
