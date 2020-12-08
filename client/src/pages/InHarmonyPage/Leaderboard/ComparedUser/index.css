@@ -1,35 +1,36 @@
-@import '../../../../styles/index.css';
+@import "../../../../styles/index.css";
 
 .ComparedUser {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--almost-white);
-    /* border: 1px solid var(--grey); don't know if we need this */
-    width: 100%;
-    height: 10rem;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-    border-radius: 2rem;
-    /*-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
-    /*-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
-    padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--almost-white);
+  /* border: 1px solid var(--grey); don't know if we need this */
+  width: 100%;
+  height: 10rem;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  border-radius: 2rem;
+  /*-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
+  /*-moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);*/
+  padding: 1rem 2rem;
+  margin-bottom: 0.75rem;
 }
 
 .ComparedUser img {
-    border-radius: 50%;
-    width: 8rem;
-    height: 8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ComparedUser .text {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 1rem;
-    width: 50rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1rem;
+  width: 50rem;
 }
 
 .ComparedUser .text .bio {
@@ -42,5 +43,5 @@
 }
 
 .ComparedUser .score h1 {
-    font-size: 4rem;
+  font-size: 4rem;
 }

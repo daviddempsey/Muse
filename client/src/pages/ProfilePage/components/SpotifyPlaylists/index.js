@@ -15,21 +15,61 @@ const SpotifyPlaylists = ({ userEmail }) => {
   };
 
   // lister function for playlists
-  const PlaylistLister = ({ playlists }) =>
-    Object.keys(playlists).map((item, i) => (
-      <div className="album">
-        <a
-          href={
-            "https://open.spotify.com/playlist/" + playlists[item].playlist_id
-          }
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img alt="playlist" src={playlists[item].image} />
-          <h3>{playlists[item].playlist_name}</h3>
-        </a>
-      </div>
-    ));
+  const PlaylistLister = ({ playlists }) => (
+    <div className="rows">
+      {Object.keys(playlists).map(
+        (item, i) =>
+          i % 3 === 0 &&
+          playlists[i] && (
+            <div className="row-1">
+              <div className="album">
+                <a
+                  href={
+                    "https://open.spotify.com/playlist/" +
+                    playlists[i].playlist_id
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img alt="playlist" src={playlists[i].image} />
+                  <h3>{playlists[i].playlist_name}</h3>
+                </a>
+              </div>
+              {playlists[i + 1] && (
+                <div className="album">
+                  <a
+                    href={
+                      "https://open.spotify.com/playlist/" +
+                      playlists[i + 1].playlist_id
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img alt="playlist" src={playlists[i + 1].image} />
+                    <h3>{playlists[i + 1].playlist_name}</h3>
+                  </a>
+                </div>
+              )}
+              {playlists[i + 2] && (
+                <div className="album">
+                  <a
+                    href={
+                      "https://open.spotify.com/playlist/" +
+                      playlists[i + 2].playlist_id
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img alt="playlist" src={playlists[i + 2].image} />
+                    <h3>{playlists[i + 2].playlist_name}</h3>
+                  </a>
+                </div>
+              )}
+            </div>
+          )
+      )}
+    </div>
+  );
 
   // check if component mounted
   React.useEffect(() => {

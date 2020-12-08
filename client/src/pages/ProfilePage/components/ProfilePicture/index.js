@@ -14,7 +14,11 @@ const ProfilePicture = ({ userEmail }) => {
     getProfilePicture(userEmail);
   }, [userEmail]);
 
-  return <img src={profilePicture} className="pfp" alt="pfp" />;
+  return (
+    <div className="pfpcontainer">
+      <img src={profilePicture} className="pfp" alt="pfp" />
+    </div>
+  );
 };
 
 export default ProfilePicture;

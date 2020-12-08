@@ -8,21 +8,21 @@ const TopGenres = ({ userEmail }) => {
   const GenreLister = ({ topGenres }) =>
     Object.keys(topGenres).map((item, i) => (
       <div>
-        {(i + 1) % 3 === 2 && i < 5 && (
+        {(i + 1) % 3 === 2 && i < 6 && (
           <div className="element">
             <h3>
               <h3 className="number">{i + 1}.</h3> {topGenres[item].genre_name}
             </h3>
           </div>
         )}
-        {(i + 1) % 3 === 1 && i < 5 && (
+        {(i + 1) % 3 === 1 && i < 6 && (
           <div className="element2">
             <h3>
               <h3 className="number">{i + 1}.</h3> {topGenres[item].genre_name}
             </h3>
           </div>
         )}
-        {(i + 1) % 3 === 0 && i < 5 && (
+        {(i + 1) % 3 === 0 && i < 6 && (
           <div className="element3">
             <h3>
               <h3 className="number">{i + 1}.</h3> {topGenres[item].genre_name}

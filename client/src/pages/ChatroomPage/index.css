@@ -1,0 +1,139 @@
+@import '../../styles/index.css';
+
+.ChatroomPage {
+    max-height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.Chatroom {
+    position: absolute;
+    top: 4.5rem;
+    right: 0;
+    width: 60%;
+    height: calc(100% - 4.5rem);
+    overflow: hidden;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+}
+
+.Chatroom header {
+    background-color: var(--red);
+    width: 100%;
+    height: 10%;
+    min-height: 3rem;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+}
+
+.Chatroom main {
+    width: 100%;
+    height: 75%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+}
+  
+.Chatroom main::-webkit-scrollbar {
+    width: 0.25rem;
+}
+  
+.Chatroom main::-webkit-scrollbar-track {
+    background: var(--grey);
+}
+  
+.Chatroom main::-webkit-scrollbar-thumb {
+    background: var(--blue);
+}
+
+.Chatroom form {
+    width: 100%;
+    height: 15%;
+    font-size: 1.5rem;
+    background: var(--almost-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.Chatroom input {
+    line-height: 1.5;
+    height: 2rem;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: "Hind";
+    color: var(--black);
+    outline: none;
+    border: none;
+    box-shadow: var(--shadow);
+    border-radius: 3rem;
+    padding: 1rem 2rem;
+}
+  
+.Chatroom form button {
+    justify-self: flex-end;
+    background: none;
+    border: none;
+    outline: none;
+    padding-left: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.Chatroom form button:disabled {
+    cursor: not-allowed;
+} 
+  
+.Chatroom ul, li {
+    text-align: left;
+    list-style: none;
+}
+  
+.Chatroom .message p {
+    max-width: 50%;
+    margin-bottom: 0.75rem;
+    line-height: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    position: relative;
+    color: var(--white);
+    text-align: left;
+    font-weight: 600;
+}
+  
+.Chatroom .message {
+    display: flex;
+    align-items: center;
+}
+  
+.Chatroom .sent {
+    flex-direction: row-reverse;
+}
+  
+.Chatroom .sent p {
+    color: var(--white);
+    background: var(--red);
+    align-self: flex-end;
+}
+
+.Chatroom .received p {
+    background: var(--almost-white);
+    color: var(--black);
+}
+
+
+.Chatroom img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 2px 5px;
+}
