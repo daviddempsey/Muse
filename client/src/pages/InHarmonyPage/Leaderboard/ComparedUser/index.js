@@ -45,13 +45,10 @@ const ComparedUser = ({ compEmail, compOverall }) => {
             </Link>
           </h2>
         </div>
-        <div className="bio">
-          <p>{bio}</p>
-        </div>
-        <br />
-        <div className="score">
+        <p className="bio">{bio}</p>
+      </div>
+      <div className="score">
           <h1>{compOverall}%</h1>
-        </div>
       </div>
     </div>
   );

@@ -133,7 +133,7 @@ class Leaderboard extends Component {
             <h2>Please press the Music Note to find compatible people!</h2>
           )}
           {!this.state.listEmpty && (
-            <HarmonyLister harmonyList={this.state.topUsers} />
+            <ul> <HarmonyLister harmonyList={this.state.topUsers} /> </ul>
           )}
         </div>
       </div>
