@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 const FriendsPage = () => {
   return (
     <DefaultLayout>
-          <FriendsContent />
+      <FriendsContent />
     </DefaultLayout>
   );
 };
