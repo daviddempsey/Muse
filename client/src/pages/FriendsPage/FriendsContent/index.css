@@ -1,5 +1,6 @@
 @import "../../../styles/index.css";
 
+
 .FriendsContent {
     display: flex;
     flex-direction: column;
@@ -10,13 +11,14 @@
 .FriendsContent h1 {
     font-size: 4rem;
     line-height: 3.75rem;
+    justify-content: center;
     text-align: center;
 }
 
 .FriendsContent .FriendsList {
-    display: flex;
-    flex-direction: column;
+    padding-top: 2.75rem;
     align-items: center;
     justify-content: center;
-    padding-top: 2.75rem;
+    max-width: 100%;
+    min-width: 80%;
 }
