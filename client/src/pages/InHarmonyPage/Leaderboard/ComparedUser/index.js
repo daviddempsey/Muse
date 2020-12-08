@@ -34,26 +34,20 @@ const ComparedUser = ({ compEmail, compOverall }) => {
   return (
     <div className="ComparedUser">
       <img alt="profile pic not found" src={pic} />
-      <div className="text">
-        <div className="name">
-          <h2>
-            <Link
-              to={"/profile/" + btoa(compEmail)}
-              style={{ color: "inherit", textDecoration: "inherit" }}
-            >
-              {name}
-            </Link>
-          </h2>
-        </div>
-        <div className="bio">
-          <p>{bio}</p>
-        </div>
-        <br />
-        <div className="score">
-          <h1>{compOverall}%</h1>
-        </div>
+      <div className="Text">
+        <h2>
+          <Link
+            to={"/profile/" + btoa(compEmail)}
+            style={{ color: "inherit", textDecoration: "inherit" }}
+          >
+            {name}
+          </Link>
+        </h2>
+        <p className="Bio">{bio}</p>
       </div>
+      <h1 className="Score">{compOverall}%</h1>
     </div>
   );
 };
+
 export default ComparedUser;
