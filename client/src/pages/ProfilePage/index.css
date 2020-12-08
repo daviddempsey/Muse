@@ -9,7 +9,7 @@
 }
 
 /* Edit profile */
-.popup {
+.editpopup {
   display: none;
   position: absolute;
   top: 10%;

@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 import "firebase/auth";
 const auth = fb.auth();
 
-class Popup extends Component {
+class EditPopup extends Component {
   //constructor
   constructor(props) {
     super(props);
@@ -212,7 +212,7 @@ class Popup extends Component {
   }
 
   togglePop() {
-    document.getElementById("popup").style.display = "none";
+    document.getElementById("editpopup").style.display = "none";
     document.getElementById("page").style.filter = "brightness(1)";
     document.getElementById("page").style.pointerEvents = "auto";
     document.getElementById("page").style.userSelect = "auto";
@@ -331,4 +331,4 @@ class Popup extends Component {
   }
 }
 
-export default withRouter(Popup);
+export default withRouter(EditPopup);

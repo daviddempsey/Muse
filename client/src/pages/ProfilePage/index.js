@@ -16,7 +16,7 @@ import TopGenres from "./components/TopGenres";
 import ProfileLink from "./components/ProfileLink";
 import SocialMedia from "./components/SocialMedia";
 import EditProfile from "./components/EditProfile";
-import Popup from "./components/Popup";
+import EditPopup from "./components/EditPopup";
 import SpotifyPlaylists from "./components/SpotifyPlaylists";
 import Name from "./components/Name";
 
@@ -222,7 +222,8 @@ class ProfilePage extends Component {
     console.log("myEmail: " + myEmail);
     console.log("otherUserEmail: " + otherUserEmail);
     let score = (await this.compareTwoUsers(myEmail, otherUserEmail)) * 100;
-    alert(score);
+
+    //alert(score);
     this.artistBreakdown(myEmail, otherUserEmail);
     this.genreBreakdown(myEmail, otherUserEmail);
   }
@@ -329,8 +330,8 @@ class ProfilePage extends Component {
             </div>
           </DefaultLayout>
         </div>
-        <div className="popup" id="popup">
-          <Popup />
+        <div className="editpopup" id="editpopup">
+          <EditPopup />
         </div>
       </div>
     );

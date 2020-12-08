@@ -12,8 +12,7 @@
 .playlistimgs .album {
   flex: 33%;
   position: relative;
-  max-width: 12vw;
-  margin-top: 0.6vw;
+  max-width: 11.5vw;
   margin-left: 0.3vw;
   margin-right: 0.3vw;
 }
@@ -26,6 +25,7 @@
 
 .playlistimgs h3 {
   position: absolute;
+  flex: 1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -33,7 +33,9 @@
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: var(--black);
   -webkit-font-smoothing: antialiased;
-  max-width: 80%;
+  font-size: 1.4vw;
+  width: 95%;
+  max-height: 100%;
   text-align: center;
   word-wrap: break-word;
 }
@@ -47,5 +49,6 @@
 .playlistimgs .row-1 {
   display: flex;
   flex-direction: row;
-  max-height: 12vw;
+  margin-top: 0.6vw;
+  height: 11vw;
 }
