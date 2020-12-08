@@ -59,14 +59,14 @@ async function computeCompatibility(admin, fsdb, currUserEmail, otherUserEmail) 
   // Get respective scores
   var compatiblityScores = {};
   compatiblityScores[otherUserEmail] = {
-    "audio_features": await computeAudioFeatureScore(currUserTopStats.top_tracks, otherUserTopStats.top_tracks),
-    "artist": await rbo(currUserTopStats.top_artists, otherUserTopStats.top_artists, "artists"),
-    "genres": await rbo(currUserTopStats.top_genres, otherUserTopStats.top_genres, "genres"),
-    "score": 0
+    "audio_feature_score": await computeAudioFeatureScore(currUserTopStats.top_tracks, otherUserTopStats.top_tracks),
+    "artist_score": await rbo(currUserTopStats.top_artists, otherUserTopStats.top_artists, "artists"),
+    "genre_score": await rbo(currUserTopStats.top_genres, otherUserTopStats.top_genres, "genres"),
+    "compatibility_score": 0
   }
   // Get average for total compatibility percentage
-  compatiblityScores[otherUserEmail]["score"] = (compatiblityScores[otherUserEmail]["audio_features"] +
-    compatiblityScores[otherUserEmail]["artist"] + compatiblityScores[otherUserEmail]["genres"]) / 3
+  compatiblityScores[otherUserEmail]["compatibility_score"] = (compatiblityScores[otherUserEmail]["audio_feature_score"] +
+    compatiblityScores[otherUserEmail]["artist_score"] + compatiblityScores[otherUserEmail]["genre_score"]) / 3
 
   // Put compatibility score inside the in_harmony table on Firestore 
   indexCompatibilityScoresIntoTable(admin, fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
@@ -121,6 +121,7 @@ exports.computeFriendCompatibility = async function (fsdb, currUserEmail, otherU
 
 /**
  * Computes the compatibility score based on the top songs listed
+ * TODO: Fix the weighting with Kenny and David
  * @param {List} currUserTopSongs top songs of current user
  * @param {List} otherUserTopSongs top songs of other user
  */
@@ -174,8 +175,14 @@ async function rbo(currList, otherList, type) {
   var tempCurrList = [];
   var tempOtherList = [];
 
+  /*
+   * This is to fix the length issue (if either user does not meet the top_stats limit)
+   * Note: this might ruin the calculations 
+   */
+  var limit = Math.min(currList.length, otherList.length);
+
   // Compute Jaccard similarity in every iteration 
-  for (let i = 0; i < currList.length; i++) {
+  for (let i = 0; i < limit; i++) {
     tempCurrList.push(currList[i]);
     tempOtherList.push(otherList[i]);
     jaccards.push(intersection(tempCurrList, tempOtherList).size / union(tempCurrList, tempOtherList).size);
@@ -253,7 +260,7 @@ function union(currList, otherList) {
 
 
 /**
- * Finds the intersection of two sets in O(currList)
+ * Finds the intersection of two sets in O(|currList|)
  * @param {List} currList top artists/genres of a user
  * @param {List} otherList top artists/genres of a user
  */
@@ -273,7 +280,7 @@ function intersection(currList, otherList) {
  */
 async function getIdsFromTopStats(doc) {
   var ids = [];
-  for (let i = 1; i < doc.length; i++) {
+  for (let i in doc) {
     ids.push(doc[i].track_id);
   }
   return ids;
@@ -287,11 +294,11 @@ async function getIdsFromTopStats(doc) {
 async function getNamesFromTopStats(doc, type) {
   var names = [];
   if (type === "artists") {
-    for (let i = 1; i < doc.length; i++) {
+    for (let i in doc){
       names.push(doc[i].artist_name);
     }
   } else {
-    for (let i = 1; i < doc.length; i++) {
+    for (let i in doc) {
       names.push(doc[i].genre_name);
     }
   }
@@ -312,20 +319,29 @@ async function indexCompatibilityScoresIntoTable(admin, fsdb, sourceUser, target
   let data = await document.get();
   let entry = data.data();
 
-  // TODO: Hey David, should i add the date here so I have record of when this was last updated? 
-
+  // Prepare in_harmony scores to be pushed into Firestore
   var similarUsers = [];
   var userEntry = {
     'email': targetUser,
-    'artist_score': compatibilityScores['artist'],
-    'genre_score': compatibilityScores['genres'],
-    'audio_feature_score': compatibilityScores['audio_features'],
-    'compatibility_score': compatibilityScores['score'],
+    'artist_score': compatibilityScores['artist_score'],
+    'genre_score': compatibilityScores['genre_score'],
+    'audio_feature_score': compatibilityScores['audio_feature_score'],
+    'compatibility_score': compatibilityScores['compatibility_score'],
   }
   similarUsers.push(userEntry);
-  await document.update({
-    similar_users: admin.firestore.FieldValue.arrayUnion(userEntry)
-  });
+
+  // Create new in_harmony document for user when not found (usually for dev testing purposes)
+  if (entry === undefined) {
+    await fsdb.collection('in_harmony').doc(sourceUser)
+      .create({
+        similar_users: similarUsers
+      });
+  } else {
+    await document.update({
+      similar_users: admin.firestore.FieldValue.arrayUnion(userEntry)
+    });
+  }
+
 }
 
 /* Location functions */
@@ -378,7 +394,7 @@ function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
  * @param {Array} list2 top artist of other user
  */
 exports.findTopSimilarArtist = function (list1, list2) {
-  
+
   // Inverse the enumerated list1
   var inverseList1 = {};
   for (let i in list1) {
@@ -421,7 +437,7 @@ exports.findTopSimilarArtist = function (list1, list2) {
  * @param {Array} list2 top genre of other user
  */
 exports.findTopSimilarGenres = function (list1, list2) {
-  
+
   // Inverse the enumerated list1
   var inverseList1 = {};
   for (let i in list1) {
@@ -436,7 +452,7 @@ exports.findTopSimilarGenres = function (list1, list2) {
       result[i] = inverseList1[element];
     }
   }
-  
+
   var similarities = [];
   var totalGenreFrequency = 0;
   for (let i in result) {
@@ -451,7 +467,7 @@ exports.findTopSimilarGenres = function (list1, list2) {
   }
 
   // Sorts list based on difference then name 
-  similarities.sort((a, b) => (a.frequency_sum < b.frequency_sum ) ? 1 : (a.frequency_sum === b.frequency_sum) ? ((a.name < b.name) ? 1 : -1) : -1);
+  similarities.sort((a, b) => (a.frequency_sum < b.frequency_sum) ? 1 : (a.frequency_sum === b.frequency_sum) ? ((a.name < b.name) ? 1 : -1) : -1);
   
   // Find the overall percentage of each simimlar genre 
   for (let i in similarities) {
