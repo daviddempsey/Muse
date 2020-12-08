@@ -30,6 +30,10 @@ const ChatroomPage = (props) => {
   const messagesRef = firestore.collection('messages');
   const query = messagesRef.where('email', '==', email).where('receiverEmail', '==', receiverEmail);
 
+  let [messages] = useCollectionData(query, { idField: 'id' });
+
+  const [formValue, setFormValue] = useState('');
+
   const authUser = () => {
     return new Promise(function (resolve, reject) {
       fb.auth().onAuthStateChanged(function (user) {
@@ -48,6 +52,7 @@ const ChatroomPage = (props) => {
   };
 
   const compare = (msg1, msg2) => {
+    console.log("works");
     if (msg1.createdAt && msg2.createdAt) {
       if (msg1.createdAt.seconds <= msg2.createdAt.seconds) {
         return -1;
@@ -58,10 +63,6 @@ const ChatroomPage = (props) => {
     }
     else return -1;
   }
-
-  let [messages] = useCollectionData(query, { idField: 'id' });
-
-  const [formValue, setFormValue] = useState('');
 
   const sendMessage = async (e) => {
     e.preventDefault();
