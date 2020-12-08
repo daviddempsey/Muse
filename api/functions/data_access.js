@@ -9,6 +9,9 @@
 const { response } = require("express");
 var request = require("request"); // "Request" library
 
+// Change this number to get more accurate results when computing compatibility
+const TOP_STATS_LIMIT = 10;
+
 /**
  * Creates a user based on the user's Spotify information into the database
  * that's passed in.
@@ -233,7 +236,7 @@ async function createUserStatsTopGenres(db, email, topArtists) {
   let index = 0;
   for (const [key, value] of genreRankings.entries()) {
     // Limit the results to only 10
-    if (index === 10) {
+    if (index === TOP_STATS_LIMIT) {
       break;
     }
 
@@ -330,7 +333,7 @@ exports.createUserStats = async function createUserStats(
 
   // find top artist
   var topArtistsCall = {
-    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10',
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=' + TOP_STATS_LIMIT,
     headers: { 'Authorization': 'Bearer ' + access_token },
     json: true
   };
@@ -341,7 +344,7 @@ exports.createUserStats = async function createUserStats(
 
   // find top genre (Do we really want it long term 50 since we have medium_term 10 for all the other calls)
   var topGenresCall = {
-    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=10',
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit='+ TOP_STATS_LIMIT,
     headers: { 'Authorization': 'Bearer ' + access_token },
     json: true
   };
@@ -351,7 +354,7 @@ exports.createUserStats = async function createUserStats(
 
   // find top tracks
   var topTracksCall = {
-    url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10',
+    url: 'https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit='+ TOP_STATS_LIMIT,
     headers: { 'Authorization': 'Bearer ' + access_token },
     json: true
   };
