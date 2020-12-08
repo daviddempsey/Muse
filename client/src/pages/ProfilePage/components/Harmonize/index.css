@@ -1,7 +1,55 @@
 @import "../../../../styles/index.css";
 
-.title {
+.modal2 {
+  height: 250px;
+  width: 500px;
+  background-color: var(--almost-white);
+  border-radius: 15px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  padding: 10px;
   text-align: left;
+  position: absolute;
+  margin-left: -250px;
+  top: 6%;
+  left: 50%;
+}
+
+/* Harmonize */
+.harmonize {
+  display: flex;
+  width: auto;
+  height: auto;
+  max-height: 45px;
   color: var(--red);
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: inherit;
+  border-color: var(--red);
+  border-width: 0.3rem;
+  border-radius: 2rem;
+  margin-left: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.harmonize:focus {
+  outline: none;
+}
+
+.harmonize:active {
+  transform: translate(1px, 1px);
+}
+
+.harmonize h3 {
+  margin-right: 10px;
+}
+
+.harmonize .headphones {
+  width: auto;
+  height: auto;
+  max-height: 25px;
+  margin-top: 0.2rem;
+  margin-left: 10px;
   margin-right: 10px;
 }

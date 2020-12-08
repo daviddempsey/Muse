@@ -60,7 +60,7 @@
   border-style: solid;
   border-width: 2px;
   border-color: var(--black);
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .modal .content .row-1 .col-1 .btn {
@@ -188,7 +188,7 @@
   margin-top: 10px;
   margin-left: 20px;
   margin-bottom: 10px;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .modal .content .row-3 {

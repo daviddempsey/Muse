@@ -12,7 +12,7 @@ const Harmonize = ({ userEmail, otherEmail }) => {
     Object.keys(SimilarArtists).map((item, i) => (
       <div id="Similar Artist">
         <li key={i}>
-          <h3>
+          <p>
             <a
               href={
                 "https://open.spotify.com/artist/" + SimilarArtists[item].id
@@ -20,7 +20,7 @@ const Harmonize = ({ userEmail, otherEmail }) => {
             >
               {SimilarArtists[item].name}
             </a>
-          </h3>
+          </p>
           {/* <h5>Difference: {SimilarArtists[item].difference}</h5> */}
         </li>
       </div>
@@ -30,8 +30,13 @@ const Harmonize = ({ userEmail, otherEmail }) => {
     Object.keys(SimilarGenres).map((item, i) => (
       <div id="Similar Artist">
         <li key={i}>
-          <h3>{SimilarGenres[item].name}</h3>
-          <h5>Score: {SimilarGenres[item].score * 100}</h5>
+          <p style={{ display: "inline" }}>{SimilarGenres[item].name} </p>
+          <p style={{ display: "inline" }}>
+            (Score: {(SimilarGenres[item].score * 100).toFixed(2)}%,{" "}
+          </p>
+          <p style={{ display: "inline" }}>
+            Tracks: {SimilarGenres[item].frequency_sum})
+          </p>
         </li>
       </div>
     ));
@@ -98,46 +103,70 @@ const Harmonize = ({ userEmail, otherEmail }) => {
 
   // to call multiple events
   const onClick = async (myEmail, otherUserEmail) => {
-    setCompareData(await compareTwoUsers(myEmail, otherUserEmail));
-    setArtistData(await artistBreakdown(myEmail, otherUserEmail));
-    setGenreData(await genreBreakdown(myEmail, otherUserEmail));
-    setShowPopUp(true);
-  };
+    if (!showPopUp) {
+      setCompareData(await compareTwoUsers(myEmail, otherUserEmail));
+      setArtistData(await artistBreakdown(myEmail, otherUserEmail));
+      setGenreData(await genreBreakdown(myEmail, otherUserEmail));
+    }
+    setShowPopUp(!showPopUp);
 
-  React.useEffect(() => {
-    console.log("mounted");
-  }, []);
+    var specifiedElement = document.getElementById("compareTwoUsers");
+    document.addEventListener("click", function (event) {
+      var isClickInside = specifiedElement.contains(event.target);
+      if (!isClickInside) {
+        setShowPopUp(false);
+      }
+    });
+  };
 
   return (
     <div>
-      <button
-        className="harmonize"
-        id="harmonize"
-        onClick={() => onClick(userEmail, otherEmail)}
-      >
-        <img src={HarmonizeIcon} className="headphones" alt="headphones" />
-        <h3>Harmonize</h3>
-      </button>
-      {showPopUp ? (
-        <div id="popup">
-          <div id="compareTwoUsers">
-            <h2>Harmonize</h2>
-            <h5>
-              In Harmony Compatibility Score: {compareData["score"] * 100}
-            </h5>
-            <h5>Similar Artist Score: {compareData["artist"] * 100}</h5>
-            <h5>Similar Genre Score: {compareData["genres"] * 100}</h5>
-            <h5>
-              Similar Audio Features Score:{" "}
-              {compareData["audio_features"] * 100}
-            </h5>
-          </div>
-          <h2> Similar Artists </h2>
-          <ArtistLister SimilarArtists={artistData} />
-          <h2> Similar Genres </h2>
-          <GenreLister SimilarGenres={genreData} />
+      <div>
+        <button
+          className="harmonize"
+          id="harmonize"
+          onClick={() => onClick(userEmail, otherEmail)}
+        >
+          <img src={HarmonizeIcon} className="headphones" alt="headphones" />
+          <h3>Harmonize</h3>
+        </button>
+      </div>
+      {showPopUp && (
+        <div className="modal2" id="compareTwoUsers">
+          <p>
+            In Harmony Compatibility Score:{" "}
+            {(compareData["score"] * 100).toFixed(2)}%
+          </p>
+          <br />
+          <p>
+            Similar Artist Score: {(compareData["artist"] * 100).toFixed(2)}%
+          </p>
+          <p>
+            Similar Genre Score: {(compareData["genres"] * 100).toFixed(2)}%
+          </p>
+          <p>
+            Similar Audio Features Score:{" "}
+            {(compareData["audio_features"] * 100).toFixed(2)}%
+          </p>
+          <br />
+          <p style={{ display: "inline" }}>Shared Top Artists: </p>
+          {artistData[0] ? (
+            <ArtistLister SimilarArtists={artistData} />
+          ) : (
+            <p style={{ display: "inline" }}>
+              None
+              <br />
+            </p>
+          )}
+          <br />
+          <p style={{ display: "inline" }}>Shared Top Genres: </p>
+          {genreData[0] ? (
+            <GenreLister SimilarGenres={genreData} />
+          ) : (
+            <p style={{ display: "inline" }}>None</p>
+          )}
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
