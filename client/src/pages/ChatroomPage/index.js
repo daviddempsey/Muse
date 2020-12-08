@@ -9,7 +9,8 @@ import "firebase/auth";
 import UserService from "../../services/user.service";
 import SendButton from "./submit_button.svg";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import DefaultLayout from "../DefaultLayout";
+// TODO: Implement header and footer
+//import DefaultLayout from "../DefaultLayout"; 
 import Header from "../DefaultLayout/Header";
 
 const firestore = fb.firestore();
@@ -89,7 +90,7 @@ const ChatroomPage = (props) => {
       setUser(user);
     });
     getName(receiverEmail);
-  }, []);
+  }, [receiverEmail]);
 
   if (!user) return null;
   return (
