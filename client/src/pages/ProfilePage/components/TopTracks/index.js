@@ -19,7 +19,7 @@ const TopTracks = ({ userEmail }) => {
                 <img src={topTracks[item]["images"][0]} alt="album" />
 
                 <div className="trackcontent">
-                  <h2>
+                  <h2 style={{ marginBottom: "2px" }}>
                     {i + 1}. {topTracks[item].track_name}
                   </h2>
                   <p className="body">{topTracks[item]["album_name"]}</p>
