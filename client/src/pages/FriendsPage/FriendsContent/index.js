@@ -34,10 +34,10 @@ const FriendsContent = () => {
   /* renders the friend page */
   return (
     <div className="FriendsContent">
-        <h1>Friends</h1>
-        <div className="FriendsList"> 
-          <FriendsLister friendsList={friendsList} />
-        </div>
+      <h1>Friends</h1>
+      <div className="FriendsList">
+        <FriendsLister friendsList={friendsList} />
+      </div>
     </div>
   );
 };

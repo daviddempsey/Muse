@@ -37,7 +37,13 @@ class Leaderboard extends Component {
 
   setUserList() {
     this.getTopUsers().then((userList) => {
-      userList.sort((a,b) => (a.compatibility_score < b.compatibility_score) ? 1 : ((b.compatibility_score < a.compatibility_score) ? -1 : 0));
+      userList.sort((a, b) =>
+        a.compatibility_score < b.compatibility_score
+          ? 1
+          : b.compatibility_score < a.compatibility_score
+          ? -1
+          : 0
+      );
       // if the user list's length is 0, then empty list is true
       if (userList.length === 0) {
         this.setState({
@@ -137,8 +143,8 @@ class Leaderboard extends Component {
             <h2>Please press the Music Note to find compatible people!</h2>
           )}
           {!this.state.listEmpty && (
-            <ul> 
-              <HarmonyLister harmonyList={this.state.topUsers} /> 
+            <ul>
+              <HarmonyLister harmonyList={this.state.topUsers} />
             </ul>
           )}
         </div>

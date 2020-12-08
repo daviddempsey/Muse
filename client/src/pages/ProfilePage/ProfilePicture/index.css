@@ -1,0 +1,17 @@
+@import "../../../styles/index.css";
+
+.pfpcontainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.pfpcontainer .pfp {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--black);
+  border-radius: 50%;
+}

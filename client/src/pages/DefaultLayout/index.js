@@ -1,8 +1,8 @@
-import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import React from "react";
+import Header from "./Header";
+import Footer from "./Footer";
 
-import './index.css';
+import "./index.css";
 
 const DefaultLayout = ({ children }) => {
   return (
