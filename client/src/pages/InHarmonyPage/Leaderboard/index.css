@@ -1,12 +1,12 @@
 @import "../../../styles/index.css";
 
 .Leaderboard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 4rem 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 4rem 6rem;
 }
 
 .Leaderboard .harmonyHeader {
@@ -72,6 +72,6 @@
   padding-top: 1rem;
 }
 
-.Leaderboard .ComparedUsers ul{
-    width: 100%;
+.Leaderboard .ComparedUsers ul {
+  width: 100%;
 }
