@@ -8,7 +8,7 @@ import Add from "./assets/friend.svg";
 import Remove from "./assets/remove.svg";
 import DM from "./assets/dm.svg";
 import Harmonize from "./assets/harmonize.svg";
-import ProfilePicture from "./components/ProfilePicture";
+import ProfilePicture from "./ProfilePicture";
 import Biography from "./Biography";
 import TopArtists from "./TopArtists";
 import TopTracks from "./TopTracks";

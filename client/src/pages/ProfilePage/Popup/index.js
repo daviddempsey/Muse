@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Facebook from "../../assets/fb.png";
-import Instagram from "../../assets/ig.png";
-import Twitter from "../../assets/twitter.png";
-import TikTok from "../../assets/tiktok.png";
+import Facebook from "../assets/fb.png";
+import Instagram from "../assets/ig.png";
+import Twitter from "../assets/twitter.png";
+import TikTok from "../assets/tiktok.png";
 import { withRouter } from "react-router-dom";
-import UserService from "../../../../services/user.service";
+import UserService from "../../../services/user.service";
 import "./index.css";
-import fb from "../../../../base.js";
+import fb from "../../../base.js";
 import Cookies from "js-cookie";
 import "firebase/auth";
 const auth = fb.auth();

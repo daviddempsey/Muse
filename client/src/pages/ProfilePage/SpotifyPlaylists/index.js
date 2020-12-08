@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import UserService from "../../../../services/user.service";
-import fb from "../../../../base";
+import UserService from "../../../services/user.service";
+import fb from "../../../base";
 import "./index.css";
 import "firebase/auth";
 const auth = fb.auth();

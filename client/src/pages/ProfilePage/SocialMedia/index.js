@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import UserService from "../../../../services/user.service";
-import fb from "../../../../base.js";
-import Spotify from "../../assets/spotify.png";
-import Facebook from "../../assets/fb.png";
-import Instagram from "../../assets/ig.png";
-import Twitter from "../../assets/twitter.png";
-import TikTok from "../../assets/tiktok.png";
+import UserService from "../../../services/user.service";
+import fb from "../../../base.js";
+import Spotify from "../assets/spotify.png";
+import Facebook from "../assets/fb.png";
+import Instagram from "../assets/ig.png";
+import Twitter from "../assets/twitter.png";
+import TikTok from "../assets/tiktok.png";
 import "./index.css";
 const auth = fb.auth();
 

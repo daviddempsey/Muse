@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "../../assets/link.svg";
+import Link from "../assets/link.svg";
 import "./index.css";
 
 const ProfileLink = () => {
