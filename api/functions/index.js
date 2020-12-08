@@ -63,8 +63,125 @@ app.get('/', (req, res) => {
 });
 
 // Create, POST
-// Go through every user in our database and compute compatibility score
+// sets the biography for the user
+app.post("/api/user/profile/set_biography/:email", (req, res) => {
+    (async () => {
+        try {
 
+            // get the document to be changed
+            const profileDoc = fsdb.collection("profile").doc(req.params.email);
+
+            // update the document with the request's body
+            await profileDoc.update(req.body);
+
+            // send a response if it's successful
+            return res.status(200).send();
+        } catch (error) {
+
+            // was not able to add the biography due to an error
+            console.log(error);
+
+            // return a 500 response due to error
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+// set profile picture for the user specified
+app.post("/api/user/profile/set_profilepic/:email", (req, res) => {
+    (async () => {
+        try {
+
+            // get the document to be changed
+            const profileDoc = fsdb.collection("profile").doc(req.params.email);
+
+            // update the document with the request's body
+            await profileDoc.update(req.body);
+
+            // send a response if it's successful
+            return res.status(200).send();
+        } catch (error) {
+            // return a 500 error if you can't set profile picture for some reason
+            console.log(error);
+            return res.status(500).send(error);
+        }
+
+    })();
+});
+
+// sets the social media for the user
+app.post("/api/user/profile/set_social_media/:email", (req, res) => {
+    (async () => {
+        try {
+
+            // get the document to be changed
+            const profileDoc = fsdb.collection("profile").doc(req.params.email);
+
+            // update the document with the request's body
+            await profileDoc.update(req.body);
+
+            // send a response if it's successful
+            return res.status(200).send();
+        } catch (error) {
+
+            // was not able to add the biography due to an error
+            console.log(error);
+
+            // return a 500 response due to error
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+// add a new friend to the current user's friend list
+app.post("/api/friends/add/:currentEmail/:otherEmail", (req, res) => {
+    (async () => {
+        try {
+            
+            // get the current user's user document
+            const userDoc = fsdb.collection("profile").doc(req.params.currentEmail);
+            await userDoc.update({
+                friends: admin.firestore.FieldValue.arrayUnion(req.params.otherEmail)
+            });
+
+            return res.status(200).send();
+            // update the user's list by adding the 
+        } catch (error) {
+
+            // was not able to add a friend due to an error
+            console.log(error);
+
+            // return a 500 response due to error
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+// add a new friend to the current user's friend list
+app.post("/api/friends/remove/:currentEmail/:otherEmail", (req, res) => {
+    (async () => {
+        try {
+            
+            // get the current user's user document
+            const userDoc = fsdb.collection("profile").doc(req.params.currentEmail);
+            await userDoc.update({
+                friends: admin.firestore.FieldValue.arrayRemove(req.params.otherEmail)
+            });
+
+            return res.status(200).send();
+            // update the user's list by adding the 
+        } catch (error) {
+
+            // was not able to remove friend due to an error
+            console.log(error);
+
+            // return a 500 response due to error
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+// Go through every user in our database and compute compatibility score
 app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
     (async () => {
         try {
@@ -90,6 +207,8 @@ app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
 });
 
 // Read, GET
+
+// options to log the user in
 app.options('/login', function(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
@@ -97,6 +216,7 @@ app.options('/login', function(req, res) {
     res.end();
 });
 
+// log the user in through Spotify
 app.get('/login', function(req, res) {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
@@ -237,7 +357,71 @@ app.get('/refresh_token', function(req, res) {
     });
 });
 
-app.get('/api/user/profile/:id', (req, res) => {
+// get all users
+app.get("/api/users/all", (req, res) => {
+    (async() => {
+        try {
+
+            // get all of the users documents
+            const userDoc = await fsdb.collection('user');
+            const users = await userDoc.get();
+
+            return res.status(200).send(users.data());
+        } catch (error) {
+
+            // unable to receive data from database, log and return error code
+            console.log(error);
+            return res.status(500).send(error);
+
+        }
+    })();
+});
+
+// gets all of user's info 
+app.get("/api/user/:email", (req, res) => {
+    (async() => {
+        try {
+
+            // get all of the users documents
+            const userDoc = await fsdb.collection('user').doc(req.params.email);
+            const user = await userDoc.get();
+            const data = user.data()
+
+            return res.status(200).send(data);
+        } catch (error) {
+
+            // unable to receive data from database, log and return error code
+            console.log(error);
+            return res.status(500).send(error);
+
+        }
+    })();
+});
+
+// get the user's name
+app.get("/api/user/:section/:email", (req, res) => {
+    (async() => {
+        try {
+            
+            // get the section from the user document from database
+            const userDoc = await fsdb.collection('user').doc(req.params.email);
+            const user = await userDoc.get();
+            const data = user.data()[req.params.section];
+            
+
+            // send the user section data back
+            return res.status(200).send(data);
+        } catch (error) {
+
+            // unable to receive data from database, log and return error code
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    })();
+});
+
+// get all of the user's profile from the database
+app.get('/api/profile/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -254,7 +438,8 @@ app.get('/api/user/profile/:id', (req, res) => {
     })();
 });
 
-app.get('/api/user/profile/:section/:id', (req, res) => {
+// get the profile information from the database
+app.get('/api/profile/:section/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
@@ -271,13 +456,14 @@ app.get('/api/user/profile/:section/:id', (req, res) => {
     })();
 });
 
-app.get('/api/user/profile/social/:site/:id', (req, res) => {
+// get social media from the of the user
+app.get('/api/social/:site/:id', (req, res) => {
     (async() => {
         try {
             // try getting the information from the database
             const document = fsdb.collection('profile').doc(req.params.id);
             let product = await document.get();
-            let response = product.data()['social_media'][req.params.id];
+            let response = product.data()['social_media'][req.params.site];
             console.log(response);
 
             // send product data to front end
@@ -289,6 +475,7 @@ app.get('/api/user/profile/social/:site/:id', (req, res) => {
     })();
 });
 
+// get the user's stats
 app.get('/api/user/stats/:id', (req, res) => {
     (async() => {
         try {
@@ -306,6 +493,7 @@ app.get('/api/user/stats/:id', (req, res) => {
     })();
 });
 
+// get individual sections of the stats
 app.get('/api/user/stats/:section/:id', (req, res) => {
     (async() => {
         try {
@@ -323,6 +511,7 @@ app.get('/api/user/stats/:section/:id', (req, res) => {
     })();
 });
 
+// options for getting in harmony list of the user
 app.options('/api/in_harmony/:id', function(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', '*');
@@ -417,15 +606,6 @@ app.get("/api/in_harmony/compareFriends/:currUserEmail/:friendUserEmail", (req, 
         }
     })();
 });
-
-
-// Update, PUT
-
-// Delete, DELETE
-
-// app.listen(3000, function () {
-//   console.log('CORS-enabled web server listening on port 3000')
-// })
 
 // call function whenever there's a new request
 // export api to Firebase cloud functions
