@@ -5,8 +5,6 @@
  * This will include profile creating and reading, user creating and reading,
  * etc.
  */
-
-const { response } = require("express");
 var request = require("request"); // "Request" library
 
 // Change this number to get more accurate results when computing compatibility
@@ -396,4 +394,298 @@ async function createUserInHarmony(db, email, refresh_token) {
 
   // Log to console the result
   console.log("Added", res);
+}
+
+
+// user access functions - POST
+exports.setProfileSection = async function setProfileSection(fsdb, req, res) {
+  try {
+
+    // get the document to be changed
+    const profileDoc = fsdb.collection("profile").doc(req.params.email);
+
+    // update the document with the request's body
+    await profileDoc.update(req.body);
+
+    // send a response if it's successful
+    return res.status(200).send();
+  } catch (error) {
+
+    // was not able to add the biography due to an error
+    console.log(error);
+
+    // return a 500 response due to error
+    return res.status(500).send(error);
+  }
+}
+
+exports.addFriend = async function addFriend(admin, fsdb, req, res) {
+  try {
+            
+    // get the current user's user document
+    const userDoc = fsdb.collection("user").doc(req.params.currentEmail);
+    await userDoc.update({
+        friends: admin.firestore.FieldValue.arrayUnion(req.params.otherEmail)
+    });
+
+    return res.status(200).send();
+    // update the user's list by adding the 
+  } catch (error) {
+
+    // was not able to add a friend due to an error
+    console.log(error);
+
+    // return a 500 response due to error
+    return res.status(500).send(error);
+  }
+}
+
+exports.removeFriend = async function removeFriend(admin, fsdb, req, res) {
+  try {
+            
+    // get the current user's user document
+    const userDoc = fsdb.collection("user").doc(req.params.currentEmail);
+    await userDoc.update({
+        friends: admin.firestore.FieldValue.arrayRemove(req.params.otherEmail)
+    });
+
+    return res.status(200).send();
+    // update the user's list by adding the 
+  } catch (error) {
+
+    // was not able to remove friend due to an error
+    console.log(error);
+
+    // return a 500 response due to error
+    return res.status(500).send(error);
+  }
+}
+
+exports.setCompatibility = async function setCompatibility(in_harmony, admin, fsdb, req, res) {
+  try {
+    var query = fsdb.collection('user');
+    var reset = {
+        similar_users: []
+    };
+
+    // delete document first
+    await fsdb.collection("in_harmony").doc(req.params.currUserId).set(reset);
+
+    var querySnapshot = await query.get();
+            
+    await in_harmony.populateLeaderboard(admin, fsdb, req.params.currUserId, req.params.distanceLimit, querySnapshot);
+
+    return res.status(200).send();
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+
+// user access functions - GET
+exports.getAllUsers = async function getAllUsers(fsdb, req, res) {
+  try {
+
+    // get all of the users documents
+    const userDoc = await fsdb.collection('user');
+    const users = await userDoc.get();
+
+    return res.status(200).send(users.data());
+  } catch (error) {
+
+    // unable to receive data from database, log and return error code
+    console.log(error);
+    return res.status(500).send(error);
+
+  }
+}
+
+exports.userInfo = async function userInfo(fsdb, req, res) {
+  try {
+
+      // get all of the users documents
+      const userDoc = await fsdb.collection('user').doc(req.params.email);
+      const user = await userDoc.get();
+      const data = user.data()
+
+      return res.status(200).send(data);
+  } catch (error) {
+
+      // unable to receive data from database, log and return error code
+      console.log(error);
+      return res.status(500).send(error);
+
+  }
+}
+
+exports.userSection = async function userSection(fsdb, req, res) {
+  try {
+            
+    // get the section from the user document from database
+    const userDoc = await fsdb.collection('user').doc(req.params.email);
+    const user = await userDoc.get();
+    const data = user.data()[req.params.section];
+    
+
+    // send the user section data back
+    return res.status(200).send(data);
+  } catch (error) {
+
+    // unable to receive data from database, log and return error code
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.userProfile = async function userProfile(fsdb, req, res) {
+  try {
+    // try getting the information from the database
+    const document = fsdb.collection('profile').doc(req.params.id);
+    let product = await document.get();
+    let response = product.data();
+
+    // send product data to front end
+    return res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.userProfileSection = async function userProfileSection(fsdb, req, res) {
+  try {
+    // try getting the information from the database
+    const document = fsdb.collection('profile').doc(req.params.id);
+    let profile = await document.get();
+    let response = profile.data()[req.params.section];
+
+    // send product data to front end
+    return res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getSocial = async function getSocial(fsdb, req, res) {
+  try {
+    // try getting the information from the database
+    const document = fsdb.collection('profile').doc(req.params.id);
+    let product = await document.get();
+    let response = product.data()['social_media'][req.params.site];
+    console.log(response);
+
+    // send product data to front end
+    return res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getAllUserStats = async function getAllUserStats(fsdb, req, res) {
+  try {
+    // try getting the information from the database
+    const document = fsdb.collection('stats').doc(req.params.id);
+    let profile = await document.get();
+    let response = profile.data();
+
+    // send product data to front end
+    return res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getUserStatSection = async function getUserStatSection(fsdb, req, res) {
+  try {
+    // try getting the information from the database
+    const document = fsdb.collection('stats').doc(req.params.id);
+    let profile = await document.get();
+    let response = profile.data()[req.params.section];
+
+    // send product data to front end
+    return res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getInHarmonyList = async function getInHarmonyList(fsdb, req, res) {
+  try {
+    // try getting the information from the database
+    const document = fsdb.collection('in_harmony').doc(req.params.id);
+    let profile = await document.get();
+    let response = profile.data();
+
+    // send product data to front end
+    return res.status(200).send(response);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getTopArtistTwoUsers = async function getTopArtistTwoUsers(in_harmony, fsdb, req, res) {
+  try {
+    // Get top stats of current user
+    const document1 = fsdb.collection('stats').doc(req.params.currUser);
+    let profile1 = await document1.get();
+    let response1 = profile1.data();
+    
+    // Get top stats of other user
+    const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+    let profile2 = await document2.get();
+    let response2 = profile2.data();
+
+    // Find similarities
+    var topSimilar = in_harmony.findTopSimilarArtist( response1.top_artists, response2.top_artists );
+
+    // send product data to front end
+    return res.status(200).send(topSimilar);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getTopGenresTwoUsers = async function getTopGenresTwoUsers(in_harmony, fsdb, req, res) {
+  try {
+    // Get top stats of current user
+    const document1 = fsdb.collection('stats').doc(req.params.currUser);
+    let profile1 = await document1.get();
+    let response1 = profile1.data();
+    
+    // Get top stats of other user
+    const document2 = fsdb.collection('stats').doc(req.params.otherUser);
+    let profile2 = await document2.get();
+    let response2 = profile2.data();
+
+    // Find similarities
+    var topSimilar = in_harmony.findTopSimilarGenres( response1.top_genres, response2.top_genres );
+
+    // send product data to front end
+    return res.status(200).send(topSimilar);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+}
+
+exports.getComparisonsTwoUsers = async function getComparisonsTwoUsers(in_harmony, fsdb, req, res) {
+  try {
+    // get the compatibility of 2 friends
+    var comparison = await in_harmony.computeFriendCompatibility(fsdb, req.params.currUserEmail, req.params.friendUserEmail);
+
+    // send compatibility data to front end
+    return res.status(200).send(comparison[req.params.friendUserEmail]);
+  } catch (error) {
+    // if error is caught, send 500 and return error message
+    console.log(error);
+    return res.status(500).send(error);
+  }
 }
