@@ -278,8 +278,8 @@ async function createUserStatsTopTracks(db, email, topTracks) {
 
     // Get artists
     var artistsOfTrack = [];
-    for (var j in topTracks[i]["album"]["artists"]) {
-      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
+    for (var k in topTracks[i]["album"]["artists"]) {
+      artistsOfTrack.push(topTracks[i]["album"]["artists"][k]["name"]);
     }
 
     var entry = {
@@ -289,12 +289,6 @@ async function createUserStatsTopTracks(db, email, topTracks) {
       "images": image_urls,
       "artists": artistsOfTrack,
       "album_name": topTracks[i]["album"]["name"]
-    }
-
-    // Get artists
-    var artistsOfTrack = [];
-    for (var j in topTracks[i]["album"]["artists"]) {
-      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
     }
 
     formattedList["top_tracks"].push(entry);
