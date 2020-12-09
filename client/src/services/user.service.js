@@ -9,114 +9,199 @@ const statsCollection = fb.firestore().collection("stats");
 class UserService {
   /* PROFILE EDIT FUNCTIONS */
   async setBiography(email, bio) {
-    try {
-      // get the document to be changed
-      const profileDoc = await profileCollection.doc(email);
-      await profileDoc.update({
-        biography: bio,
-      });
-    } catch (error) {
-      alert(error);
+
+    // url for the post function for set biography
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_biography/" + email;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({
+        biography: bio 
+      })
+    };
+
+    // upload new bio
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
+  // changes user profile pic
   async setProfilePicture(email, profilePicLink) {
-    try {
-      // get the profile document to be changed
-      const profileDoc = await profileCollection.doc(email);
-      await profileDoc.update({
-        profile_picture: profilePicLink,
-      });
-    } catch (error) {
-      alert(error);
+    
+    // url for the post function for set profile pic
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_profilepic/" + email;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({
+        profile_picture: profilePicLink 
+      })
+    };
+
+    // upload new pic
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
   /* SOCIAL MEDIA EDIT FUNCTIONS */
+
+  // set facebook profile link
   async setFacebook(email, facebookLink) {
-    try {
-      // get the document to be changed
-      const profileDoc = profileCollection.doc(email);
-      await profileDoc.update({
-        "social_media.facebook": facebookLink,
-      });
-    } catch (error) {
-      alert(error);
-      console.log(error);
-    }
+
+    // url for the post function for set social media
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+      data: JSON.stringify({
+        "social_media.facebook": facebookLink
+      })
+    };
+
+    // upload new link
+    return await fetch(url, options).then((response) => {
+      console.log(response.status);
+    })
   }
 
+  // set instagram profile link
   async setInstagram(email, instaLink) {
-    try {
-      // get the document to be changed
-      const profileDoc = profileCollection.doc(email);
-      await profileDoc.update({
-        "social_media.instagram": instaLink,
-      });
-    } catch (error) {
-      alert(error);
+    
+    // url for the post function for set social media
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({
+        "social_media.instagram": instaLink
+      })
+    };
+
+    // upload new link
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
+  // set twitter profile link
   async setTwitter(email, twitterLink) {
-    try {
-      // get the document to be changed
-      const profileDoc = profileCollection.doc(email);
-      await profileDoc.update({
-        "social_media.twitter": twitterLink,
-      });
-    } catch (error) {
-      alert(error);
+
+    // url for the post function for set social media
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({
+        "social_media.twitter": twitterLink
+      })
+    };
+
+    // upload new link
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
+  // set tiktok link
   async setTiktok(email, tiktokLink) {
-    try {
-      // get the document to be changed
-      const profileDoc = profileCollection.doc(email);
-      await profileDoc.update({
-        "social_media.tiktok": tiktokLink,
-      });
-    } catch (error) {
-      alert(error);
+
+    // url for the post function for set social media
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({
+        "social_media.tiktok": tiktokLink
+      })
+    };
+
+    // upload new link
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
   /* UPDATE USER FRIENDLIST (ADD FRIEND)*/
+
+  // add friend to list 
   async addFriend(myEmail, newEmail) {
-    try {
-      // get the document to be changed
-      const userDoc = userCollection.doc(myEmail);
-      await userDoc.update({
-        // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk
-        // need to change from hardcoded email to passed in parameter later on
-        friends: firebase.firestore.FieldValue.arrayUnion(newEmail),
-      });
-    } catch (error) {
-      alert(error);
+
+    // url for the post function for add friend
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/add/" + myEmail + newEmail;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+    };
+
+    // add new user
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
+  // remove friend from list
   async removeFriend(myEmail, newEmail) {
-    console.log("inside");
-    try {
-      // get the document to be changed
-      const userDoc = userCollection.doc(myEmail);
-      await userDoc.update({
-        // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk
-        // need to change from hardcoded email to passed in parameter later on
-        friends: firebase.firestore.FieldValue.arrayRemove(newEmail),
-      });
-    } catch (error) {
-      alert(error);
+
+    // url for the post function for remove friend
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/remove/" + myEmail + newEmail;
+    
+    // options to be added for the call
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }, 
+    };
+
+    // remove user
+    return await fetch(url, options)
+    .catch((error) => {
       console.log(error);
-    }
+    });
   }
 
   /* USER GET FUNCTIONS */
