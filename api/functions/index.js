@@ -139,7 +139,7 @@ app.post("/api/friends/add/:currentEmail/:otherEmail", (req, res) => {
         try {
             
             // get the current user's user document
-            const userDoc = fsdb.collection("profile").doc(req.params.currentEmail);
+            const userDoc = fsdb.collection("user").doc(req.params.currentEmail);
             await userDoc.update({
                 friends: admin.firestore.FieldValue.arrayUnion(req.params.otherEmail)
             });
@@ -163,7 +163,7 @@ app.post("/api/friends/remove/:currentEmail/:otherEmail", (req, res) => {
         try {
             
             // get the current user's user document
-            const userDoc = fsdb.collection("profile").doc(req.params.currentEmail);
+            const userDoc = fsdb.collection("user").doc(req.params.currentEmail);
             await userDoc.update({
                 friends: admin.firestore.FieldValue.arrayRemove(req.params.otherEmail)
             });

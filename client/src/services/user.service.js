@@ -164,7 +164,7 @@ class UserService {
   async addFriend(myEmail, newEmail) {
 
     // url for the post function for add friend
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/add/" + myEmail + newEmail;
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/add/" + myEmail + "/" + newEmail;
     
     // options to be added for the call
     const options = {
@@ -186,7 +186,7 @@ class UserService {
   async removeFriend(myEmail, newEmail) {
 
     // url for the post function for remove friend
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/remove/" + myEmail + newEmail;
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/remove/" + myEmail + "/" + newEmail;
     
     // options to be added for the call
     const options = {
