@@ -15,7 +15,7 @@ var redirect_uri = 'http://localhost:5001/muse-eec76/us-central1/app/callback'; 
 const debug = require('debug')('firestore-snippets-node'); // firebase debug
 const admin = require('firebase-admin'); // firebase admin account
 
-var serviceAccount = require('./permissions.json'); // service account
+var serviceAccount = require('./service_account_keys'); // service account
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     projectId: 'muse-eec76',
