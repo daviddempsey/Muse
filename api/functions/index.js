@@ -114,8 +114,6 @@ app.post("/api/user/profile/set_social_media/:email", (req, res) => {
     (async () => {
         try {
             // get the document to be changed
-            console.log(req.params);
-            console.log(req.body);
             const profileDoc = fsdb.collection("profile").doc(req.params.email);
 
             // update the document with the request's body
