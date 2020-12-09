@@ -7,7 +7,6 @@ import Decal from "./assets/decal.png";
 import Add from "./assets/friend.svg";
 import Remove from "./assets/remove.svg";
 import DM from "./assets/dm.svg";
-import Harmonize from "./assets/harmonize.svg";
 import ProfilePicture from "./ProfilePicture";
 import Biography from "./Biography";
 import TopArtists from "./TopArtists";
@@ -15,8 +14,9 @@ import TopTracks from "./TopTracks";
 import TopGenres from "./TopGenres";
 import ProfileLink from "./ProfileLink";
 import SocialMedia from "./SocialMedia";
+import Harmonize from "./Harmonize";
 import EditProfile from "./EditProfile";
-import Popup from "./Popup";
+import EditPopup from "./EditPopup";
 import SpotifyPlaylists from "./SpotifyPlaylists";
 import Name from "./Name";
 
@@ -157,76 +157,6 @@ class ProfilePage extends Component {
     return false;
   }
 
-  /* HARMONIZE FETCH CALLS */
-  compareTwoUsers = async (myEmail, otherUserEmail) => {
-    const url =
-      "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compareFriends/" +
-      myEmail +
-      "/" +
-      otherUserEmail;
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log(data);
-    return data["score"];
-  };
-
-  // Perform comparison between two users
-  artistBreakdown = async (myEmail, otherUserEmail) => {
-    const url =
-      "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compare/similar/artists/" +
-      myEmail +
-      "/" +
-      otherUserEmail;
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log("artist: " + data);
-    return data;
-  };
-
-  // Perform comparison between two users
-  genreBreakdown = async (myEmail, otherUserEmail) => {
-    const url =
-      "http://localhost:5001/muse-eec76/us-central1/app/api/in_harmony/compare/similar/genres/" +
-      myEmail +
-      "/" +
-      otherUserEmail;
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log("genre: " + data);
-    return data;
-  };
-
-  // to call multiple events
-  async onClick(myEmail, otherUserEmail) {
-    console.log("myEmail: " + myEmail);
-    console.log("otherUserEmail: " + otherUserEmail);
-    let score = (await this.compareTwoUsers(myEmail, otherUserEmail)) * 100;
-    alert(score);
-    this.artistBreakdown(myEmail, otherUserEmail);
-    this.genreBreakdown(myEmail, otherUserEmail);
-  }
-
   // TODO: RENDER IN HARMONY BUTTON
   // also idk if i passed props correctly for addfriend in line 110
   // everything else should work once we figure out logic
@@ -250,23 +180,10 @@ class ProfilePage extends Component {
                     )}
                     <ProfileLink userEmail={this.state.userEmail} />
                     {!this.state.userEdit && (
-                      <button
-                        className="harmonize"
-                        id="harmonize"
-                        onClick={() =>
-                          this.onClick(
-                            fb.auth().currentUser.email,
-                            this.state.userEmail
-                          )
-                        }
-                      >
-                        <img
-                          src={Harmonize}
-                          className="headphones"
-                          alt="headphones"
-                        />
-                        <h3>Harmonize</h3>
-                      </button>
+                      <Harmonize
+                        userEmail={fb.auth().currentUser.email}
+                        otherEmail={atob(this.props.match.params.user_email)}
+                      />
                     )}
                     {!this.state.friend && !this.state.userEdit && (
                       <button
@@ -329,8 +246,8 @@ class ProfilePage extends Component {
             </div>
           </DefaultLayout>
         </div>
-        <div className="popup" id="popup">
-          <Popup />
+        <div className="editpopup" id="editpopup">
+          <EditPopup />
         </div>
       </div>
     );

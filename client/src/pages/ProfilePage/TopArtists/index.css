@@ -13,7 +13,6 @@
   flex: 33%;
   position: relative;
   max-width: 11vw;
-  margin-top: 1vw;
   margin-left: 1vw;
   margin-right: 1vw;
 }
@@ -22,7 +21,7 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .artistimgs .rows {
@@ -34,5 +33,6 @@
 .artistimgs .row-1 {
   display: flex;
   flex-direction: row;
-  max-height: 11.5vw;
+  margin-top: 1vw;
+  max-height: 11vw;
 }
