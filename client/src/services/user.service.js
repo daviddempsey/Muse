@@ -73,7 +73,11 @@ class UserService {
         "Content-Type": "application/json",
       }, 
       data: JSON.stringify({
-        "social_media.facebook": facebookLink
+        "email": email
+      }),
+      body: JSON.stringify({
+        "social_media_type": "facebook",
+        "link": facebookLink
       })
     };
 
