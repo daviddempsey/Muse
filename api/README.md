@@ -39,6 +39,3 @@ npm run serve
 To edit and add your endpoints, open the index.js file in the functions folder!
 
 Note: since we are currently doing local host, you have to be in the functions folder to run
-
-## Any issues? 
-message me (Kenny)
