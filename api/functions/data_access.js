@@ -14,20 +14,13 @@ const TOP_STATS_LIMIT = 10;
  * Creates a user based on the user's Spotify information into the database
  * that's passed in.
  *
+ * @param {*} admin reference to admin for database access
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
  * @param {*} displayName name of the user
  * @param {*} spotifyID Spotify ID of the user
- * @param {*} refreshToken Spotify refresh token of the user
- */
-/**
- * Creates a user based on the user's Spotify information into the database
- * that's passed in.
- *
- * @param {*} db reference to the database to add to
- * @param {*} email email of the user
- * @param {*} displayName name of the user
- * @param {*} spotifyID Spotify ID of the user
+ * @param {*} profilePicture Link to profile picture on spotify
+ * @param {*} acctUrl link to user's spotify profile
  * @param {*} refreshToken Spotify refresh token of the user
  */
 exports.createUser = async function createUser(
@@ -92,6 +85,8 @@ exports.createUser = async function createUser(
  * Creates and prepopulates the user's profile
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
+ * @param {*} profilePicture the profile picture url of current user
+ * @param {*} acctUrl the spotify link of the user 
  */
 async function createUserProfile(db, email, profilePicture, acctUrl) {
   // create empty social media object
@@ -309,6 +304,7 @@ async function createUserStatsTopTracks(db, email, topTracks) {
  * Creates and populated the user's stats for top 5 stats
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
+ * @param {*} access_token Spotify access token of the user
  * @param {*} refresh_token Spotify refresh token of the user
  */
 exports.createUserStats = async function createUserStats(
@@ -398,6 +394,12 @@ async function createUserInHarmony(db, email, refresh_token) {
 
 
 // user access functions - POST
+/**
+ * Gets the profile section specifed
+ * @param {*} fsdb reference to database
+ * @param {*} req the request from the call
+ * @param {*} res the response of the call
+ */
 exports.setProfileSection = async function setProfileSection(fsdb, req, res) {
   try {
 
@@ -419,6 +421,13 @@ exports.setProfileSection = async function setProfileSection(fsdb, req, res) {
   }
 }
 
+/**
+ * Adds friend to current user's list
+ * @param {*} admin reference to the admin to access database
+ * @param {*} fsdb reference to the database
+ * @param {*} req the request from the call
+ * @param {*} res the response of the call
+ */
 exports.addFriend = async function addFriend(admin, fsdb, req, res) {
   try {
             
@@ -440,6 +449,13 @@ exports.addFriend = async function addFriend(admin, fsdb, req, res) {
   }
 }
 
+/**
+ * Removes a friend from the current user's list
+ * @param {*} admin reference to the admin to access database
+ * @param {*} fsdb reference to the database
+ * @param {*} req the request from the call
+ * @param {*} res the response of the call
+ */
 exports.removeFriend = async function removeFriend(admin, fsdb, req, res) {
   try {
             
@@ -461,6 +477,14 @@ exports.removeFriend = async function removeFriend(admin, fsdb, req, res) {
   }
 }
 
+/**
+ * Sets the in harmony for the users
+ * @param {*} in_harmony reference to the file for in harmony functions
+ * @param {*} admin reference to admin object to access database
+ * @param {*} fsdb reference to the database
+ * @param {*} req the request of the call
+ * @param {*} res the response of the call
+ */
 exports.setCompatibility = async function setCompatibility(in_harmony, admin, fsdb, req, res) {
   try {
     var query = fsdb.collection('user');
@@ -485,6 +509,12 @@ exports.setCompatibility = async function setCompatibility(in_harmony, admin, fs
 
 
 // user access functions - GET
+/**
+ * Gets all users in the users list
+ * @param {*} fsdb reference to the database 
+ * @param {*} req the request from the call
+ * @param {*} res the response of the call
+ */
 exports.getAllUsers = async function getAllUsers(fsdb, req, res) {
   try {
 
@@ -502,6 +532,12 @@ exports.getAllUsers = async function getAllUsers(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the user document of desire user
+ * @param {*} fsdb reference to the database
+ * @param {*} req the request from the call
+ * @param {*} res the response of the call
+ */
 exports.userInfo = async function userInfo(fsdb, req, res) {
   try {
 
@@ -520,6 +556,12 @@ exports.userInfo = async function userInfo(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the desired section from user document of desired user
+ * @param {*} fsdb reference to the database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.userSection = async function userSection(fsdb, req, res) {
   try {
             
@@ -539,6 +581,12 @@ exports.userSection = async function userSection(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the user's profile
+ * @param {*} fsdb reference to the database
+ * @param {*} req request of the call
+ * @param {*} res response of the call
+ */
 exports.userProfile = async function userProfile(fsdb, req, res) {
   try {
     // try getting the information from the database
@@ -554,6 +602,12 @@ exports.userProfile = async function userProfile(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the specified section of the user's profile
+ * @param {*} fsdb reference to the database
+ * @param {*} req request of the call
+ * @param {*} res response of the call
+ */
 exports.userProfileSection = async function userProfileSection(fsdb, req, res) {
   try {
     // try getting the information from the database
@@ -569,6 +623,12 @@ exports.userProfileSection = async function userProfileSection(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the social media of the user
+ * @param {*} fsdb reference to the database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.getSocial = async function getSocial(fsdb, req, res) {
   try {
     // try getting the information from the database
@@ -585,6 +645,12 @@ exports.getSocial = async function getSocial(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets all user stats
+ * @param {*} fsdb reference to the database
+ * @param {*} req request from the call
+ * @param {*} res response from the call
+ */
 exports.getAllUserStats = async function getAllUserStats(fsdb, req, res) {
   try {
     // try getting the information from the database
@@ -600,6 +666,12 @@ exports.getAllUserStats = async function getAllUserStats(fsdb, req, res) {
   }
 }
 
+/**
+ * Get specified section of user's stats
+ * @param {*} fsdb reference to database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.getUserStatSection = async function getUserStatSection(fsdb, req, res) {
   try {
     // try getting the information from the database
@@ -615,6 +687,12 @@ exports.getUserStatSection = async function getUserStatSection(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the user's in harmony list
+ * @param {*} fsdb reference to the database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.getInHarmonyList = async function getInHarmonyList(fsdb, req, res) {
   try {
     // try getting the information from the database
@@ -630,6 +708,13 @@ exports.getInHarmonyList = async function getInHarmonyList(fsdb, req, res) {
   }
 }
 
+/**
+ * Gets the top artists between 2 users
+ * @param {*} in_harmony reference to in harmony functions
+ * @param {*} fsdb reference to database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.getTopArtistTwoUsers = async function getTopArtistTwoUsers(in_harmony, fsdb, req, res) {
   try {
     // Get top stats of current user
@@ -653,6 +738,13 @@ exports.getTopArtistTwoUsers = async function getTopArtistTwoUsers(in_harmony, f
   }
 }
 
+/**
+ * Gets the top genres between 2 users
+ * @param {*} in_harmony reference to in harmony functions
+ * @param {*} fsdb reference to database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.getTopGenresTwoUsers = async function getTopGenresTwoUsers(in_harmony, fsdb, req, res) {
   try {
     // Get top stats of current user
@@ -676,6 +768,13 @@ exports.getTopGenresTwoUsers = async function getTopGenresTwoUsers(in_harmony, f
   }
 }
 
+/**
+ * Gets in harmony comparison between 2 users
+ * @param {*} in_harmony reference to in harmony functions
+ * @param {*} fsdb reference to database
+ * @param {*} req request from the call
+ * @param {*} res response of the call
+ */
 exports.getComparisonsTwoUsers = async function getComparisonsTwoUsers(in_harmony, fsdb, req, res) {
   try {
     // get the compatibility of 2 friends
