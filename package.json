@@ -4,7 +4,8 @@
   "scripts": {
     "deploy": "git subtree push --prefix client heroku master",
     "client": "cd client && npm start",
-    "backend": "cd api/functions && npm run serve"
+    "backend": "cd api/functions && npm run serve",
+    "install": "cd client && npm install && cd .. && cd api/functions && npm install && cd .."
   },
   "repository": {
     "type": "git",
