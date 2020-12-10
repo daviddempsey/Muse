@@ -41,7 +41,6 @@ exports.createUser = async function createUser(
     location: {},
     profile: userEmail,
     friends: [],
-    messages: [],
     stats_id: userEmail,
     in_harmony: userEmail,
   };
@@ -57,7 +56,6 @@ exports.createUser = async function createUser(
       let response = await admin.auth().createUser({
         uid: spotifyID,
         displayName: displayName,
-        refreshToken: refreshToken,
         email: userEmail,
       });
       console.log("Successfully created new user with email: ", response.email);
@@ -103,7 +101,6 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
     biography: "",
     profile_url: new Buffer.from(email).toString("base64"),
     profile_picture: profilePicture,
-    select_playlist: [],
     social_media: userSocialMedia,
   };
 
@@ -284,12 +281,6 @@ async function createUserStatsTopTracks(db, email, topTracks) {
       "album_name": topTracks[i]["album"]["name"]
     }
 
-    // Get artists
-    var artistsOfTrack = [];
-    for (var j in topTracks[i]["album"]["artists"]) {
-      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
-    }
-
     formattedList["top_tracks"].push(entry);
   }
 
@@ -315,13 +306,10 @@ exports.createUserStats = async function createUserStats(
 
   // create an empty stats document for the user
   const statsData = {
-    song_stats: '',
-    albums: '',
-    artist_stats: '',
-    playlist_stats: '',
     top_artists: [],
     top_tracks: [],
-    top_genres: []
+    top_genres: [],
+    public_playlists: []
   }
   const res = await db.collection('stats').doc(email).set(statsData);
 
@@ -375,7 +363,6 @@ exports.createUserStats = async function createUserStats(
  * @param {*} refresh_token
  */
 async function createUserInHarmony(db, email, refresh_token) {
-  // TODO: in harmony algorithm - Steven's task
 
   // Create the in harmony list (empty for now)
   const userInHarmonyData = {
