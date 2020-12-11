@@ -62,12 +62,12 @@ class ProfilePage extends Component {
       this.userEditCompare().then((userMatch) => {
         this.setState({
           userEdit: userMatch,
-          checkingUser: false,
         });
       });
       this.friendsCompare().then((friendsMatch) => {
         this.setState({
           friend: friendsMatch,
+          checkingUser: false,
         });
       });
     });
