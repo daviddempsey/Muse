@@ -1,5 +1,6 @@
 @import './reset.css';
 @import './typography.css';
+
 :root {
     --yellow: #f9d342;
     --red: #ff6666;

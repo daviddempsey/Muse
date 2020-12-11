@@ -1,20 +1,15 @@
 import React from "react";
-import "./index.css";
 
 import DefaultLayout from "../DefaultLayout";
-import FriendsPage from "./FriendsPage.js";
+import FriendsContent from "./FriendsContent";
 import { withRouter } from "react-router-dom";
 
-const FriendPage = () => {
+const FriendsPage = () => {
   return (
     <DefaultLayout>
-      <div id="friend-page">
-        <div id="friends">
-          <FriendsPage />
-        </div>
-      </div>
+      <FriendsContent />
     </DefaultLayout>
   );
 };
 
-export default withRouter(FriendPage);
+export default withRouter(FriendsPage);

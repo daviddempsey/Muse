@@ -1,22 +1,18 @@
-import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import fb from '../../../base';
-import '../index.css';
-
-const auth = fb.auth();
+import React from "react";
+import "firebase/auth";
+import "../index.css";
 
 const ChatMessage = (props) => {
-    const { text, uid, photoURL, status } = props.message;
+  const { text, photoURL, status } = props.message;
 
-    const messageClass = status; // styling on whether sent or received
-  
-    return (
-      <div className={`message ${messageClass}`}>
-        <img src={photoURL} />
-        <p>{text}</p>
-      </div>
-    )
-}
+  const messageClass = status; // styling on whether sent or received
+
+  return (
+    <div className={`message ${messageClass}`}>
+      <img src={photoURL} alt="profilepicture" />
+      <p>{text}</p>
+    </div>
+  );
+};
 
 export default ChatMessage;
