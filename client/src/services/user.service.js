@@ -9,582 +9,338 @@ const statsCollection = fb.firestore().collection("stats");
 class UserService {
   /* PROFILE EDIT FUNCTIONS */
   async setBiography(email, bio) {
-
-    // url for the post function for set biography
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_biography/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        biography: bio 
-      })
-    };
-
-    // upload new bio
-    return await fetch(url, options)
-    .catch((error) => {
+    try {
+      // get the document to be changed
+      const profileDoc = await profileCollection.doc(email);
+      await profileDoc.update({
+        biography: bio,
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
 
-  // changes user profile pic
   async setProfilePicture(email, profilePicLink) {
-    
-    // url for the post function for set profile pic
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_profilepic/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        profile_picture: profilePicLink 
-      })
-    };
-
-    // upload new pic
-    return await fetch(url, options)
-    .catch((error) => {
+    try {
+      // get the profile document to be changed
+      const profileDoc = await profileCollection.doc(email);
+      await profileDoc.update({
+        profile_picture: profilePicLink,
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
+
+  async setPlaylist(email, playlist) {}
 
   /* SOCIAL MEDIA EDIT FUNCTIONS */
-
-  // set facebook profile link
   async setFacebook(email, facebookLink) {
-
-    // url for the post function for set social media
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        "social_media.facebook": facebookLink
-      })
-    };
-
-    // upload new link
-    return await fetch(url, options).then((response) => {
-      console.log(response.status);
-    })
+    try {
+      // get the document to be changed
+      const profileDoc = profileCollection.doc(email);
+      await profileDoc.update({
+        "social_media.facebook": facebookLink,
+      });
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // set instagram profile link
   async setInstagram(email, instaLink) {
-    
-    // url for the post function for set social media
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        "social_media.instagram": instaLink
-      })
-    };
-
-    // upload new link
-    return await fetch(url, options)
-    .catch((error) => {
+    try {
+      // get the document to be changed
+      const profileDoc = profileCollection.doc(email);
+      await profileDoc.update({
+        "social_media.instagram": instaLink,
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
 
-  // set twitter profile link
   async setTwitter(email, twitterLink) {
-
-    // url for the post function for set social media
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        "social_media.twitter": twitterLink
-      })
-    };
-
-    // upload new link
-    return await fetch(url, options)
-    .catch((error) => {
+    try {
+      // get the document to be changed
+      const profileDoc = profileCollection.doc(email);
+      await profileDoc.update({
+        "social_media.twitter": twitterLink,
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
 
-  // set tiktok link
   async setTiktok(email, tiktokLink) {
-
-    // url for the post function for set social media
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/profile/set_social_media/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-      body: JSON.stringify({
-        "social_media.tiktok": tiktokLink
-      })
-    };
-
-    // upload new link
-    return await fetch(url, options)
-    .catch((error) => {
+    try {
+      // get the document to be changed
+      const profileDoc = profileCollection.doc(email);
+      await profileDoc.update({
+        "social_media.tiktok": tiktokLink,
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
-
   /* UPDATE USER FRIENDLIST (ADD FRIEND)*/
-
-  // add friend to list 
   async addFriend(myEmail, newEmail) {
-
-    // url for the post function for add friend
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/add/" + myEmail + "/" + newEmail;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-    };
-
-    // add new user
-    return await fetch(url, options)
-    .catch((error) => {
+    try {
+      // get the document to be changed
+      const userDoc = userCollection.doc(myEmail);
+      await userDoc.update({
+        // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk
+        // need to change from hardcoded email to passed in parameter later on
+        friends: firebase.firestore.FieldValue.arrayUnion(newEmail),
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
 
-  // remove friend from list
   async removeFriend(myEmail, newEmail) {
-
-    // url for the post function for remove friend
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/friends/remove/" + myEmail + "/" + newEmail;
-    
-    // options to be added for the call
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, 
-    };
-
-    // remove user
-    return await fetch(url, options)
-    .catch((error) => {
+    console.log("inside");
+    try {
+      // get the document to be changed
+      const userDoc = userCollection.doc(myEmail);
+      await userDoc.update({
+        // most people did firebase.Firestore.FieldValue but it says firebase undefined so idk
+        // need to change from hardcoded email to passed in parameter later on
+        friends: firebase.firestore.FieldValue.arrayRemove(newEmail),
+      });
+    } catch (error) {
+      alert(error);
       console.log(error);
-    });
+    }
   }
 
   /* USER GET FUNCTIONS */
-  // get refresh token 
   async getRefreshToken(email) {
-
-    // url for the get refresh token call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/refresh_token/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the refresh token
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await userCollection.doc(email);
+      const userDoc = await response.get();
+      const userRefresh = userDoc.data()["refresh_token"];
+      console.log(userRefresh);
+      return userRefresh;
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // get names of user requested
   async getName(email) {
-    
-    // url for the get name call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/name/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the name
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
-
-
+    try {
+      const response = await userCollection.doc(email);
+      const userDoc = await response.get();
+      return userDoc.data()["name"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
   /* DOCUMENT GET FUNCTIONS */
-
-  // gets all users 
   async getAll() {
-
-    // url for the get all user call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/users/all";
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return all users
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await userCollection.get();
+      const allUsers = response.data();
+      return allUsers;
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // gets the user's entire document
   async getUser(email) {
-
-    // url for the get user call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the user
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await userCollection.doc(email);
+      const userDoc = await response.get();
+      return userDoc.data();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
-
-  // get the user's entire user document
+  // get the user's friends list
   async getUserFriends(email) {
-
-    // url for the get friends call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/friends/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the friends list
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = userCollection.doc(email);
+      const friends = await response.get();
+      return friends.data()["friends"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // gets the whole profile of the user requested
   async getUserProfile(email) {
-
-    // url for the get profile call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/profile/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the specific user profile
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const userProfileDoc = await response.get();
+      return userProfileDoc.data();
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
   /* PROFILE INFORMATION GET FUNCTIONS */
-
-  // gets the biography of the user requested
   async getBiography(email) {
-
-    // url for the get bio call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/profile/biography/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the biography
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const biography = await response.get();
+      return biography.data()["biography"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // gets the profile picture of the user requested
   async getProfilePicture(email) {
+    // try getting the profile picture
+    try {
+      const response = await profileCollection.doc(email);
+      const profilePic = await response.get();
+      return profilePic.data()["profile_picture"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
 
-    // url for the get profile pic call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/profile/profile_picture/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the pic url
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+  async getProfileLink(email) {
+    // try getting the profile link
+    try {
+      const response = await profileCollection.doc(email);
+      const profileLink = await response.get();
+      return profileLink.data()["profile_url"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
   /* SOCIAL MEDIA GET FUNCTIONS */
-  // gets the facebook account of the user requested
   async getFacebook(email) {
-
-    // url for the get facebook call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/social/facebook/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the profile
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const facebookData = await response.get();
+      return facebookData.data()["social_media"]["facebook"];
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  // gets the twitter account of the user requested
   async getInstagram(email) {
-
-    // url for the get ig call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/social/instagram/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the handle
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const instaData = await response.get();
+      return instaData.data()["social_media"]["instagram"];
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  // gets the twitter account of the user requested
   async getTwitter(email) {
-
-    // url for the get twitter call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/social/twitter/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the handle
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const twitterData = await response.get();
+      return twitterData.data()["social_media"]["twitter"];
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  // gets the tiktok account of the user requested
   async getTikTok(email) {
-
-    // url for the get tiktok call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/social/tiktok/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the tiktok 
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const tiktokData = await response.get();
+      return tiktokData.data()["social_media"]["tiktok"];
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  // gets the spotify account of the user requested
   async getSpotify(email) {
-
-    // url for the get spotify call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/social/spotify/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "text/plain",
-        "Content-Type": "text/plain",
-      }
-    };
-
-    // get and return the spotify
-    return await fetch(url, options).then((response) => {
-      return response.text();
-    });
+    try {
+      const response = await profileCollection.doc(email);
+      const spotifyData = await response.get();
+      return spotifyData.data()["social_media"]["spotify"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
   /* STATS INFORMATION GET FUNCTIONS */
-  // gets the top artists of the users requested
   async getTopArtists(email) {
-
-    // url for the get top artists call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/stats/top_artists/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the top artists
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await statsCollection.doc(email);
+      const topArtists = await response.get();
+      return topArtists.data()["top_artists"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // gets the top genres of the users requested
   async getTopGenres(email) {
-
-    // url for the get top genres call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/stats/top_genres/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the top genres
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await statsCollection.doc(email);
+      const topGenres = await response.get();
+      return topGenres.data()["top_genres"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // gets the top tracks of the users requested
   async getTopTracks(email) {
-
-    // url for the get top tracks call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/stats/top_tracks/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the top tracks
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await statsCollection.doc(email);
+      const topTracks = await response.get();
+      return topTracks.data()["top_tracks"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
 
-  // gets the spotify playlists of the user requested
   async getSpotifyPlaylists(email) {
-
-    // url for the get playlists call
-    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/stats/public_playlists/" + email;
-    
-    // options to be added for the call
-    const options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }
-    };
-
-    // get and return the playlists
-    return await fetch(url, options).then((response) => {
-      return response.json().then((user) => {
-        return user;
-      });
-    });
+    try {
+      const response = await statsCollection.doc(email);
+      const playlists = await response.get();
+      return playlists.data()["public_playlists"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
   }
+
+  /* IN HARMONY FETCH */
+  async getInHarmony(email) {
+    try {
+      const response = await fb.firestore().collection("in_harmony").doc(email);
+      const inHarmony = await response.get();
+      return inHarmony.data()["similar_users"];
+    } catch (error) {
+      alert(error);
+      console.log(error);
+    }
+  }
+
+  /* SPOTIFY REAL TIME DATA FETCH */
+  /*async getSpotifyPlaylists(refreshToken) {
+              // get the access token 
+              // get the spotify playlists
+
+            }*/
 
   /* Profile information get functions */
   /*
@@ -602,15 +358,18 @@ class UserService {
                 }
             */
 
+  // what is this function
   /* 
                 create(user) {
                   return db.add(user);
                 }
 
+                // I don't think email can be changed
                 update(email, value) {
                   return db.doc(email).update(value);
                 }
 
+                // i don't think we can delete this email
                 delete(email) {
                   return db.doc(email).delete();
                 }
