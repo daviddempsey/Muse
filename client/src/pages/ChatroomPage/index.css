@@ -48,11 +48,11 @@
 }
 
 .Chatroom main::-webkit-scrollbar-track {
-    background: var(--grey);
+    background: var(--white);
 }
 
 .Chatroom main::-webkit-scrollbar-thumb {
-    background: var(--blue);
+    background: var(--grey);
 }
 
 .Chatroom form {

@@ -13,9 +13,9 @@
 }
 
 .MessagingList::-webkit-scrollbar-track {
-    background: var(--grey);
+    background: var(--white);
 }
 
 .MessagingList::-webkit-scrollbar-thumb {
-    background: var(--blue);
+    background: var(--grey);
 }
