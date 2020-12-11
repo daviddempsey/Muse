@@ -120,7 +120,7 @@ const ChatroomPage = (props) => {
             onChange={(e) => setFormValue(e.target.value)}
           />
           <button type="submit" disabled={!formValue}>
-            <img src={SendButton} alt="Send" />
+            <img className="SBImg" src={SendButton} alt="Send" />
           </button>
         </form>
       </div>
