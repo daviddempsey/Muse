@@ -5,8 +5,11 @@ var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-var data_access = require('./data_access'); // the database access functions
-var in_harmony = require('./in_harmony'); // the in harmony functions
+var data_access = require('./model/data_access'); // the database access functions
+var in_harmony = require('./model/in_harmony'); // the in harmony algorithm
+var model_inharmony = require('./model/model_inharmony'); // in harmony access functions
+var model_profile = require('./model/model_profile'); // profile access functions
+var model_user = require('./model/model_user'); // user access functions
 
 var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
 var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
@@ -66,14 +69,14 @@ app.get('/', (req, res) => {
 // sets the biography for the user
 app.post("/api/user/profile/set_biography/:email", (req, res) => {
     (async () => {
-        return await data_access.setProfileSection(fsdb, req, res);
+        return await model_profile.setProfileSection(fsdb, req, res);
     })();
 });
 
 // set profile picture for the user specified
 app.post("/api/user/profile/set_profilepic/:email", (req, res) => {
     (async () => {
-        return await data_access.setProfileSection(fsdb, req, res);
+        return await model_profile.setProfileSection(fsdb, req, res);
 
     })();
 });
@@ -81,28 +84,28 @@ app.post("/api/user/profile/set_profilepic/:email", (req, res) => {
 // sets the social media for the user
 app.post("/api/user/profile/set_social_media/:email", (req, res) => {
     (async () => {
-        return await data_access.setProfileSection(fsdb, req, res);
+        return await model_profile.setProfileSection(fsdb, req, res);
     })();
 });
 
 // add a new friend to the current user's friend list
 app.post("/api/friends/add/:currentEmail/:otherEmail", (req, res) => {
     (async () => {
-        return await data_access.addFriend(admin, fsdb, req, res);
+        return await model_user.addFriend(admin, fsdb, req, res);
     })();
 });
 
 // add a new friend to the current user's friend list
 app.post("/api/friends/remove/:currentEmail/:otherEmail", (req, res) => {
     (async () => {
-        return await data_access.removeFriend(admin, fsdb, req, res);
+        return await model_user.removeFriend(admin, fsdb, req, res);
     })();
 });
 
 // Go through every user in our database and compute compatibility score
 app.post("/api/in_harmony/:currUserId/:distanceLimit", (req, res) => {
     (async () => {
-        return await data_access.setCompatibility(in_harmony, admin, fsdb, req, res);
+        return await model_inharmony.setCompatibility(in_harmony, admin, fsdb, req, res);
     })();
 });
 
@@ -261,14 +264,14 @@ app.get('/refresh_token', function(req, res) {
 // get all users
 app.get("/api/users/all", (req, res) => {
     (async() => {
-        return await data_access.getAllUsers(fsdb, req, res);
+        return await model_user.getAllUsers(fsdb, req, res);
     })();
 });
 
 // gets all of user's info 
 app.get("/api/user/:email", (req, res) => {
     (async() => {
-        return await data_access.userInfo(fsdb, req, res);
+        return await model_user.getUserInfo(fsdb, req, res);
     })();
     
 });
@@ -276,42 +279,42 @@ app.get("/api/user/:email", (req, res) => {
 // get the user section request
 app.get("/api/user/:section/:email", (req, res) => {
     (async() => {
-        return await data_access.userSection(fsdb, req, res);
+        return await model_user.getUserSection(fsdb, req, res);
     })();
 });
 
 // get all of the user's profile from the database
 app.get('/api/profile/:id', (req, res) => {
     (async() => {
-        return await data_access.userProfile(fsdb, req, res);
+        return await model_profile.getUserProfile(fsdb, req, res);
     })();
 });
 
 // get the profile information from the database
 app.get('/api/profile/:section/:id', (req, res) => {
     (async() => {
-        return await data_access.userProfileSection(fsdb, req, res);
+        return await model_profile.getUserProfileSection(fsdb, req, res);
     })();
 });
 
 // get social media from the of the user
 app.get('/api/social/:site/:id', (req, res) => {
     (async() => {
-        return await data_access.getSocial(fsdb, req, res);
+        return await model_profile.getSocial(fsdb, req, res);
     })();
 });
 
 // get the user's stats
 app.get('/api/user/stats/:id', (req, res) => {
     (async() => {
-        return await data_access.getAllUserStats(fsdb, req, res);
+        return await model_profile.getAllUserStats(fsdb, req, res);
     })();
 });
 
 // get individual sections of the stats
 app.get('/api/user/stats/:section/:id', (req, res) => {
     (async() => {
-        return await data_access.getUserStatSection(fsdb, req, res);
+        return await model_profile.getUserStatSection(fsdb, req, res);
     })();
 });
 
@@ -326,14 +329,14 @@ app.options('/api/in_harmony/:id', function(req, res) {
 // Get In-Harmony Data from Firestore 
 app.get("/api/in_harmony/:id", (req, res) => {
     (async() => {
-        return await data_access.getInHarmonyList(fsdb, req, res);
+        return await model_inharmony.getInHarmonyList(fsdb, req, res);
     })();
 })
 
 // Get top artists between two users
 app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, res) => {
     (async() => {
-        return await data_access.getTopArtistTwoUsers(in_harmony, fsdb, req, res);
+        return await model_inharmony.getTopArtistTwoUsers(in_harmony, fsdb, req, res);
     })();
 })
 
@@ -341,14 +344,14 @@ app.get("/api/in_harmony/compare/similar/artists/:currUser/:otherUser", (req, re
 // Get top genres between two users
 app.get("/api/in_harmony/compare/similar/genres/:currUser/:otherUser", (req, res) => {
     (async() => {
-        return await data_access.getTopGenresTwoUsers(in_harmony, fsdb, req, res);
+        return await model_inharmony.getTopGenresTwoUsers(in_harmony, fsdb, req, res);
     })();
 })
 
 // Get comparison between two users
 app.get("/api/in_harmony/compareFriends/:currUserEmail/:friendUserEmail", (req, res) => {
     (async() => {
-        return await data_access.getComparisonsTwoUsers(in_harmony, fsdb, req, res);
+        return await model_inharmony.getComparisonsTwoUsers(in_harmony, fsdb, req, res);
     })();
 });
 
