@@ -6,6 +6,7 @@ import LoadingPage from './pages/LoadingPage';
 import ChatroomPage from './pages/ChatroomPage';
 import FriendsPage from './pages/FriendsPage';
 import InHarmonyPage from './pages/InHarmonyPage';
+import LogoutPage from './pages/LogoutPage';
 import './styles/index.css';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route exact path='/logging' component={LoadingPage} />
           <Route exact path='/messages/:receiver_id' component={ChatroomPage} />
           <Route exact path='/friends' component={FriendsPage} />
-          <Route exact parth='/harmony' component={InHarmonyPage} />
+          <Route exact path='/harmony' component={InHarmonyPage} />
+          <Route exact path='/logout' component={LogoutPage} />
         </Switch>
       </Router>
     </div>

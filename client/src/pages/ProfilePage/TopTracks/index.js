@@ -7,31 +7,32 @@ const TopTracks = ({ userEmail }) => {
 
   const TrackLister = ({ topTracks }) =>
     Object.keys(topTracks).map((item, i) => (
-      <div>
+      <div key={i}>
         {i < 5 && (
           <a
             href={"https://open.spotify.com/track/" + topTracks[item].track_id}
             target="_blank"
             rel="noopener noreferrer"
+            key={"spotifyLink"}
           >
-            <div className="trackelement">
-              <div className="columns">
-                <img src={topTracks[item]["images"][0]} alt="album" />
+            <div className="trackelement" key="trackelement">
+              <div className="columns" key="columns">
+                <img src={topTracks[item]["images"][0]} key="album" alt="album" />
 
-                <div className="trackcontent">
-                  <h2 style={{ marginBottom: "2px" }}>
+                <div className="trackcontent" key="trackcontent">
+                  <h2 style={{ marginBottom: "2px" }} key="h2">
                     {i + 1}. {topTracks[item].track_name}
                   </h2>
-                  <p className="body">{topTracks[item]["album_name"]}</p>
-                  <p className="body">
+                  <p className="body" key="p1">{topTracks[item]["album_name"]}</p>
+                  <div className="body" key="body">
                     {topTracks[item]["artists"].map((artist, i) =>
                       topTracks[item]["artists"][i + 1] ? (
-                        <p className="body">{artist}, </p>
+                        <p className="body" key="p2">{artist}, </p>
                       ) : (
-                        <p className="body">{artist}</p>
+                        <p className="body" key="p3">{artist}</p>
                       )
                     )}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
