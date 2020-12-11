@@ -5,8 +5,6 @@
  * This will include profile creating and reading, user creating and reading,
  * etc.
  */
-
-const { response } = require("express");
 var request = require("request"); // "Request" library
 
 // Change this number to get more accurate results when computing compatibility
@@ -16,20 +14,13 @@ const TOP_STATS_LIMIT = 10;
  * Creates a user based on the user's Spotify information into the database
  * that's passed in.
  *
+ * @param {*} admin reference to admin for database access
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
  * @param {*} displayName name of the user
  * @param {*} spotifyID Spotify ID of the user
- * @param {*} refreshToken Spotify refresh token of the user
- */
-/**
- * Creates a user based on the user's Spotify information into the database
- * that's passed in.
- *
- * @param {*} db reference to the database to add to
- * @param {*} email email of the user
- * @param {*} displayName name of the user
- * @param {*} spotifyID Spotify ID of the user
+ * @param {*} profilePicture Link to profile picture on spotify
+ * @param {*} acctUrl link to user's spotify profile
  * @param {*} refreshToken Spotify refresh token of the user
  */
 exports.createUser = async function createUser(
@@ -50,7 +41,6 @@ exports.createUser = async function createUser(
     location: {},
     profile: userEmail,
     friends: [],
-    messages: [],
     stats_id: userEmail,
     in_harmony: userEmail,
   };
@@ -66,7 +56,6 @@ exports.createUser = async function createUser(
       let response = await admin.auth().createUser({
         uid: spotifyID,
         displayName: displayName,
-        refreshToken: refreshToken,
         email: userEmail,
       });
       console.log("Successfully created new user with email: ", response.email);
@@ -94,6 +83,8 @@ exports.createUser = async function createUser(
  * Creates and prepopulates the user's profile
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
+ * @param {*} profilePicture the profile picture url of current user
+ * @param {*} acctUrl the spotify link of the user 
  */
 async function createUserProfile(db, email, profilePicture, acctUrl) {
   // create empty social media object
@@ -110,7 +101,6 @@ async function createUserProfile(db, email, profilePicture, acctUrl) {
     biography: "",
     profile_url: new Buffer.from(email).toString("base64"),
     profile_picture: profilePicture,
-    select_playlist: [],
     social_media: userSocialMedia,
   };
 
@@ -291,12 +281,6 @@ async function createUserStatsTopTracks(db, email, topTracks) {
       "album_name": topTracks[i]["album"]["name"]
     }
 
-    // Get artists
-    var artistsOfTrack = [];
-    for (var j in topTracks[i]["album"]["artists"]) {
-      artistsOfTrack.push(topTracks[i]["album"]["artists"][j]["name"]);
-    }
-
     formattedList["top_tracks"].push(entry);
   }
 
@@ -311,6 +295,7 @@ async function createUserStatsTopTracks(db, email, topTracks) {
  * Creates and populated the user's stats for top 5 stats
  * @param {*} db reference to the database to add to
  * @param {*} email email of the user
+ * @param {*} access_token Spotify access token of the user
  * @param {*} refresh_token Spotify refresh token of the user
  */
 exports.createUserStats = async function createUserStats(
@@ -321,13 +306,10 @@ exports.createUserStats = async function createUserStats(
 
   // create an empty stats document for the user
   const statsData = {
-    song_stats: '',
-    albums: '',
-    artist_stats: '',
-    playlist_stats: '',
     top_artists: [],
     top_tracks: [],
-    top_genres: []
+    top_genres: [],
+    public_playlists: []
   }
   const res = await db.collection('stats').doc(email).set(statsData);
 
@@ -381,7 +363,6 @@ exports.createUserStats = async function createUserStats(
  * @param {*} refresh_token
  */
 async function createUserInHarmony(db, email, refresh_token) {
-  // TODO: in harmony algorithm - Steven's task
 
   // Create the in harmony list (empty for now)
   const userInHarmonyData = {
@@ -397,3 +378,6 @@ async function createUserInHarmony(db, email, refresh_token) {
   // Log to console the result
   console.log("Added", res);
 }
+
+
+
