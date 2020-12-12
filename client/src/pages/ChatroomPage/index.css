@@ -17,6 +17,11 @@
     box-shadow: var(--shadow);
 }
 
+.ChatroomPage .messaging-list {
+    width: 40%;
+    height: calc(100vh - 4.5rem);
+}
+
 .Chatroom header {
     background-color: var(--red);
     width: 100%;
@@ -43,11 +48,11 @@
 }
 
 .Chatroom main::-webkit-scrollbar-track {
-    background: var(--grey);
+    background: var(--white);
 }
 
 .Chatroom main::-webkit-scrollbar-thumb {
-    background: var(--blue);
+    background: var(--grey);
 }
 
 .Chatroom form {
