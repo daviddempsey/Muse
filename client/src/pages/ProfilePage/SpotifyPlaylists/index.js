@@ -87,7 +87,7 @@ const SpotifyPlaylists = ({ userEmail }) => {
 
   return (
     <div>
-      <h2 className="title">Your Spotify Playlists</h2>
+      <h2 className="title">Spotify Playlists</h2>
       <div className="playlistimgs">
         <PlaylistLister playlists={playlists} />
       </div>
