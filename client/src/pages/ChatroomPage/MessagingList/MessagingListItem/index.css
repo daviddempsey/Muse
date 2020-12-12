@@ -1,0 +1,52 @@
+@import '../../../../styles/index.css';
+
+.MessagingListItem {
+    width: 100%;
+    height: 6rem;
+    box-shadow: var(--shadow);
+}
+
+.MessagingListItem .padding {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MessagingListItem .pfp {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.MessagingListItem .pfp img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.MessagingListItem .text {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+    padding-left: 1rem;
+}
+
+.MessagingListItem .text h2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.MessagingListItem .text p {
+    line-height: 2.5rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}

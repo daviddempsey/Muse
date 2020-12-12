@@ -12,6 +12,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 // TODO: Implement header and footer
 //import DefaultLayout from "../DefaultLayout"; 
 import Header from "../DefaultLayout/Header";
+import MessagingList from "./MessagingList";
 
 const firestore = fb.firestore();
 
@@ -96,7 +97,9 @@ const ChatroomPage = (props) => {
   return (
     <div className="ChatroomPage">
       <Header />
-      <div className="messaging-list">owo</div>
+      <div className="messaging-list">
+        <MessagingList receiver={receiverEmail} />
+      </div>
       <div className="Chatroom">
         <header>
           <h2>{name}</h2>
