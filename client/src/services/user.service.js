@@ -586,6 +586,29 @@ class UserService {
     });
   }
 
+  // gets the spotify playlists of the user requested
+  async getRecentMessage(email, friendEmail) {
+
+    const encodedEmail = btoa(email);
+    const encodedFriendEmail = btoa(friendEmail)
+    // url for the get playlists call
+    const url = "http://localhost:5001/muse-eec76/us-central1/app/api/user/recentMessage?user=" + encodedEmail + "&friend=" + encodedFriendEmail;
+    
+    // options to be added for the call
+    const options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    };
+
+    // get and return the playlists
+    return await fetch(url, options).then((response) => {
+      return response.text();
+    });
+  };
+
   /* Profile information get functions */
   /*
                 getSongStats() {

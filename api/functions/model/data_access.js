@@ -39,6 +39,7 @@ exports.createUser = async function createUser(
     spotify_id: spotifyID,
     refresh_token: refreshToken,
     location: {},
+    recentMessages: {},
     profile: userEmail,
     friends: [],
     stats_id: userEmail,

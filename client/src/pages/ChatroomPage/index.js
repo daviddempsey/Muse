@@ -26,10 +26,13 @@ const ChatroomPage = (props) => {
   const dummy = useRef();
 
   const messagesRef = firestore.collection("messages");
-  const query = messagesRef
+
+  const messageQuery = messagesRef
     .where("email", "==", email)
     .where("receiverEmail", "==", receiverEmail);
-  let [messages] = useCollectionData(query, { idField: "id" });
+  let [messages] = useCollectionData(messageQuery, { idField: "id" });
+
+  const userRef = firestore.collection("user");
 
   const authUser = () => {
     return new Promise(function (resolve, reject) {
@@ -79,6 +82,12 @@ const ChatroomPage = (props) => {
       receiverEmail: email,
       photoURL,
       status: "received",
+    });
+
+    await userRef.doc(email).update({
+      recentMessages : {
+        [receiverEmail]: formValue
+      }
     });
 
     setFormValue("");
