@@ -1,10 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import UserService from '../../../../services/user.service';
-import fb from '../../../../base';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import UserService from "../../../../services/user.service";
 import "./index.css";
 
-const MessagingListItem = ({email, receiver}) => {
+const MessagingListItem = ({ email, receiver }) => {
   const [name, setName] = useState("");
   const [pfp, setPfp] = useState("");
   const [recentMessage, setRecentMessage] = useState("");
@@ -27,18 +26,24 @@ const MessagingListItem = ({email, receiver}) => {
     // getRecentMessage(email);
   });
 
-  return <div className="MessagingListItem" style={{background: receiver === email ? "#e5e5e5" : "#fcfcfc"}}>
-    <Link to={"/messages/" + btoa(email)}>
-      <div className="padding">
-        <div className="pfp">
-          <img src={pfp} alt="pfp" />
+  return (
+    <div
+      className="MessagingListItem"
+      style={{ background: receiver === email ? "#e5e5e5" : "#fcfcfc" }}
+    >
+      <Link to={"/messages/" + btoa(email)}>
+        <div className="padding">
+          <div className="pfp">
+            <img src={pfp} alt="pfp" />
+          </div>
+          <div className="text">
+            <h2>{name}</h2>
+            {/* <p>{recentMessage}</p> */}
+          </div>
         </div>
-        <div className="text">
-          <h2>{name}</h2>
-          {/* <p>{recentMessage}</p> */}
-        </div>
-      </div>
-    </Link>
-  </div>;
+      </Link>
+    </div>
+  );
 };
+
 export default MessagingListItem;

@@ -36,7 +36,7 @@ const SpotifyPlaylists = ({ userEmail }) => {
                 </a>
               </div>
               {playlists[i + 1] && (
-                <div className="album" key={i+1}>
+                <div className="album" key={i + 1}>
                   <a
                     href={
                       "https://open.spotify.com/playlist/" +
@@ -51,7 +51,7 @@ const SpotifyPlaylists = ({ userEmail }) => {
                 </div>
               )}
               {playlists[i + 2] && (
-                <div className="album" key={i+2}>
+                <div className="album" key={i + 2}>
                   <a
                     href={
                       "https://open.spotify.com/playlist/" +
