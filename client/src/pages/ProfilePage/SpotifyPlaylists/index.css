@@ -50,5 +50,5 @@
   display: flex;
   flex-direction: row;
   margin-top: 1vw;
-  height: 11vw;
+  max-height: 11.25vw;
 }
