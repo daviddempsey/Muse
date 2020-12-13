@@ -127,7 +127,6 @@ exports.getUserSection = async function getUserSection(fsdb, req, res) {
       const userDoc = await fsdb.collection('user').doc(req.params.email);
       const user = await userDoc.get();
       const data = user.data()[req.params.section];
-      
   
       // send the user section data back
       return res.status(200).send(data);
@@ -137,4 +136,17 @@ exports.getUserSection = async function getUserSection(fsdb, req, res) {
       console.log(error);
       return res.status(500).send(error);
     }
+}
+
+exports.getRecentMessage = async function getRecentMessage(fsdb, userEmail, friendEmail, res) {
+  try {
+    const userDoc = await fsdb.collection('user').doc(userEmail);
+    const user = await userDoc.get();
+    const data = user.data()["recentMessages"][friendEmail];
+
+    return res.status(200).send(data);
+  } catch (error) {
+    // console.log(error);
+    return res.status(200).send("");
+  }
 }
