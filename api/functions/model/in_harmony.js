@@ -154,7 +154,7 @@ async function computeAudioFeatureScore(currUserTopSongs, otherUserTopSongs) {
   }
 
   var diff = differenceInMeanOfAudioFeatures(meansOfAudioFeatures1, meansOfAudioFeatures2);
-  var score = calculateCompatibilityScore(diff);
+  var score = calculateAudioFeatureCompatibilityScore(diff);
   return score;
 
 }
