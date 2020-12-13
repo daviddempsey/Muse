@@ -23,6 +23,7 @@ const ChatroomPage = (props) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [formValue, setFormValue] = useState("");
+  const [pfp, setPfp] = useState("");
   const dummy = useRef();
 
   const messagesRef = firestore.collection("messages");
@@ -51,6 +52,10 @@ const ChatroomPage = (props) => {
     setName(await UserService.getName(email));
   };
 
+  const getPfp = async (email) => {
+    setPfp(await UserService.getProfilePicture(email));
+  };
+
   const compare = (msg1, msg2) => {
     if (msg1.createdAt && msg2.createdAt) {
       if (msg1.createdAt.seconds <= msg2.createdAt.seconds) {
@@ -64,7 +69,7 @@ const ChatroomPage = (props) => {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { photoURL } = user;
+    const photoURL = pfp;
 
     await messagesRef.add({
       text: formValue,
@@ -98,6 +103,7 @@ const ChatroomPage = (props) => {
     authUser().then((user) => {
       setEmail(user.email);
       setUser(user);
+      getPfp(user.email);
     });
     getName(receiverEmail);
   }, [receiverEmail]);
