@@ -70,6 +70,7 @@ class ProfilePage extends Component {
           friend: friendsMatch,
         });
       });
+      window.scrollTo(0, 0);
     });
   };
 
