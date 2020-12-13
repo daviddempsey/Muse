@@ -43,6 +43,7 @@
     background-color: var(--white);
     padding-top: 1rem;
     padding-bottom: 1rem;
+    box-shadow: var(--shadow)
 }
 
 .Chatroom main::-webkit-scrollbar {
