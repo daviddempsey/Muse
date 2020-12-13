@@ -50,7 +50,7 @@ const HarmonizeModal = ({email, otherEmail, setShow}) => {
     if(loading) {
       compareTwoUsers(email, otherEmail).then((data) => {
         setScore((data["score"]*100).toFixed(2));
-        const displayedScore = (s) => (data[s]*100/3).toFixed(2);
+        const displayedScore = (s) => Math.max((data[s]*100/3).toFixed(2), 0.01);
         const aScore = displayedScore("artist"), gScore = displayedScore("genres"), fScore = displayedScore("audio_features");
         const chartData = [
           {y: aScore, label: "Artist Score"},
