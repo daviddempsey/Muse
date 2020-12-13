@@ -24,8 +24,8 @@ function App() {
             <PrivateRoute exact path='/messages' component={MessagesLoadingPage} />
             <PrivateRoute exact path='/messages/:receiver_id' component={ChatroomPage} />
             <PrivateRoute exact path='/friends' component={FriendsPage} />
-            <PrivateRoute exact parth='/harmony' component={InHarmonyPage} />
-            <PrivateRoute exact path='/logout' component={LogoutPage} />
+            <Route exact path='/logout' component={LogoutPage} />
+            <PrivateRoute exact path='/harmony' component={InHarmonyPage} />
           </Switch>
         </Router>
       </AuthProvider>
