@@ -8,6 +8,7 @@ import FriendsPage from './pages/FriendsPage';
 import InHarmonyPage from './pages/InHarmonyPage';
 import LogoutPage from './pages/LogoutPage';
 import './styles/index.css';
+import MessagesLoadingPage from './pages/MessagesLoadingPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/profile/:user_email' component={ProfilePage} />
           <Route exact path='/logging' component={LoadingPage} />
+          <Route exact path='/messages' component={MessagesLoadingPage} />
           <Route exact path='/messages/:receiver_id' component={ChatroomPage} />
           <Route exact path='/friends' component={FriendsPage} />
           <Route exact path='/harmony' component={InHarmonyPage} />

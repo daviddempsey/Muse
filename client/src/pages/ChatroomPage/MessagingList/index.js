@@ -16,7 +16,7 @@ const MessagingList = ({receiver}) => {
   };
 
   /* gets the friends list of the current user */
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth.currentUser) {
       let userEmail = fb.auth().currentUser.email;
       getFriendsList(userEmail);
