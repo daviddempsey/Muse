@@ -6,7 +6,7 @@ import "./index.css";
 const MessagingListItem = ({ email, receiver }) => {
   const [name, setName] = useState("");
   const [pfp, setPfp] = useState("");
-  const [recentMessage, setRecentMessage] = useState("");
+  // const [recentMessage, setRecentMessage] = useState("");
 
   const getName = async (email) => {
     setName(await UserService.getName(email));
