@@ -14,7 +14,7 @@ const HarmonizeModal = ({email, otherEmail, setShow}) => {
       type: "pie", indexLabel: "{label}: {y}%", startAngle: -90,
       showInLegend: true, legendText: "{label}",
       dataPoints: [
-        {y: 100, label: "OOPSIE WHOOPSIE!!! uwu looks like we made a wittle ducky wucky!! a wittle ducko boingo! The code monkeys at our headquawters are working VEWY HAWD to fix this!"},
+        {y: 100, label: "Error"},
       ],
     }]
   });
@@ -63,7 +63,7 @@ const HarmonizeModal = ({email, otherEmail, setShow}) => {
           animationDuration: 500,
           data: [{
             type: "pie",
-            indexLabel: "{label}: {y}%",
+            indexLabel: "{label}: {y}",
             startAngle: -90,
             showInLegend: true,
             legendText: "{label}",
