@@ -17,14 +17,14 @@ const MessagingListItem = ({email, receiver}) => {
     setPfp(await UserService.getProfilePicture(email));
   };
 
-  const getRecentMessage = async (email) => {
-    setRecentMessage(await UserService.getRecentMessage(fb.auth().currentUser.email, email));
-  }
+  // const getRecentMessage = async (email) => {
+  //   setRecentMessage(await UserService.getRecentMessage(fb.auth().currentUser.email, email));
+  // }
 
   useEffect(() => {
     getName(email);
     getPfp(email);
-    getRecentMessage(email);
+    // getRecentMessage(email);
   });
 
   return <div className="MessagingListItem" style={{background: receiver === email ? "#e5e5e5" : "#fcfcfc"}}>
@@ -35,7 +35,7 @@ const MessagingListItem = ({email, receiver}) => {
         </div>
         <div className="text">
           <h2>{name}</h2>
-          <p>{recentMessage}</p>
+          {/* <p>{recentMessage}</p> */}
         </div>
       </div>
     </Link>
