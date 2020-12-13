@@ -62,7 +62,7 @@ const HarmonizeModal = ({ email, otherEmail, setShow }) => {
       compareTwoUsers(email, otherEmail).then((data) => {
         setScore((data["score"] * 100).toFixed(2));
         const displayedScore = (s) =>
-          data[s] && data[s] > 0 ? ((data[s] * 100) / 3).toFixed(2) : 0.0;
+          data[s] && data[s] > 0 ? ((data[s] * 100) / 3).toFixed(2) : 0;
         const aScore = displayedScore("artist"),
           gScore = displayedScore("genres"),
           fScore = displayedScore("audio_features");
