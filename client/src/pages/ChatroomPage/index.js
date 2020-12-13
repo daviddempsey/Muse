@@ -23,13 +23,17 @@ const ChatroomPage = (props) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [formValue, setFormValue] = useState("");
+  const [pfp, setPfp] = useState("");
   const dummy = useRef();
 
   const messagesRef = firestore.collection("messages");
-  const query = messagesRef
+
+  const messageQuery = messagesRef
     .where("email", "==", email)
     .where("receiverEmail", "==", receiverEmail);
-  let [messages] = useCollectionData(query, { idField: "id" });
+  let [messages] = useCollectionData(messageQuery, { idField: "id" });
+
+  const userRef = firestore.collection("user");
 
   const authUser = () => {
     return new Promise(function (resolve, reject) {
@@ -48,6 +52,10 @@ const ChatroomPage = (props) => {
     setName(await UserService.getName(email));
   };
 
+  const getPfp = async (email) => {
+    setPfp(await UserService.getProfilePicture(email));
+  };
+
   const compare = (msg1, msg2) => {
     if (msg1.createdAt && msg2.createdAt) {
       if (msg1.createdAt.seconds <= msg2.createdAt.seconds) {
@@ -61,7 +69,7 @@ const ChatroomPage = (props) => {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { photoURL } = user;
+    const photoURL = pfp;
 
     await messagesRef.add({
       text: formValue,
@@ -81,6 +89,12 @@ const ChatroomPage = (props) => {
       status: "received",
     });
 
+    await userRef.doc(email).update({
+      recentMessages : {
+        [receiverEmail]: formValue
+      }
+    });
+
     setFormValue("");
     dummy.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -89,6 +103,7 @@ const ChatroomPage = (props) => {
     authUser().then((user) => {
       setEmail(user.email);
       setUser(user);
+      getPfp(user.email);
     });
     getName(receiverEmail);
   }, [receiverEmail]);
@@ -120,7 +135,7 @@ const ChatroomPage = (props) => {
             onChange={(e) => setFormValue(e.target.value)}
           />
           <button type="submit" disabled={!formValue}>
-            <img src={SendButton} alt="Send" />
+            <img className="SBImg" src={SendButton} alt="Send" />
           </button>
         </form>
       </div>

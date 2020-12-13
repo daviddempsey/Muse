@@ -36,11 +36,14 @@
 
 .Chatroom main {
     width: 100%;
-    height: 75%;
+    height: 78%;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     background-color: var(--white);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-shadow: var(--shadow)
 }
 
 .Chatroom main::-webkit-scrollbar {
@@ -57,19 +60,20 @@
 
 .Chatroom form {
     width: 100%;
-    height: 15%;
+    height: calc(12% - 2rem);
     font-size: 1.5rem;
-    background: var(--almost-white);
+    background: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
     box-sizing: border-box;
+    box-shadow: var(--shadow);
 }
 
 .Chatroom input {
     line-height: 1.5;
-    height: 2rem;
+    height: 1.5rem;
     width: 100%;
     font-size: 1.5rem;
     font-weight: 600;
@@ -80,6 +84,7 @@
     box-shadow: var(--shadow);
     border-radius: 3rem;
     padding: 1rem 2rem;
+    background-color: var(--almost-white);
 }
 
 .Chatroom form button {
@@ -106,7 +111,6 @@ li {
 
 .Chatroom .message p {
     max-width: 50%;
-    margin-bottom: 0.75rem;
     line-height: 1.5rem;
     padding: 0.5rem 1rem;
     border-radius: 1.5rem;
@@ -119,6 +123,7 @@ li {
 .Chatroom .message {
     display: flex;
     align-items: center;
+    margin: 0.5rem;
 }
 
 .Chatroom .sent {
@@ -134,12 +139,20 @@ li {
 .Chatroom .received p {
     background: var(--almost-white);
     color: var(--black);
+    box-shadow: var(--shadow);
+    margin-left: 0.25rem;
 }
 
+.Chatroom .SBImg {
+    width: 2.5rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin: 2px 5px;
+}
 
-.Chatroom img {
+.PImg {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin: 2px 5px;
+    margin: 0rem 0.25rem;
 }

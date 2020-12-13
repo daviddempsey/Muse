@@ -71,9 +71,6 @@ async function computeCompatibility(admin, fsdb, currUserEmail, otherUserEmail) 
   // Put compatibility score inside the in_harmony table on Firestore 
   indexCompatibilityScoresIntoTable(admin, fsdb, currUserEmail, otherUserEmail, compatiblityScores[otherUserEmail]);
 
-  // do we update the other user's in_harmony document as well? 
-  //  indexCompatibilityScoresIntoIndex(fsdb, otherUserEmail, currUserEmail, compatiblityScores);
-
   return JSON.stringify(compatiblityScores);
 
 }
@@ -171,7 +168,7 @@ async function rbo(currList, otherList, type) {
   currList = await getNamesFromTopStats(currList, type);
   otherList = await getNamesFromTopStats(otherList, type);
 
-  var jaccards = [];
+  var jaccards_sum = 0;
   var tempCurrList = [];
   var tempOtherList = [];
 
@@ -185,16 +182,11 @@ async function rbo(currList, otherList, type) {
   for (let i = 0; i < limit; i++) {
     tempCurrList.push(currList[i]);
     tempOtherList.push(otherList[i]);
-    jaccards.push(intersection(tempCurrList, tempOtherList).size / union(tempCurrList, tempOtherList).size);
+    jaccards_sum += intersection(tempCurrList, tempOtherList).size / union(tempCurrList, tempOtherList).size;
   }
 
   // Compute and return average of Jaccard similarity
-  var sum = 0;
-  for (let i in jaccards) {
-    sum += jaccards[i];
-  }
-  return sum / jaccards.length;
-
+  return jaccards_sum / tempCurrList.length;
 }
 
 
@@ -233,7 +225,7 @@ function differenceInMeanOfAudioFeatures(meansOfAudioFeatures1, meansOfAudioFeat
  * the audio features
  * @param {Object} data contains the difference in audio features
  */
-function calculateCompatibilityScore(data) {
+function calculateAudioFeatureCompatibilityScore(data) {
   var avg = (data["valenceDiff"] + data["energyDiff"] +
     data["danceabilityDiff"] + data["acousticnessDiff"]) / 4;
   return 1 - avg;
@@ -412,19 +404,21 @@ exports.findTopSimilarArtist = function (list1, list2) {
 
   var similarities = [];
   for (let i in result) {
-    let difference = Math.abs(result[i] - i);
+    let currRank = parseInt(result[i]);
+    let otherRank = parseInt(i);
+    let avg_ranking = (currRank + otherRank) / 2;
 
     // within every entry, you need to put the artist_id (find in database)
     let entry = {
-      "difference": difference,
+      "avg_ranking": avg_ranking,
       "name": list2[i]["artist_name"],
       "id": list2[i]["artist_id"]
     };
     similarities.push(entry);
   }
 
-  // Sorts list based on difference then name 
-  similarities.sort((a, b) => (a.difference > b.difference) ? 1 : (a.difference === b.difference) ? ((a.name > b.name) ? 1 : -1) : -1);
+  // Sorts list based on avg_ranking then name 
+  similarities.sort((a, b) => (a.avg_ranking > b.avg_ranking) ? 1 : (a.avg_ranking === b.avg_ranking) ? ((a.name > b.name) ? 1 : -1) : -1);
 
   return similarities;
 }
@@ -453,25 +447,28 @@ exports.findTopSimilarGenres = function (list1, list2) {
     }
   }
 
+  // Take the average of the frequencies in both lists
   var similarities = [];
   var totalGenreFrequency = 0;
   for (let i in result) {
-    // within every entry, you need to put the genre_id (find in database)
+
+    let currFrequency = parseInt(list1[i]["frequency"]);
+    let otherFrequency = parseInt(list2[i]["frequency"]);
     let entry = {
       "name": list2[i]["genre_name"],
-      "frequency_sum": list2[i]["frequency"] + list1[result[i]]["frequency"]
+      "frequency_avg": (currFrequency + otherFrequency) / 2
     };
 
-    totalGenreFrequency += entry.frequency_sum;
+    totalGenreFrequency += entry["frequency_avg"];
     similarities.push(entry);
   }
 
-  // Sorts list based on difference then name 
-  similarities.sort((a, b) => (a.frequency_sum < b.frequency_sum) ? 1 : (a.frequency_sum === b.frequency_sum) ? ((a.name < b.name) ? 1 : -1) : -1);
+  // Sorts list based on frequency_avg then name 
+  similarities.sort((a, b) => (a.frequency_avg < b.frequency_avg) ? 1 : (a.frequency_avg === b.frequency_avg) ? ((a.name < b.name) ? 1 : -1) : -1);
   
   // Find the overall percentage of each simimlar genre 
   for (let i in similarities) {
-    similarities[i]["score"] = similarities[i]["frequency_sum"] / totalGenreFrequency;
+    similarities[i]["score"] = similarities[i]["frequency_avg"] / totalGenreFrequency;
   }
   
   return similarities;

@@ -10,6 +10,7 @@ var in_harmony = require('./model/in_harmony'); // the in harmony algorithm
 var model_inharmony = require('./model/model_inharmony'); // in harmony access functions
 var model_profile = require('./model/model_profile'); // profile access functions
 var model_user = require('./model/model_user'); // user access functions
+var atob = require('atob');
 
 var client_id = 'd81dc76912324d4085250cc20a84ebeb'; // Your client id
 var client_secret = '9160d378ee03457dbb3d30a54e79d6ab'; // Your secret
@@ -267,6 +268,14 @@ app.get("/api/users/all", (req, res) => {
         return await model_user.getAllUsers(fsdb, req, res);
     })();
 });
+// gets the most recent message from a specific user
+app.get("/api/user/recentMessage", (req, res) => {
+    const user = atob(req.query.user);
+    const friend = atob(req.query.friend);
+    (async() => {
+        return await model_user.getRecentMessage(fsdb, user, friend, res);
+    })();
+});
 
 // gets all of user's info 
 app.get("/api/user/:email", (req, res) => {
@@ -275,6 +284,7 @@ app.get("/api/user/:email", (req, res) => {
     })();
     
 });
+
 
 // get the user section request
 app.get("/api/user/:section/:email", (req, res) => {

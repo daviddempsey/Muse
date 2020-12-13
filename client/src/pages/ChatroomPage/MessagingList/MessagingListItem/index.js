@@ -6,7 +6,7 @@ import "./index.css";
 const MessagingListItem = ({ email, receiver }) => {
   const [name, setName] = useState("");
   const [pfp, setPfp] = useState("");
-  const [bio, setBio] = useState("");
+  const [recentMessage, setRecentMessage] = useState("");
 
   const getName = async (email) => {
     setName(await UserService.getName(email));
@@ -16,14 +16,14 @@ const MessagingListItem = ({ email, receiver }) => {
     setPfp(await UserService.getProfilePicture(email));
   };
 
-  const getBio = async (email) => {
-    setBio(await UserService.getBiography(email));
-  };
+  // const getRecentMessage = async (email) => {
+  //   setRecentMessage(await UserService.getRecentMessage(fb.auth().currentUser.email, email));
+  // }
 
-  React.useEffect(() => {
+  useEffect(() => {
     getName(email);
     getPfp(email);
-    getBio(email);
+    // getRecentMessage(email);
   });
 
   return (
@@ -38,11 +38,12 @@ const MessagingListItem = ({ email, receiver }) => {
           </div>
           <div className="text">
             <h2>{name}</h2>
-            <p>{bio}</p>
+            {/* <p>{recentMessage}</p> */}
           </div>
         </div>
       </Link>
     </div>
   );
 };
+
 export default MessagingListItem;
