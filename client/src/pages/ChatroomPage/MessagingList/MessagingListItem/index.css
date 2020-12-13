@@ -14,15 +14,18 @@
 }
 
 .MessagingListItem .pfp {
-    width: 4rem;
-    height: 4rem;
+    min-width: 4rem;
+    max-width: 4rem;
+    min-height: 4rem;
+    max-height: 4rem;
     border-radius: 50%;
     overflow: hidden;
+  
 }
 
 .MessagingListItem .pfp img {
     height: 100%;
-    width: 100%;
+    width: 100%; 
     object-fit: cover;
 }
 
