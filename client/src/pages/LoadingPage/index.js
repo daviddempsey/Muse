@@ -21,7 +21,6 @@ const LoadingPage = ({ history }) => {
       .then((user) => {
         // convert the user's email to 64bit encoded
         var encodedEmail = btoa(user["user"]["email"]);
-        console.log(encodedEmail);
 
         // redirect
         history.push("/profile/" + encodedEmail);

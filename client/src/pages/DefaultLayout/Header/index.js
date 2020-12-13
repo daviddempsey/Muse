@@ -83,7 +83,7 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/" className="nav-item">
+            <NavLink to="/logout" className="nav-item">
               Logout
             </NavLink>
           </li>
